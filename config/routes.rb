@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  root 'application#index'
-  get '*path' => 'application#index'
+  resources :recipes
+
+  root 'recipes#index'
+  get '*path' => 'recipes#index'
 
 end

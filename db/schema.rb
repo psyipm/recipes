@@ -11,6 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20141227141147) do
 
+  create_table "components", force: :cascade do |t|
+    t.string  "title",     limit: 255
+    t.integer "recipe_id", limit: 4
+  end
+
+  add_index "components", ["recipe_id"], name: "index_components_on_recipe_id", using: :btree
+
+  create_table "photos", force: :cascade do |t|
+    t.string  "src",       limit: 255
+    t.string  "src_big",   limit: 255
+    t.integer "recipe_id", limit: 4
+  end
+
+  add_index "photos", ["recipe_id"], name: "index_photos_on_recipe_id", using: :btree
+
+  create_table "recipes", force: :cascade do |t|
+    t.string   "title",      limit: 512
+    t.text     "text",       limit: 65535
+    t.integer  "serving",    limit: 4
+    t.integer  "cook_time",  limit: 4
+    t.integer  "rating",     limit: 4
+    t.boolean  "published",  limit: 1
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string  "title",     limit: 255
+    t.integer "recipe_id", limit: 4
+  end
+
+  add_index "tags", ["recipe_id"], name: "index_tags_on_recipe_id", using: :btree
+
+  add_foreign_key "components", "recipes"
+  add_foreign_key "photos", "recipes"
+  add_foreign_key "tags", "recipes"
 end

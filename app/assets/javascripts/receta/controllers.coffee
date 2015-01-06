@@ -65,6 +65,10 @@ class TokenfieldHelpers
     setTokens: (tokens, add = false, triggerChange = false)->
         @keyInput.tokenfield('setTokens', tokens, add, triggerChange)
 
+    addToken: (token)->
+        @setTokens(token, true)
+        @updateTokens()
+
     updateTokens: ()->
         @setTokens(@getTokens())
 
@@ -81,6 +85,16 @@ controllers.controller("RecipesController", [ '$scope', '$http',
                 response( components )
         )
 
-        tfHelpers = new TokenfieldHelpers("keywords-inp")
-        tfHelpers.init tfCallback
+        $scope.tokenhelpers = new TokenfieldHelpers("keywords-inp")
+        $scope.tokenhelpers.init tfCallback
+
+        $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
+
+        $scope.search = ()->
+            $http.post(
+                '/recipes/find.json',
+                {selected: $scope.tokenhelpers.getTokens()}
+            ).success((data)->
+                console.log data
+            )
 ])

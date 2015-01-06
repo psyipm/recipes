@@ -7,7 +7,11 @@ class RecipesController < ApplicationController
 		
 	end
 
-	def show
-		@recipes = Recipe.all
+	def find
+		if(params[:selected])
+			@recipes = Recipe.find_by_components params[:selected]
+		else
+			@recipes = Recipe.all
+		end
 	end
 end

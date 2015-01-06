@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-
+  
+  root 'recipes#index'
   resources :recipes
 
-  root 'recipes#index'
-  get '*path' => 'recipes#index'
+  # get '*path' => 'recipes#index'
+
+  post 'components/find'
 
 end

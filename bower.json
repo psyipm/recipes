@@ -4,7 +4,10 @@
     "dependencies": {
         "angular": "latest",
         "angular-route": "latest",
-        "bootstrap": "~3.1.1"
+        "bootstrap": "~3.1.1",
+        "jquery-ujs": "latest",
+        "bootstrap-tokenfield": "latest",
+        "jquery-ui": "latest"
     }
   },
   "vendor": {

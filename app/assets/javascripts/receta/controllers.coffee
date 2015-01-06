@@ -35,32 +35,52 @@ recipes =
         }
     ]`
 
+Array::unique = ->
+    output = {}
+    output[@[key]] = @[key] for key in [0...@length]
+    value for key, value of output
+
+
+class TokenfieldHelpers
+    keyInput = {}
+    sourceFn = {}
+
+    constructor: (inputId)->
+        @keyInput = $("#" + inputId);
+
+    init: (autoCompleteSource)->
+        @sourceFn = autoCompleteSource
+        tfparams = `{ autocomplete: { source: this.sourceFn, delay: 100, select: this.getSelectFn() }, showAutocompleteOnFocus: true }`
+        @keyInput.tokenfield tfparams
+
+    getSelectFn: ()->
+        context = this
+        updateFn = @updateTokens
+        fn = (e)-> 
+            updateFn.call(context)
+
+    getTokens: ()->
+        @keyInput.tokenfield('getTokensList').split(", ").unique();
+
+    setTokens: (tokens, add = false, triggerChange = false)->
+        @keyInput.tokenfield('setTokens', tokens, add, triggerChange)
+
+    updateTokens: ()->
+        @setTokens(@getTokens())
+
+
 controllers = angular.module('controllers',[])
 controllers.controller("RecipesController", [ '$scope', '$http',
-  ($scope,$http)->
-    # $scope.search = (keywords)->  
-    #   $location.path("/").search('keywords',keywords)
-
-    # $(".keyword-ex-lnk").click ->
-     #  keyword = $(this).html()
-     #  $scope.keywords += ", #{keyword}"
-
-    # if $routeParams.keywords
-    #   keywords = $routeParams.keywords.toLowerCase()
-    #   $scope.recipes = recipes.filter (recipe)-> 
-    #     recipe.recipe.title.toLowerCase().indexOf(keywords) != -1
-    # else
-    #   $scope.recipes = []
-
-    tfCallback = (request, response)->
-        $http.post(
-            '/components/find.json',
-            {query: request.term}
-        ).success((data)->
-            components = (i.title for i in data)
-            response( components )
+    ($scope,$http)->
+        tfCallback = (request, response)->
+            $http.post(
+                '/components/find.json',
+                {query: request.term}
+            ).success((data)->
+                components = (i.title for i in data)
+                response( components )
         )
 
-    tfparams = `{ autocomplete: { source: tfCallback, delay: 100 }, showAutocompleteOnFocus: true }`
-    $("#keywords-inp").tokenfield(tfparams)
+        tfHelpers = new TokenfieldHelpers("keywords-inp")
+        tfHelpers.init tfCallback
 ])

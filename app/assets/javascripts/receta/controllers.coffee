@@ -90,11 +90,13 @@ controllers.controller("RecipesController", [ '$scope', '$http',
 
         $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
 
+        $scope.recipes = recipes
+
         $scope.search = ()->
             $http.post(
                 '/recipes/find.json',
                 {selected: $scope.tokenhelpers.getTokens()}
             ).success((data)->
-                console.log data
+                $scope.recipes = data
             )
 ])

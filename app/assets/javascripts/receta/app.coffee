@@ -2,6 +2,7 @@ receta = angular.module('receta',[
   'templates',
   'ngRoute',
   'controllers',
+  'ngSanitize',
 ])
 
 receta.config([ '$routeProvider',

@@ -16,13 +16,22 @@
 <hr>
 <section class="row" ng-if="recipes">
   <h1 class="text-center h2">Results</h1>
-  <ul class="list-unstyled">
-    <li ng-repeat="recipe in recipes">
-      <section class="well col-md-6 col-md-offset-3">
-        <h1 class="h3 col-md-6 text-right" style="margin-top: 0"><a href="#">{{recipe.name}}</a></h1>
-        <div class="col-md-6">
-          <button class="btn btn-info">Edit</button>
-          <button class="btn btn-danger">Delete</button>
+  <ul class="list-unstyled col-md-8">
+    <li ng-repeat="n in recipes">
+      <section class="col-md-12 col-md-offset-3">
+        <h1 class="h3 col-md-12">{{n.recipe.title}}</h1>
+        <div class="col-md-12">
+          <ul class="list-unstyled">
+            <li ng-repeat="img in n.photos">
+              <a href="{{img.src_big}}"><img ng-src="{{img.src || img.src_big}}"></a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-12" ng-bind-html="n.recipe.text"></div>
+        <div class="col-md-12">
+          <span ng-if="n.recipe.serving">Порции: {{n.recipe.serving}} |</span>
+          <span ng-if="n.recipe.cook_time"> Время приготовления: {{n.recipe.cook_time}} минут | </span>
+          <span> Рейтинг: {{n.recipe.rating || 0}}</span>
         </div>
       </section>
     </li>

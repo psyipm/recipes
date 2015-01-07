@@ -4,6 +4,7 @@
     "dependencies": {
         "angular": "latest",
         "angular-route": "latest",
+        "angular-sanitize": "latest",
         "bootstrap": "~3.1.1",
         "jquery-ujs": "latest",
         "bootstrap-tokenfield": "latest",

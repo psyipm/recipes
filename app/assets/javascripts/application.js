@@ -18,5 +18,6 @@
 //= require angular-route
 //= require angular-sanitize
 //= require angular-rails-templates
+//= require delayed-change
 //= require_tree ../templates
 //= require_tree .

@@ -3,6 +3,7 @@ receta = angular.module('receta',[
   'ngRoute',
   'controllers',
   'ngSanitize',
+  'delayed-change'
 ])
 
 receta.config([ '$routeProvider',

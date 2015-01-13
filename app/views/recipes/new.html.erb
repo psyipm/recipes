@@ -1,6 +1,6 @@
 <% content_for :title, "Добавить рецепт" %>
 
-<div class="container-fluid top-buffer-md recipe-form" ng-app="receta">
+<div class="container-fluid top-buffer-md recipe-form" ng-app="receta" ng-controller="AddRecipeController">
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			<h3>Добавить рецепт</h3>
@@ -14,12 +14,13 @@
 					</div>
 					<label for="recipe[text]">Текст</label>
 					<div class="form-group">
-						<textarea class="form-control" name="recipe[text]" id="recipe[text]" ng-model="text" rows="15"></textarea>
+						<textarea class="form-control" name="recipe[text]" id="recipe[text]" ng-model="text" delayed-change="parseComponents()" rows="15"></textarea>
 					</div>
 					<label for="tags[]">Теги</label>
 					<div class="form-group">
 						<input type="text" class="form-control" name="tags[]" id="tags[]" ng-model="tags">
 					</div>
+					<input type="hidden" name="components[]"></input>
 					<button type="submit" name="submitbtn" class="btn btn-default" id="submitbtn" value="">Отправить</button>
 				<% end %>
 			</div>

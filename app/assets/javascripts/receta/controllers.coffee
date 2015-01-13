@@ -120,3 +120,22 @@ controllers.controller("RecipesController", [ '$scope', '$http',
         $scope.toggle = ($event)->
             t.toggle($event)
 ])
+
+
+controllers.controller("AddRecipeController", ['$scope', '$http',
+    ($scope,$http)->
+        $scope.getComponents = ()->
+            $http.post(
+                '/components/get.json',
+                {}
+            ).success((data)->
+                $scope.components = data
+                console.log $scope.components
+            )
+
+        $scope.getComponents() unless $scope.components
+
+        $scope.parseComponents = ()->
+            console.log $scope.text
+        
+])

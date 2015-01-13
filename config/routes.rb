@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   # get '*path' => 'recipes#index'
 
   post 'components/find'
+  post 'components/get'
 
 end

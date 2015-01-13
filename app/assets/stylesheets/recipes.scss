@@ -9,7 +9,17 @@
 	box-shadow: 1px 0 10px #ccc;
 }
 
+.top-buffer-lg {
+	margin-top: 50px;
+}
+
+.top-buffer-md {
+    margin-top: 25px;
+}
+
 @import 'recipe';
+
+@import 'recipe_form';
 
 .sidebar-right {
   border-left: 1px solid #eee;

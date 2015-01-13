@@ -1,0 +1,45 @@
+<% content_for :title, "Добавить рецепт" %>
+
+<div class="container-fluid top-buffer-md recipe-form" ng-app="receta">
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<h3>Добавить рецепт</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-md-8">
+				<%= form_tag recipes_path do %>
+					<label for="recipe[title]">Название</label>
+					<div class="form-group">
+						<input type="text" class="form-control" name="recipe[title]" id="recipe[title]" ng-model="title">
+					</div>
+					<label for="recipe[text]">Текст</label>
+					<div class="form-group">
+						<textarea class="form-control" name="recipe[text]" id="recipe[text]" ng-model="text" rows="15"></textarea>
+					</div>
+					<label for="tags[]">Теги</label>
+					<div class="form-group">
+						<input type="text" class="form-control" name="tags[]" id="tags[]" ng-model="tags">
+					</div>
+					<button type="submit" name="submitbtn" class="btn btn-default" id="submitbtn" value="">Отправить</button>
+				<% end %>
+			</div>
+			<div class="col-md-4">
+				<div class="components-list" ng-if="text">
+					<label>Ингредиенты</label> <sup class="help-badge" title="Удалите лишние или добавьте отсутствующие. Здесь должны быть основные компоненты, за которыми обычно нужно идти в магазин. Не пишите такие ингредиенты как соль, перец и т.д. - вряд ли кто-то будет искать что приготовить из соли :)">?</sup>
+					<div>
+						<div class="component-input-group">
+							<input type="text" class="form-control" placeholder="пример: сыр">
+							<button class="btn btn-default" title="Добавить"><span class="glyphicon glyphicon-plus"></span></button>
+						</div>
+					</div>
+					<div ng-repeat="i in components">
+						<div class="component-input-group">
+							<input type="text" class="form-control">
+							<button class="btn btn-default" title="Удалить"><span class="glyphicon glyphicon-remove"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

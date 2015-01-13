@@ -1,0 +1,22 @@
+.recipe-form textarea {
+    resize: vertical;
+}
+
+.component-input-group input {
+  display: inline;
+  width: 75%;
+  margin: 2px;
+}
+
+.component-input-group button {
+  margin: -3px 0 0 -2px;
+}
+
+.help-badge {
+  width: 5px;
+  height: 5px;
+  font-weight: bold;
+  color: green;
+  text-shadow: 1px 1px #d5ffcc;
+  cursor: pointer;
+}

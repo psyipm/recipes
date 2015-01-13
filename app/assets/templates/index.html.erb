@@ -1,6 +1,6 @@
 <section class="row">
   <form>
-    <div class="form-group col-md-6 col-md-offset-3">
+    <div class="form-group col-md-7 col-md-offset-3">
       <h3>Здесь можно подобрать рецепты по ингредиентам</h3>
       <p>Введите компоненты, которые есть в наличии, например <a href="" class="keyword-ex-lnk">сыр</a>, <a href="" class="keyword-ex-lnk">грибы</a></p>
       <label for="keywords" class="sr-only">Keywords</label>
@@ -21,14 +21,17 @@
       <section class="col-md-12 col-md-offset-3">
         <h1 class="h3 col-md-12">{{n.recipe.title}}</h1>
         <div class="col-md-12">
-          <ul class="list-unstyled">
+          <ul class="list-unstyled recipe-images">
             <li ng-repeat="img in n.photos">
               <a href="{{img.src_big}}"><img ng-src="{{img.src || img.src_big}}"></a>
             </li>
           </ul>
         </div>
-        <div class="col-md-12" ng-bind-html="n.recipe.text"></div>
+        <div class="recipe-text" ng-click="toggle($event)" title="Показать полностью">
+          <div class="col-md-12 recipe-descr collapsed" ng-bind-html="n.recipe.text"></div>
+        </div>
         <div class="col-md-12">
+          <a class="toggle-text">▾</a>
           <span ng-if="n.recipe.serving">Порции: {{n.recipe.serving}} |</span>
           <span ng-if="n.recipe.cook_time"> Время приготовления: {{n.recipe.cook_time}} минут | </span>
           <span> Рейтинг: {{n.recipe.rating || 0}}</span>

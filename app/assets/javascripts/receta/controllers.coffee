@@ -73,6 +73,22 @@ class TokenfieldHelpers
         @setTokens(@getTokens())
 
 
+class ToggleText
+    toggle: ($event) ->
+        target = $event.target
+        @collapsed = !@collapsed
+        $arrow = $(target).parent().parent().find("a.toggle-text")
+
+        if(@collapsed)
+            $(target).removeClass("collapsed")
+            $arrow.text("▴")
+            return
+        else
+            $(target).addClass("collapsed")
+            $arrow.text("▾")
+            return
+
+
 controllers = angular.module('controllers',[])
 controllers.controller("RecipesController", [ '$scope', '$http',
     ($scope,$http)->
@@ -99,4 +115,8 @@ controllers.controller("RecipesController", [ '$scope', '$http',
             ).success((data)->
                 $scope.recipes = data
             )
+
+        t = new ToggleText()
+        $scope.toggle = ($event)->
+            t.toggle($event)
 ])

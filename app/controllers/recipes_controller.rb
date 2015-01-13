@@ -12,7 +12,7 @@ class RecipesController < ApplicationController
 		if(params[:selected])
 			@recipes = Recipe.find_by_components params[:selected]
 		else
-			@recipes = Recipe.all
+			@recipes = Recipe.where(["published = ?", 1])
 		end
 	end
 

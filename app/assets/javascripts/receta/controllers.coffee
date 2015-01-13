@@ -42,8 +42,8 @@ Array::unique = ->
 
 
 class TokenfieldHelpers
-    keyInput = {}
-    sourceFn = {}
+    @keyInput = {}
+    @sourceFn = {}
 
     constructor: (inputId)->
         @keyInput = $("#" + inputId);
@@ -129,13 +129,23 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
                 '/components/get.json',
                 {}
             ).success((data)->
-                $scope.components = data
+                $scope.dictionary = data
+                $scope.components = $scope.parseComponents()
+
+                console.log $scope.dictionary
                 console.log $scope.components
             )
 
-        $scope.getComponents() unless $scope.components
+        $scope.textChanged = ()->
+            console.log "invoke"
+            console.log $scope.dictionary
+
+            return $scope.getComponents() unless $scope.dictionary
+
+            $scope.components = $scope.parseComponents()
 
         $scope.parseComponents = ()->
-            console.log $scope.text
+            $scope.dictionary.filter (word)->
+                ~$scope.text.indexOf word
         
 ])

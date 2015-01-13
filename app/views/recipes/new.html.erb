@@ -14,7 +14,7 @@
 					</div>
 					<label for="recipe[text]">Текст</label>
 					<div class="form-group">
-						<textarea class="form-control" name="recipe[text]" id="recipe[text]" ng-model="text" delayed-change="parseComponents()" rows="15"></textarea>
+						<textarea class="form-control" name="recipe[text]" id="recipe[text]" ng-model="text" delayed-change="textChanged()" rows="15"></textarea>
 					</div>
 					<label for="tags[]">Теги</label>
 					<div class="form-group">
@@ -35,7 +35,7 @@
 					</div>
 					<div ng-repeat="i in components">
 						<div class="component-input-group">
-							<input type="text" class="form-control">
+							<input type="text" class="form-control" value="{{i}}">
 							<button class="btn btn-default" title="Удалить"><span class="glyphicon glyphicon-remove"></span></button>
 						</div>
 					</div>

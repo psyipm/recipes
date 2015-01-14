@@ -132,20 +132,31 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
                 $scope.dictionary = data
                 $scope.components = $scope.parseComponents()
 
+                #debug
                 console.log $scope.dictionary
                 console.log $scope.components
             )
 
+        $scope.parseComponents = ()->
+            $scope.dictionary.filter (word)->
+                ~$scope.text.indexOf word
+
         $scope.textChanged = ()->
+            #debug
             console.log "invoke"
             console.log $scope.dictionary
 
             return $scope.getComponents() unless $scope.dictionary
-
             $scope.components = $scope.parseComponents()
 
-        $scope.parseComponents = ()->
-            $scope.dictionary.filter (word)->
-                ~$scope.text.indexOf word
-        
+        $scope.user_created = []
+        $scope.addComponent = (word)->
+            word = word.toLowerCase()
+            $scope.user_created.push word unless word in $scope.user_created
+            $scope.components = [].concat.apply($scope.user_created, $scope.components).unique()
+            this.newcmp = ""
+
+            #debug
+            console.log $scope.components
+
 ])

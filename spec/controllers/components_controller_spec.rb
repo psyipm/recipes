@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe ComponentsController do
+describe ComponentsController do 
 
 end

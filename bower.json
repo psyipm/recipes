@@ -5,13 +5,13 @@
         "angular": "latest",
         "angular-route": "latest",
         "angular-sanitize": "latest",
-        "delayed-change": "latest",
+        "delayed-change": "https://github.com/psyipm/delayed-change.git",
         "angular-resource": "latest",
         "angular-mocks": "latest",
         "bootstrap": "~3.1.1",
         "jquery-ujs": "latest",
         "bootstrap-tokenfield": "latest",
-        "jquery-ui": "latest"
+        "jquery-ui": "latest",
     }
   },
   "vendor": {

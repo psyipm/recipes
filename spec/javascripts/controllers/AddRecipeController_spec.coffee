@@ -68,6 +68,17 @@ describe "AddRecipeController", ->
       scope.textChanged()
       expect(scope.components).toEqualData(["картофель", "яйца"])
 
+    it "should not add removed component", ->
+      scope.textChanged()
+      scope.removeComponent("картофель")
+      scope.textChanged()
+      expect(scope.components).not.toContain("картофель")
+
+    it "should not remove user-created components", ->
+      scope.addComponent("сыр")
+      scope.textChanged()
+      expect(scope.components).toContain("сыр")
+
   describe "addComponent", ->
     beforeEach ->
       scope.textChanged()
@@ -87,6 +98,19 @@ describe "AddRecipeController", ->
       scope.addComponent("КартОФЕЛЬ")
       expect(scope.components).toEqualData(['картофель', 'яйца'])
 
+    it "should add component even if it has been deleted previously", ->
+      scope.removeComponent("картофель")
+      scope.addComponent("Картофель")
+      expect(scope.components).toContain("картофель")
+      expect(scope.user_removed).not.toContain("картофель")
+
+    it "should not add removed component", ->
+      scope.addComponent("сЫр")
+      scope.removeComponent("сыр")
+      scope.addComponent("лук")
+      expect(scope.components).toContain("лук")
+      expect(scope.components).not.toContain("сыр")
+
   describe "removeComponent", ->
     beforeEach ->
       scope.textChanged()
@@ -97,3 +121,8 @@ describe "AddRecipeController", ->
     it "should push removed component to array", ->
       scope.removeComponent("картофель")
       expect(scope.user_removed).toContain("картофель")
+
+    it "should remove selected from components", ->
+      scope.removeComponent("картофель")
+      expect(scope.components).not.toContain("картофель")
+

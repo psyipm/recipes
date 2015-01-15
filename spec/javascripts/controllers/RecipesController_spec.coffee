@@ -6,20 +6,30 @@ describe "RecipesController", ->
   resource     = null
 
   setupController =(keywords)->
-    inject(($location, $routeParams, $rootScope, $resource, $controller)->
+    inject(($rootScope, $resource, $controller, $httpBackend)->
       scope       = $rootScope.$new()
-      location    = $location
       resource    = $resource
-      routeParams = $routeParams
-      routeParams.keywords = keywords
 
-      ctrl        = $controller('RecipesController',
+      httpBackend = $httpBackend 
+
+      ctrl        = $controller("RecipesController",
                                 $scope: scope
                                 $location: location)
+
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
     )
 
   beforeEach(module("receta"))
   beforeEach(setupController())
 
-  it 'defaults to no recipes', ->
-    expect(scope.recipes).toEqualData([])
+  it "defaults to 1 recipes", ->
+    expect(scope.recipes.length).toEqualData(1)
+
+  describe "tokenfield helpers class", ->
+    it "should be defined", ->
+      expect(scope.tokenhelpers).toBeDefined()
+
+    it "should be able to initialize", ->
+      scope.tokenhelpers.init scope.tfCallback

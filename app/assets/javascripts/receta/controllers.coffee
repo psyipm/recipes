@@ -106,7 +106,7 @@ controllers.controller("RecipesController", [ '$scope', '$http',
 
         $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
 
-        $scope.recipes = []
+        $scope.recipes = recipes
 
         $scope.search = ()->
             $http.post(
@@ -142,10 +142,6 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
                 ~$scope.text.indexOf word
 
         $scope.textChanged = ()->
-            #debug
-            console.log "invoke"
-            console.log $scope.dictionary
-
             return $scope.getComponents() unless $scope.dictionary
             $scope.components = $scope.parseComponents()
 
@@ -155,8 +151,4 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
             $scope.user_created.push word unless word in $scope.user_created
             $scope.components = [].concat.apply($scope.user_created, $scope.components).unique()
             this.newcmp = ""
-
-            #debug
-            console.log $scope.components
-
 ])

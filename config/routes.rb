@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   post 'components/find'
   post 'components/get'
 
+  post 'tags/find'
+
 end

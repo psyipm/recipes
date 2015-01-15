@@ -17,6 +17,14 @@
     margin-top: 25px;
 }
 
+.nopadding-left {
+    padding-left: 0 !important;
+}
+
+.nopadding-right {
+    padding-right: 0 !important;
+}
+
 @import 'recipe';
 
 @import 'recipe_form';

@@ -48,9 +48,9 @@ class TokenfieldHelpers
     constructor: (inputId)->
         @keyInput = $("#" + inputId);
 
-    init: (autoCompleteSource)->
+    init: (autoCompleteSource, minLength = 2)->
         @sourceFn = autoCompleteSource
-        tfparams = `{ autocomplete: { source: this.sourceFn, delay: 100, select: this.getSelectFn() }, showAutocompleteOnFocus: true }`
+        tfparams = `{ autocomplete: { source: this.sourceFn, delay: 300, minLength: minLength, select: this.getSelectFn() }, showAutocompleteOnFocus: true }`
         @keyInput.tokenfield tfparams
 
     getSelectFn: ()->
@@ -99,7 +99,7 @@ controllers.controller("RecipesController", [ '$scope', '$http',
             ).success((data)->
                 components = (i.title for i in data)
                 response( components )
-        )
+            )
 
         $scope.tokenhelpers = new TokenfieldHelpers("keywords-inp")
         $scope.tokenhelpers.init tfCallback
@@ -172,4 +172,17 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
         $scope.removeComponent = (word)->
             $scope.user_removed = pushToArray(word, $scope.user_removed)
             $scope.components = filterRemoved()
+
+        tfCallback = (request, response) ->
+            $http.post(
+                '/tags/find.json',
+                {query: request.term}
+            ).success((data)->
+                tags = (i.title for i in data)
+                response( tags )
+            )
+
+        $scope.tfHelpers = new TokenfieldHelpers("tags")
+        $scope.tfHelpers.init tfCallback
+
 ])

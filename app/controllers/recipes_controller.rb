@@ -21,6 +21,7 @@ class RecipesController < ApplicationController
 	end
 
 	def create
-		@params = ActionController::Parameters.new(params[:recipe])
+		# @params = ActionController::Parameters.new(params[:recipe])
+		@params = params
 	end
 end

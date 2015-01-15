@@ -147,6 +147,7 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
 
         $scope.user_created = []
         $scope.addComponent = (word)->
+            return unless word
             word = word.toLowerCase()
             $scope.user_created.push word unless word in $scope.user_created
             $scope.components = [].concat.apply($scope.user_created, $scope.components).unique()

@@ -69,9 +69,14 @@ describe "AddRecipeController", ->
       expect(scope.components).toEqualData(["картофель", "яйца"])
 
   describe "addComponent", ->
-
     beforeEach ->
       scope.textChanged()
+
+    it "should handle empty strings", ->
+      try
+        scope.addComponent()
+      catch e
+        expect(e).toEqual("we shouldn't be there")
 
     it "should add lowercased component to list", ->
       scope.addComponent("Сыр")
@@ -81,3 +86,14 @@ describe "AddRecipeController", ->
       scope.addComponent("картофель")
       scope.addComponent("КартОФЕЛЬ")
       expect(scope.components).toEqualData(['картофель', 'яйца'])
+
+  describe "removeComponent", ->
+    beforeEach ->
+      scope.textChanged()
+
+    it "should be defined", ->
+      expect(typeof scope.removeComponent).toEqual("function")
+
+    it "should push removed component to array", ->
+      scope.removeComponent("картофель")
+      expect(scope.user_removed).toContain("картофель")

@@ -37,7 +37,7 @@
 					<div data-ng-repeat="i in components">
 						<div class="component-input-group">
 							<input type="text" class="form-control" value="{{i}}">
-							<button class="btn btn-default" title="Удалить"><span class="glyphicon glyphicon-remove"></span></button>
+							<button class="btn btn-default" data-ng-click="removeComponent(i)" title="Удалить"><span class="glyphicon glyphicon-remove"></span></button>
 						</div>
 					</div>
 				</div>

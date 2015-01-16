@@ -17,11 +17,27 @@ class RecipesController < ApplicationController
 	end
 
 	def new
-		
+		@recipe = Recipe.new
 	end
 
 	def create
-		# @params = ActionController::Parameters.new(params[:recipe])
-		@params = params
+		@params = photo_params
+	end
+
+  private
+	def recipe_params
+		params.require(:recipe).permit(:title, :text, :cook_time, :serving, :components, :tags, :photos)
+	end
+	def component_params
+		params.require(:components)
+		components = params[:components].split ", "
+	end
+	def tag_params
+		params.require(:tags)
+		tags = params[:tags].split ", "
+	end
+	def photo_params
+		params.require :photos
+		photos = params[:photos]
 	end
 end

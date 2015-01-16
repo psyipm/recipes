@@ -121,6 +121,36 @@ controllers.controller("RecipesController", [ '$scope', '$http',
             t.toggle($event)
 ])
 
+class DropZoneHelpers
+    @attached = false
+
+    init: ->
+        _self = this
+        if not @attached
+            try
+                $("body").dropzone { 
+                    url: "/photos", 
+                    previewsContainer: "#previews", 
+                    clickable: "#clickable",
+                    maxFilesize: 1,
+                    paramName: "upload[image]",
+                    addRemoveLinks: true,
+                    sending: _self.onSending
+                    success: _self.onSuccess
+                    removedfile: _self.onRemove
+                }
+            catch ignore
+        @attached = true
+
+    onSending: (file, xhr, formData)->
+        formData.append "authenticity_token", $("input[name='authenticity_token']").val()
+
+    onSuccess: (file, response)->
+        console.log file
+        console.log response
+
+    onRemove: (file)->
+        console.log file
 
 controllers.controller("AddRecipeController", ['$scope', '$http',
     ($scope,$http)->
@@ -185,14 +215,6 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
         $scope.tfHelpers = new TokenfieldHelpers("tags")
         $scope.tfHelpers.init tfCallback
 
-        $("body").dropzone { 
-            url: "/photos", 
-            previewsContainer: "#previews", 
-            clickable: "#clickable",
-            maxFilesize: 1,
-            paramName: "upload[image]",
-            addRemoveLinks: true,
-            sending: (file, xhr, formData)->
-                formData.append "authenticity_token", $("input[name='authenticity_token']").val()
-        }
+        dz = new DropZoneHelpers()
+        dz.init()
 ])

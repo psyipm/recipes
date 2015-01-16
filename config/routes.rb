@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   
   root 'recipes#index'
   resources :recipes, only: [:index, :new, :create]
-  resources :photos, only: [:create]
+  resources :photos, only: [:create, :destroy]
 
   post 'recipes/find'
 

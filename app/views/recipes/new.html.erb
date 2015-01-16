@@ -7,30 +7,29 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-md-8">
-				<%= form_tag recipes_path, multipart: true do %>
-					<label for="recipe[title]">Название</label>
+				<%= form_for @recipe, multipart: true do |f| %>
+					<%= f.label :title, "Название" %>
 					<div class="form-group">
-						<input type="text" class="form-control" name="recipe[title]" id="title" data-ng-model="title">
+						<%= f.text_field :title, :class => "form-control", "data-ng-model" => "title" %>
 					</div>
-					<label for="recipe[text]">Текст</label>
+					<%= f.label :text, "Текст" %>
 					<div class="form-group">
-						<textarea class="form-control" name="recipe[text]" id="text" data-ng-model="text" data-delayed-change="textChanged()" rows="15"></textarea>
+						<%= f.text_area :text, :class => "form-control", "data-ng-model" => "text", "data-delayed-change" => "textChanged()", "rows" => 15  %>
 					</div>
-					<label for="tags[]">Теги</label>
+					<label for="tags">Теги</label>
 					<div class="form-group">
-						<input type="text" class="form-control" name="tags[]" id="tags" data-ng-model="tags">
+						<input type="text" class="form-control" name="tags" id="tags" data-ng-model="tags">
 					</div>
-					<input type="hidden" name="components[]" value="{{components.join(', ')}}">
 					<div class="col-md-6 nopadding-left">
-						<label for="cooking_time">Количество порций</label>
+						<%= f.label :serving, "Количество порций" %>
 						<div class="form-group">
-							<input type="number" class="form-control" id="serving" name="recipe[serving]" min="1">
+							<%= f.number_field :serving, :class => "form-control", :id => "serving", :in => 1..10 %>
 						</div>
 					</div>
 					<div class="col-md-6 nopadding-right">
-						<label for="cooking_time">Время приготовления</label>
+						<%= f.label :cook_time, "Время приготовления" %>
 						<div class="form-group">
-							<input type="number" class="form-control" id="cooking_time" name="recipe[cooking_time]" placeholder="минут" min="1">
+							<%= f.number_field :cook_time, :class => "form-control", :id => "cook_time", :min => 1, :placeholder => "минут" %>
 						</div>
 					</div>
 					<div class="col-md-12 nopadding-left form-group">
@@ -40,9 +39,10 @@
 						</a>
 						<small class="drop-hint">или перетащите картинки на эту страницу</small>
 					</div>
-					<!-- <%= file_field_tag 'photo' %> -->
 					<div id="previews" class="dropzone-previews"></div>
-					<button type="submit" name="submitbtn" class="btn btn-default" id="submitbtn" value="">Отправить</button>
+					<!-- <%= f.hidden_field :photos, :value => "{{components.join(', ')}}" %> -->
+					<input type="hidden" name="components" value="{{components.join(', ')}}">
+					<%= f.submit "Отправить", :class => "btn btn-default" %>
 				<% end %>
 			</div>
 			<div class="col-md-4">

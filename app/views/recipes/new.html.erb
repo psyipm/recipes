@@ -7,7 +7,7 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-md-8">
-				<%= form_tag recipes_path do %>
+				<%= form_tag recipes_path, multipart: true do %>
 					<label for="recipe[title]">Название</label>
 					<div class="form-group">
 						<input type="text" class="form-control" name="recipe[title]" id="title" data-ng-model="title">
@@ -24,15 +24,24 @@
 					<div class="col-md-6 nopadding-left">
 						<label for="cooking_time">Количество порций</label>
 						<div class="form-group">
-							<input type="number" class="form-control" id="serving" min="1">
+							<input type="number" class="form-control" id="serving" name="recipe[serving]" min="1">
 						</div>
 					</div>
 					<div class="col-md-6 nopadding-right">
 						<label for="cooking_time">Время приготовления</label>
 						<div class="form-group">
-							<input type="number" class="form-control" id="cooking_time" placeholder="минут" min="1">
+							<input type="number" class="form-control" id="cooking_time" name="recipe[cooking_time]" placeholder="минут" min="1">
 						</div>
 					</div>
+					<div class="col-md-12 nopadding-left form-group">
+						<a id="clickable" class="btn btn-default">
+							<span class="glyphicon glyphicon-picture"></span>
+							Загрузить фото
+						</a>
+						<small class="drop-hint">или перетащите картинки на эту страницу</small>
+					</div>
+					<!-- <%= file_field_tag 'photo' %> -->
+					<div id="previews" class="dropzone-previews"></div>
 					<button type="submit" name="submitbtn" class="btn btn-default" id="submitbtn" value="">Отправить</button>
 				<% end %>
 			</div>

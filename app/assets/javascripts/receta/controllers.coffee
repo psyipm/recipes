@@ -185,4 +185,14 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
         $scope.tfHelpers = new TokenfieldHelpers("tags")
         $scope.tfHelpers.init tfCallback
 
+        $("body").dropzone { 
+            url: "/photos", 
+            previewsContainer: "#previews", 
+            clickable: "#clickable",
+            maxFilesize: 1,
+            paramName: "upload[image]",
+            addRemoveLinks: true,
+            sending: (file, xhr, formData)->
+                formData.append "authenticity_token", $("input[name='authenticity_token']").val()
+        }
 ])

@@ -51,6 +51,10 @@ GEM
       slop (~> 3.6)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.5)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -126,6 +130,11 @@ GEM
       multi_xml (~> 0.5)
       rack (~> 1.2)
     oj (2.11.1)
+    paperclip (4.2.1)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.3)
+      mime-types
     phantomjs (1.9.7.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -215,6 +224,7 @@ DEPENDENCIES
   guard-teaspoon
   jbuilder (~> 2.0)
   mysql2
+  paperclip (~> 4.1)
   phantomjs
   rails (= 4.2.0)
   sass-rails (~> 5.0)

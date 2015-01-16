@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141227141147) do
+ActiveRecord::Schema.define(version: 20150116203028) do
 
   create_table "components", force: :cascade do |t|
     t.string  "title",     limit: 255
@@ -21,9 +21,14 @@ ActiveRecord::Schema.define(version: 20141227141147) do
   add_index "components", ["recipe_id"], name: "index_components_on_recipe_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
-    t.string  "src",       limit: 255
-    t.string  "src_big",   limit: 255
-    t.integer "recipe_id", limit: 4
+    t.string   "original",           limit: 255
+    t.string   "medium",             limit: 255
+    t.string   "thumb",              limit: 255
+    t.integer  "recipe_id",          limit: 4
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
   end
 
   add_index "photos", ["recipe_id"], name: "index_photos_on_recipe_id", using: :btree

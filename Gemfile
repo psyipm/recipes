@@ -29,6 +29,8 @@ gem 'vkontakte_api', '~> 1.4'
 #Angular CSRF protection
 gem 'angular_rails_csrf'
 
+gem "paperclip", "~> 4.1"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

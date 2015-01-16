@@ -20,3 +20,17 @@
   text-shadow: 1px 1px #d5ffcc;
   cursor: pointer;
 }
+
+/* fix dropzone previews */
+.dropzone .dz-preview .dz-details img, 
+.dropzone-previews .dz-preview .dz-details img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.dropzone .dz-preview, 
+.dropzone-previews .dz-preview {
+    margin-left: 0px !important;
+}
+/* end fix dropzone previews */

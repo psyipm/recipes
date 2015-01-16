@@ -23,7 +23,7 @@
         <div class="col-md-12">
           <ul class="list-unstyled recipe-images">
             <li ng-repeat="img in n.photos">
-              <a href="{{img.src_big}}"><img ng-src="{{img.src || img.src_big}}"></a>
+              <a href="{{img.original}}"><img ng-src="{{img.medium || img.original}}"></a>
             </li>
           </ul>
         </div>

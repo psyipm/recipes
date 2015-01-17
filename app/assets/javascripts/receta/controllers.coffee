@@ -146,11 +146,16 @@ class DropZoneHelpers
         formData.append "authenticity_token", $("input[name='authenticity_token']").val()
 
     onSuccess: (file, response)->
-        console.log file
-        console.log response
+        $(file.previewTemplate).find(".dz-remove").attr("data-file-id", response.id)
+        $(file.previewElement).addClass("dz-success")
 
     onRemove: (file)->
-        console.log file
+        id = $(file.previewTemplate).find(".dz-remove").attr("data-file-id")
+        success = (data) ->
+            $(file.previewTemplate).remove() if data.hasOwnProperty "success"
+
+        $.ajax {type: "delete", url: "/photos/" + id, success: success}
+
 
 controllers.controller("AddRecipeController", ['$scope', '$http',
     ($scope,$http)->

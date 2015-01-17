@@ -26,10 +26,11 @@ class PhotosController < ApplicationController
 
   def destroy
     @upload = Photo.find_by id: params[:id], recipe_id: nil
-    if @upload.destroy    
-      render json: { message: "File deleted from server" }
-    else
-      render json: { message: @upload.errors.full_messages.join(', ') }
+    begin
+      @upload.destroy
+      render json: { success: 1, message: "File deleted from server" }
+    rescue Exception => e
+      render json: { error: 1, message: "Error while deleting file" }
     end
   end
 

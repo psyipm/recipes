@@ -123,6 +123,7 @@ controllers.controller("RecipesController", [ '$scope', '$http',
 
 class DropZoneHelpers
     @attached = false
+    @photos = []
 
     init: ->
         _self = this
@@ -146,13 +147,13 @@ class DropZoneHelpers
         formData.append "authenticity_token", $("input[name='authenticity_token']").val()
 
     onSuccess: (file, response)->
-        $(file.previewTemplate).find(".dz-remove").attr("data-file-id", response.id)
+        $(file.previewTemplate).find(".dz-remove").attr("data-file-id", response.file.id)
         $(file.previewElement).addClass("dz-success")
 
     onRemove: (file)->
         id = $(file.previewTemplate).find(".dz-remove").attr("data-file-id")
         success = (data) ->
-            $(file.previewTemplate).remove() if data.hasOwnProperty "success"
+            $(file.previewTemplate).remove()
 
         $.ajax {type: "delete", url: "/photos/" + id, success: success}
 

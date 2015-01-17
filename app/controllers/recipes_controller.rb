@@ -21,7 +21,13 @@ class RecipesController < ApplicationController
 	end
 
 	def create
-		@params = photo_params
+		# byebug
+		# render json: {recipe: recipe_params, components: component_params, tags: tag_params, photos: photo_params}
+		@recipe = Recipe.create recipe_params
+		tag_params.each {|t| @recipe.tags.create title: t }
+		component_params.each {|c| @recipe.components.create title: c }
+		photo_params.each {|p| Photo.update_urls @recipe.id, p }
+		Photo.remove_orphaned
 	end
 
   private
@@ -38,6 +44,6 @@ class RecipesController < ApplicationController
 	end
 	def photo_params
 		params.require :photos
-		photos = params[:photos]
+		data = JSON.parse params[:photos]
 	end
 end

@@ -14,4 +14,13 @@ class Photo < ActiveRecord::Base
 						:presence => true,
 						:content_type => { :content_type => /\Aimage\/.*\Z/ },
 						:size => { :less_than => 1.megabyte }
+
+  def self.update_urls(recipe_id, params)
+  	photo = Photo.find params["id"] 
+	photo.update recipe_id: recipe_id, original: params["original"], medium: params["medium"], thumb: params["thumb"]
+  end
+  def self.remove_orphaned
+  	photos = Photo.where recipe_id: nil
+  	photos.each {|p| p.destroy }
+  end
 end

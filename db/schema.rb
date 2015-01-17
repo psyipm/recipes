@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150116203028) do
+ActiveRecord::Schema.define(version: 20150117160702) do
 
   create_table "components", force: :cascade do |t|
     t.string  "title",     limit: 255
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20150116203028) do
     t.integer  "serving",    limit: 4
     t.integer  "cook_time",  limit: 4
     t.integer  "rating",     limit: 4
-    t.boolean  "published",  limit: 1
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.boolean  "published",  limit: 1,     default: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
   create_table "tags", force: :cascade do |t|

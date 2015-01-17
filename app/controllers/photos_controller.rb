@@ -10,12 +10,12 @@ class PhotosController < ApplicationController
       # send success header
       render json: { 
       				message: "success", 
-      				id: @upload.id, 
-      				url: { 
-      					original: @upload.image.url, 
-      					medium: styles[:medium].attachment.url, 
-      					thumb: styles[:thumb].attachment.url
-      				} 
+              file: {
+                id: @upload.id, 
+                original: @upload.image.url, 
+                medium: styles[:medium].attachment.url, 
+                thumb: styles[:thumb].attachment.url
+              }
       			}, :status => 200
     else
       #  you need to send an error header, otherwise Dropzone

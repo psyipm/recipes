@@ -9,10 +9,10 @@ class RecipesController < ApplicationController
 	end
 
 	def find
-		if(params[:selected])
+		if params[:selected].length > 0 and params[:selected][0].length > 0
 			@recipes = Recipe.find_by_components params[:selected]
 		else
-			@recipes = Recipe.where(["published = ?", 1])
+			@recipes = Recipe.where(["published = ?", 1]).order id: :desc
 		end
 	end
 
@@ -21,18 +21,25 @@ class RecipesController < ApplicationController
 	end
 
 	def create
-		# byebug
 		# render json: {recipe: recipe_params, components: component_params, tags: tag_params, photos: photo_params}
-		@recipe = Recipe.create recipe_params
-		tag_params.each {|t| @recipe.tags.create title: t }
-		component_params.each {|c| @recipe.components.create title: c }
-		photo_params.each {|p| Photo.update_urls @recipe.id, p }
-		Photo.remove_orphaned
+		begin
+			@recipe = Recipe.create recipe_params
+			tag_params.each {|t| @recipe.tags.create title: t }
+			component_params.each {|c| @recipe.components.create title: c }
+			photo_params.each {|p| Photo.update_urls @recipe.id, p }
+			Photo.remove_unused
+
+			@ok = true
+		rescue Exception => e
+			@ok = false
+		end
 	end
 
   private
 	def recipe_params
-		params.require(:recipe).permit(:title, :text, :cook_time, :serving, :components, :tags, :photos)
+		recipe = params.require(:recipe).permit(:title, :text, :cook_time, :serving)
+		recipe[:text].gsub!(/(\r\n)/, '<br>')
+		recipe
 	end
 	def component_params
 		params.require(:components)
@@ -44,6 +51,6 @@ class RecipesController < ApplicationController
 	end
 	def photo_params
 		params.require :photos
-		data = JSON.parse params[:photos]
+		data = params[:photos].split ", "
 	end
 end

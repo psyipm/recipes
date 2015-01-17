@@ -24,8 +24,8 @@ recipes =
             "photos":
                 [
                     {
-                        "src":"http://cs540102.vk.me/c540103/v540103796/2c41b/bfxceZpuYCw.jpg",
-                        "src_big":"http://cs540102.vk.me/c540103/v540103796/2c41c/D6K9hbmSjXc.jpg"
+                        "medium":"http://cs540102.vk.me/c540103/v540103796/2c41b/bfxceZpuYCw.jpg",
+                        "original":"http://cs540102.vk.me/c540103/v540103796/2c41c/D6K9hbmSjXc.jpg"
                     }
                 ],
             "tags":
@@ -42,11 +42,9 @@ Array::unique = ->
 
 
 class TokenfieldHelpers
-    @keyInput = {}
-    @sourceFn = {}
-
     constructor: (inputId)->
-        @keyInput = $("#" + inputId);
+        @keyInput = $("#" + inputId)
+        @sourceFn = {}
 
     init: (autoCompleteSource, minLength = 2)->
         @sourceFn = autoCompleteSource
@@ -121,45 +119,9 @@ controllers.controller("RecipesController", [ '$scope', '$http',
             t.toggle($event)
 ])
 
-class DropZoneHelpers
-    @attached = false
-    @photos = []
 
-    init: ->
-        _self = this
-        if not @attached
-            try
-                $("body").dropzone { 
-                    url: "/photos", 
-                    previewsContainer: "#previews", 
-                    clickable: "#clickable",
-                    maxFilesize: 1,
-                    paramName: "upload[image]",
-                    addRemoveLinks: true,
-                    sending: _self.onSending
-                    success: _self.onSuccess
-                    removedfile: _self.onRemove
-                }
-            catch ignore
-        @attached = true
-
-    onSending: (file, xhr, formData)->
-        formData.append "authenticity_token", $("input[name='authenticity_token']").val()
-
-    onSuccess: (file, response)->
-        $(file.previewTemplate).find(".dz-remove").attr("data-file-id", response.file.id)
-        $(file.previewElement).addClass("dz-success")
-
-    onRemove: (file)->
-        id = $(file.previewTemplate).find(".dz-remove").attr("data-file-id")
-        success = (data) ->
-            $(file.previewTemplate).remove()
-
-        $.ajax {type: "delete", url: "/photos/" + id, success: success}
-
-
-controllers.controller("AddRecipeController", ['$scope', '$http',
-    ($scope,$http)->
+controllers.controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers',
+    ($scope,$http,dz)->
         $scope.getComponents = ()->
             $http.post(
                 '/components/get.json',
@@ -184,7 +146,7 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
                 val not in $scope.user_removed
 
         mergeWithCreated = ()->
-            [].concat.apply($scope.user_created, $scope.components).unique()
+          [].concat.apply($scope.user_created, $scope.components).unique()
 
         $scope.parseComponents = ()->
             $scope.dictionary.filter (word)->
@@ -221,6 +183,5 @@ controllers.controller("AddRecipeController", ['$scope', '$http',
         $scope.tfHelpers = new TokenfieldHelpers("tags")
         $scope.tfHelpers.init tfCallback
 
-        dz = new DropZoneHelpers()
         dz.init()
 ])

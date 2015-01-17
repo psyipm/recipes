@@ -40,8 +40,8 @@
 						<small class="drop-hint">или перетащите картинки на эту страницу</small>
 					</div>
 					<div id="previews" class="dropzone-previews"></div>
-					<!-- <%= f.hidden_field :photos, :value => "{{components.join(', ')}}" %> -->
 					<input type="hidden" name="components" value="{{components.join(', ')}}">
+					<input type="hidden" name="photos" id="photos">
 					<%= f.submit "Отправить", :class => "btn btn-default" %>
 				<% end %>
 			</div>

@@ -9,7 +9,7 @@ class PhotosController < ApplicationController
       styles = @upload.image.styles
       # send success header
       render json: { 
-      				message: "success", 
+      				success: 1, 
               file: {
                 id: @upload.id, 
                 original: @upload.image.url, 

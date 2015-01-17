@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117160702) do
+ActiveRecord::Schema.define(version: 20150117212125) do
 
   create_table "components", force: :cascade do |t|
     t.string  "title",     limit: 255
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150117160702) do
     t.text     "text",       limit: 65535
     t.integer  "serving",    limit: 4
     t.integer  "cook_time",  limit: 4
-    t.integer  "rating",     limit: 4
+    t.integer  "rating",     limit: 4,     default: 0
     t.boolean  "published",  limit: 1,     default: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false

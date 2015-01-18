@@ -7,14 +7,13 @@ receta = angular.module('receta',[
   'ngResource',
   'recetaServices'
 ])
-.directive "myRepeatDirective", ->
+.directive "recipeListRenderingDirective", ->
   (scope, element, attrs) ->
     fotorama = ()->
       window.setTimeout(()->
         $(".fotorama").fotorama()
-        console.log  "repeatComplete"
       , 100)
-      
+
     fotorama() if scope.$last
     return
 

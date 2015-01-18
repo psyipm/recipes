@@ -150,7 +150,7 @@ controllers.controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpe
 
         $scope.parseComponents = ()->
             $scope.dictionary.filter (word)->
-                ~$scope.text.indexOf word
+                ~$scope.text.toLowerCase().indexOf word
 
         $scope.textChanged = ()->
             return $scope.getComponents() unless $scope.dictionary

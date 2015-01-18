@@ -24,10 +24,12 @@ class RecipesController < ApplicationController
 		# render json: {recipe: recipe_params, components: component_params, tags: tag_params, photos: photo_params}
 		begin
 			@recipe = Recipe.create recipe_params
-			tag_params.each {|t| @recipe.tags.create title: t }
-			component_params.each {|c| @recipe.components.create title: c }
-			photo_params.each {|p| Photo.update_urls @recipe.id, p }
-			Photo.remove_unused
+			ActiveRecord::Base.transaction do
+				tag_params.each {|t| @recipe.tags.create title: t }
+				component_params.each {|c| @recipe.components.create title: c }
+				photo_params.each {|p| Photo.update_urls @recipe.id, p }
+				Photo.remove_unused
+			end
 
 			@ok = true
 		rescue Exception => e

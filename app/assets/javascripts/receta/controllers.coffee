@@ -41,43 +41,14 @@ Array::unique = ->
     value for key, value of output
 
 
-class TokenfieldHelpers
-    constructor: (inputId)->
-        @keyInput = $("#" + inputId)
-        @sourceFn = {}
-
-    init: (autoCompleteSource, minLength = 2)->
-        @sourceFn = autoCompleteSource
-        tfparams = `{ autocomplete: { source: this.sourceFn, delay: 300, minLength: minLength, select: this.getSelectFn() }, showAutocompleteOnFocus: true }`
-        @keyInput.tokenfield tfparams
-
-    getSelectFn: ()->
-        context = this
-        updateFn = @updateTokens
-        fn = (e)-> 
-            updateFn.call(context)
-
-    getTokens: ()->
-        @keyInput.tokenfield('getTokensList').split(", ").unique();
-
-    setTokens: (tokens, add = false, triggerChange = false)->
-        @keyInput.tokenfield('setTokens', tokens, add, triggerChange)
-
-    addToken: (token)->
-        @setTokens(token, true)
-        @updateTokens()
-
-    updateTokens: ()->
-        @setTokens(@getTokens())
-
-
 class ToggleText
     toggle: ($event) ->
         target = $event.target
-        @collapsed = !@collapsed
+        console.log $event
+        collapsed = $(target).hasClass("collapsed")
         $arrow = $(target).parent().parent().find("a.toggle-text")
 
-        if(@collapsed)
+        if(collapsed)
             $(target).removeClass("collapsed")
             $arrow.text("▴")
             return
@@ -88,8 +59,8 @@ class ToggleText
 
 
 controllers = angular.module('controllers',[])
-controllers.controller("RecipesController", [ '$scope', '$http',
-    ($scope,$http)->
+controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelpers',
+    ($scope,$http,tf)->
         tfCallback = (request, response)->
             $http.post(
                 '/components/find.json',
@@ -99,7 +70,7 @@ controllers.controller("RecipesController", [ '$scope', '$http',
                 response( components )
             )
 
-        $scope.tokenhelpers = new TokenfieldHelpers("keywords-inp")
+        $scope.tokenhelpers = tf.bind "keywords-inp"
         $scope.tokenhelpers.init tfCallback
 
         $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
@@ -122,8 +93,8 @@ controllers.controller("RecipesController", [ '$scope', '$http',
 ])
 
 
-controllers.controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers',
-    ($scope,$http,dz)->
+controllers.controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers',
+    ($scope,$http,dz,tf)->
         $scope.getComponents = ()->
             $http.post(
                 '/components/get.json',
@@ -182,7 +153,7 @@ controllers.controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpe
                 response( tags )
             )
 
-        $scope.tfHelpers = new TokenfieldHelpers("tags")
+        $scope.tfHelpers = tf.bind "tags"
         $scope.tfHelpers.init tfCallback
 
         dz.init()

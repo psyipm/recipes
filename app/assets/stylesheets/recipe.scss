@@ -7,6 +7,11 @@
   text-overflow: ellipsis;
   overflow: hidden;
   height: 100px;
+  color: #444;
+}
+
+.recipe-descr.collapsed:hover {
+    color: #000;
 }
 
 .recipe-images > li:first-child > a > img {

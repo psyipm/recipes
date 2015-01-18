@@ -12,7 +12,8 @@
         "jquery-ujs": "latest",
         "bootstrap-tokenfield": "latest",
         "jquery-ui": "latest",
-        "dropzone": "latest"
+        "dropzone": "latest",
+        "fotorama": "latest"
     }
   },
   "vendor": {

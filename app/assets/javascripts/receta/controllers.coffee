@@ -104,7 +104,7 @@ controllers.controller("RecipesController", [ '$scope', '$http',
 
         $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
 
-        $scope.recipes = recipes
+        $scope.recipes = []
 
         $scope.search = ()->
             $http.post(
@@ -117,6 +117,8 @@ controllers.controller("RecipesController", [ '$scope', '$http',
         t = new ToggleText()
         $scope.toggle = ($event)->
             t.toggle($event)
+
+        $(".fotorama").fotorama()
 ])
 
 

@@ -3,7 +3,7 @@ class Photo < ActiveRecord::Base
 
   has_attached_file :image, 
   					:styles => { 
-  						:medium => "300x300>",
+  						:medium => "320x320>",
   						:thumb => "100x100>"
   					},
   					:path => ":rails_root/public/system/:attachment/:id_partition/:hash.:extension",

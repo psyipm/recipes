@@ -37,10 +37,13 @@ controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelp
 
         addRecipes = (recipes)->
           $scope.recipes = [].concat($scope.recipes, recipes)
+          unless recipes.length < 10
+            $scope.offset += 10
+          else
+            $("#more").attr("disabled", "disabled")
 
         $scope.search = ()->
           Recipe.find($scope.tokenhelpers.getTokens(), addRecipes, $scope.offset)
-          $scope.offset += 10
 
         t = new ToggleText()
         $scope.toggle = ($event)->

@@ -4,7 +4,10 @@ class RecipesController < ApplicationController
 	protect_from_forgery with: :exception
 	
 	def index
-		
+		@tags = Tag.cloud
+		if params[:tag]
+			@recipes = Recipe.find_by_tag params[:tag]
+		end
 	end
 
 	def find

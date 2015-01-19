@@ -24,4 +24,8 @@ class Recipe < ActiveRecord::Base
 
 		recipes = sql.load
 	end
+
+	def self.find_by_tag(tag)
+		Recipe.joins(:tags).where("lower(tags.title) like ?", "%#{tag.mb_chars.downcase.to_s}%")
+	end
 end

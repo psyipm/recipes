@@ -3,4 +3,8 @@ class TagsController < ApplicationController
 		query = params[:query]
 		@tags = Tag.select('distinct lower(title) as title').where('lower(title) like ?', "%#{query.mb_chars.downcase}%")
 	end
+
+	def cloud
+		@tags = Tag.cloud
+	end
 end

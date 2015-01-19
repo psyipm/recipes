@@ -50,6 +50,7 @@ controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelp
             t.toggle($event)
 
         $(".fotorama").fotorama()
+        $("#tagcloud").tx3TagCloud()
 ])
 
 

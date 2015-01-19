@@ -21,7 +21,7 @@
       <section class="col-md-12 nopadding-left">
         <h1 class="h3 col-md-12 nopadding-left">{{n.recipe.title}}</h1>
         <div class="col-md-12 nopadding-left">
-          <div class="fotorama" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="320">
+          <div class="fotorama recipe-images" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="320">
             <img data-ng-repeat="img in n.photos" ng-src="{{img.medium || img.original}}" alt="">
           </div>
         </div>

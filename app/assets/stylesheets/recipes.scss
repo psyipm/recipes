@@ -5,12 +5,12 @@
 @import 'header';
 
 .container {
-	height: 100%;
-	box-shadow: 1px 0 10px #ccc;
+  height: 100%;
+  box-shadow: 1px 0 10px #ccc;
 }
 
 .top-buffer-lg {
-	margin-top: 50px;
+  margin-top: 50px;
 }
 
 .top-buffer-md {
@@ -30,9 +30,14 @@
 @import 'recipe_form';
 
 .sidebar-right {
-  border-left: 1px solid #eee;
-  box-shadow: -3px 0px 10px -10px black;
   padding: 15px;
+}
+
+@media screen and(min-width: 992px) {
+  .sidebar-right {
+    border-left: 1px solid #eee;
+      box-shadow: -3px 0px 10px -10px black;
+  }
 }
 
 @import 'footer';

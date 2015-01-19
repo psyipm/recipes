@@ -14,21 +14,6 @@
     color: #000;
 }
 
-.recipe-images > li:first-child > a > img {
-  width: 350px;
-}
-
-.recipe-images > li:not(:first-child) {
-  display: block;
-  margin: 5px;
-}
-
-.recipe-images > li:first-child {
-  display: inline;
-  float: left;
-  margin: 0 5px;
-}
-
-.recipe-images a > img {
-  width: 150px;
+.recipe-images img {
+  max-height: 320px !important;
 }

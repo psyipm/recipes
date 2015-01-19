@@ -99,3 +99,51 @@ recetaServices.factory("TokenfieldHelpers", [
 				new TokenfieldHelpers inputId
 		}
 ])
+
+recetaServices.factory("Component", ['$http',
+	($http)->
+		return {
+			find: (query, callback)->
+				$http.post(
+					'/components/find.json',
+					{query: query}
+				).success((data)->
+					components = (i.title for i in data)
+					callback(components)
+				)
+
+			get: (callback)->
+				$http.post(
+					'/components/get.json', {}
+				).success((data)->
+					callback(data)
+				)
+		}
+])
+
+recetaServices.factory("Tag", ['$http',
+	($http)->
+		return {
+			find: (query, callback)->
+				$http.post(
+					'/tags/find.json',
+					{query: query}
+				).success((data)->
+					tags = (i.title for i in data)
+					callback(tags)
+				)
+		}
+])
+
+recetaServices.factory("Recipe", ['$http',
+	($http)->
+		return {
+			find: (tokens, callback, offset = 0, limit = 10)->
+				$http.post(
+					'/recipes/find.json',
+					{selected: tokens, offset: offset, limit: limit}
+				).success((data)->
+					callback(data)
+				)
+		}
+])

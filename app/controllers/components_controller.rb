@@ -5,7 +5,7 @@ class ComponentsController < ApplicationController
 
 	def find
 		query = params[:query]
-		@components = Component.where('title like ?', "%#{query.mb_chars.downcase}%")
+		@components = Component.select('distinct lower(title) as title').where('lower(title) like ?', "%#{query.mb_chars.downcase}%")
 	end
 
 	def get

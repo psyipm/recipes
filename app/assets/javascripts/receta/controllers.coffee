@@ -22,16 +22,10 @@ class ToggleText
 
 
 controllers = angular.module('controllers',[])
-controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelpers',
-    ($scope,$http,tf)->
+controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelpers', 'Component', 'Recipe',
+    ($scope,$http,tf,Component,Recipe)->
         tfCallback = (request, response)->
-            $http.post(
-                '/components/find.json',
-                {query: request.term}
-            ).success((data)->
-                components = (i.title for i in data)
-                response( components )
-            )
+          Component.find(request.term, (c)-> response(c))
 
         $scope.tokenhelpers = tf.bind "keywords-inp"
         $scope.tokenhelpers.init tfCallback
@@ -39,14 +33,14 @@ controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelp
         $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
 
         $scope.recipes = []
+        $scope.offset = 0
+
+        addRecipes = (recipes)->
+          $scope.recipes = [].concat($scope.recipes, recipes)
 
         $scope.search = ()->
-            $http.post(
-                '/recipes/find.json',
-                {selected: $scope.tokenhelpers.getTokens()}
-            ).success((data)->
-                $scope.recipes = data
-            )
+          Recipe.find($scope.tokenhelpers.getTokens(), addRecipes, $scope.offset)
+          $scope.offset += 10
 
         t = new ToggleText()
         $scope.toggle = ($event)->
@@ -56,20 +50,16 @@ controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelp
 ])
 
 
-controllers.controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers',
-    ($scope,$http,dz,tf)->
+controllers.controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers', 'Component', 'Tag',
+    ($scope,$http,dz,tf,Component,Tag)->
         $scope.getComponents = ()->
-            $http.post(
-                '/components/get.json',
-                {}
-            ).success((data)->
+            Component.get (data)->
                 $scope.dictionary = data
                 $scope.components = $scope.parseComponents()
 
                 #debug
                 console.log $scope.dictionary
                 console.log $scope.components
-            )
 
         pushToArray = (word, array) ->
             return array unless word
@@ -108,13 +98,7 @@ controllers.controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpe
             $scope.components = filterRemoved()
 
         tfCallback = (request, response) ->
-            $http.post(
-                '/tags/find.json',
-                {query: request.term}
-            ).success((data)->
-                tags = (i.title for i in data)
-                response( tags )
-            )
+            Tag.find request.term, (t)-> response(t)
 
         $scope.tfHelpers = tf.bind "tags"
         $scope.tfHelpers.init tfCallback

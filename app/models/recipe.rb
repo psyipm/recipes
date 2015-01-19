@@ -3,7 +3,7 @@ class Recipe < ActiveRecord::Base
 	has_many :tags
 	has_many :photos, dependent: :destroy
 
-	def self.find_by_components(components)
+	def self.find_by_components(components, offset = 0, limit = 10)
 		args = components.join("|").mb_chars.downcase.to_s
 		counts = Recipe.select("count(*)").
 				from("recipes as r").
@@ -18,7 +18,9 @@ class Recipe < ActiveRecord::Base
 		sql = Recipe.select("rc.*").
 				from("recipes as rc, (#{recipe_ids.to_sql}) as c").
 				where(["rc.id in (c.recipe_id) AND rc.published = ?", 1]).
-				order("c.missing_comp_count")
+				order("c.missing_comp_count").
+				offset(offset).
+				limit(limit)
 
 		recipes = sql.load
 	end

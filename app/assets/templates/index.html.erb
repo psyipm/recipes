@@ -7,14 +7,14 @@
       <input id="keywords-inp" ng-model="keywords" name="keywords" type="text" autofocus class="form-control">
       <p>...или воспользуйтесь <a href="">поиском по тексту</a></p>
     </div>
-    <div class="form-group col-md-6 col-md-offset-3 text-center">
+    <div class="form-group col-md-7 col-md-offset-3 text-center">
       <button id="search" ng-click="search()" class="btn btn-default btn-lg">Поиск</button>
     </div>
 
   </form>
 </section>
 <hr>
-<section class="row" ng-if="recipes">
+<section class="row" ng-if="recipes.length">
   <!-- <h1 class="text-center h2">Results</h1> -->
   <ul class="list-unstyled col-md-8 col-md-offset-3">
     <li ng-repeat="n in recipes" recipe-list-rendering-directive>
@@ -37,4 +37,12 @@
       </section>
     </li>
   </ul>
+
+  <div class="form-group col-md-7 col-md-offset-3 text-center">
+    <hr>
+    <button id="more" ng-click="search()" class="btn btn-default">
+      <span class="glyphicon glyphicon-refresh"></span>
+      Загрузить еще
+    </button>
+  </div>
 </section>

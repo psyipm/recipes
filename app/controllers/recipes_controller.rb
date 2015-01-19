@@ -2,7 +2,6 @@ class RecipesController < ApplicationController
 	# Prevent CSRF attacks by raising an exception.
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :exception
-	# protect_from_forgery
 	
 	def index
 		
@@ -10,9 +9,9 @@ class RecipesController < ApplicationController
 
 	def find
 		if params[:selected].length > 0 and params[:selected][0].length > 0
-			@recipes = Recipe.find_by_components params[:selected]
+			@recipes = Recipe.find_by_components params[:selected], params[:offset], params[:limit]
 		else
-			@recipes = Recipe.where(["published = ?", 1]).order id: :desc
+			@recipes = Recipe.where(["published = ?", 1]).order(id: :desc).offset(params[:offset]).limit(params[:limit])
 		end
 	end
 
@@ -21,7 +20,6 @@ class RecipesController < ApplicationController
 	end
 
 	def create
-		# render json: {recipe: recipe_params, components: component_params, tags: tag_params, photos: photo_params}
 		begin
 			@recipe = Recipe.create recipe_params
 			ActiveRecord::Base.transaction do

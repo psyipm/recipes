@@ -11,6 +11,10 @@
 }
 
 #footer > a:hover {
-	color: #555;
-	text-decoration: none;
+	color: #000000;
+    -webkit-transition: color 250ms linear;
+    -moz-transition: color 250ms linear;
+    -o-transition: color 250ms linear;
+    -ms-transition: color 250ms linear;
+    transition: color 250ms linear;
 }

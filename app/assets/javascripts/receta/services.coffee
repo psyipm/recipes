@@ -106,7 +106,7 @@ recetaServices.factory("Component", ['$http',
 			find: (query, callback)->
 				$http.post(
 					'/components/find.json',
-					{query: query}
+					{query: query.trim()}
 				).success((data)->
 					components = (i.title for i in data)
 					callback(components)
@@ -127,7 +127,7 @@ recetaServices.factory("Tag", ['$http',
 			find: (query, callback)->
 				$http.post(
 					'/tags/find.json',
-					{query: query}
+					{query: query.trim()}
 				).success((data)->
 					tags = (i.title for i in data)
 					callback(tags)

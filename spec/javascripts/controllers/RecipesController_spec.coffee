@@ -6,11 +6,11 @@ describe "RecipesController", ->
   resource     = null
 
   setupController =(keywords)->
-    inject(($rootScope, $resource, $controller, $httpBackend)->
+    inject(($rootScope, $resource, $controller, $httpBackend, $location)->
       scope       = $rootScope.$new()
       resource    = $resource
-
       httpBackend = $httpBackend 
+      location    = $location
 
       ctrl        = $controller("RecipesController",
                                 $scope: scope
@@ -24,8 +24,8 @@ describe "RecipesController", ->
   beforeEach(module("receta"))
   beforeEach(setupController())
 
-  it "defaults to 1 recipes", ->
-    expect(scope.recipes.length).toEqualData(1)
+  it "recipes should be empty", ->
+    expect(scope.recipes).toEqualData([])
 
   describe "tokenfield helpers class", ->
     it "should be defined", ->

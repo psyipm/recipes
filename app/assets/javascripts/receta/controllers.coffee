@@ -22,8 +22,8 @@ class ToggleText
 
 
 controllers = angular.module('controllers',[])
-controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelpers', 'Component', 'Recipe',
-    ($scope,$http,tf,Component,Recipe)->
+controllers.controller("RecipesController", ['$scope','$http','$location','TokenfieldHelpers','Component','Recipe', 
+    ($scope,$http,$location,tf,Component,Recipe)->
         tfCallback = (request, response)->
           Component.find(request.term, (c)-> response(c))
 
@@ -35,15 +35,24 @@ controllers.controller("RecipesController", [ '$scope', '$http', 'TokenfieldHelp
         $scope.recipes = []
         $scope.offset = 0
 
-        addRecipes = (recipes)->
+        searchCallback = (recipes)->
+          $scope.no_more = false
           $scope.recipes = [].concat($scope.recipes, recipes)
           unless recipes.length < 10
             $scope.offset += 10
           else
-            $("#more").attr("disabled", "disabled")
+            $scope.no_more = true
+          $("#more").attr("disabled", $scope.no_more)
 
         $scope.search = ()->
-          Recipe.find($scope.tokenhelpers.getTokens(), addRecipes, $scope.offset)
+          tokens = $scope.tokenhelpers.getTokens()
+          $location.search("components", tokens.join(","))
+          Recipe.find tokens, searchCallback, $scope.offset
+
+        search = $location.search()
+        if search.hasOwnProperty "components"
+          $scope.tokenhelpers.setTokens search.components
+          Recipe.find $scope.tokenhelpers.getTokens(), searchCallback, $scope.offset
 
         t = new ToggleText()
         $scope.toggle = ($event)->

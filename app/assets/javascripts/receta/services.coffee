@@ -84,7 +84,10 @@ recetaServices.factory("TokenfieldHelpers", [
 									updateFn.call(context)
 
 					getTokens: ()->
-							@keyInput.tokenfield('getTokensList').split(", ").unique();
+							try
+								@keyInput.tokenfield('getTokensList').split(", ").unique()
+							catch e
+								[]
 
 					setTokens: (tokens, add = false, triggerChange = false)->
 							@keyInput.tokenfield('setTokens', tokens, add, triggerChange)
@@ -138,10 +141,10 @@ recetaServices.factory("Tag", ['$http',
 recetaServices.factory("Recipe", ['$http',
 	($http)->
 		return {
-			find: (tokens, callback, offset = 0, limit = 10)->
+			find: (params, callback, offset = 0, limit = 10)->
 				$http.post(
 					'/recipes/find.json',
-					{selected: tokens, offset: offset, limit: limit}
+					{query: params, offset: offset, limit: limit}
 				).success((data)->
 					callback(data)
 				)

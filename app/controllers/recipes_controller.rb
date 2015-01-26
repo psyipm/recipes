@@ -11,10 +11,13 @@ class RecipesController < ApplicationController
 	end
 
 	def find
-		if params[:selected].length > 0 and params[:selected][0].length > 0
-			@recipes = Recipe.find_by_components params[:selected], params[:offset], params[:limit]
+		query = params[:query] || []
+		if query[:tokens] and query[:tokens].length > 0 and query[:tokens][0].length > 0
+			@recipes = Recipe.find query, params[:offset], params[:limit]
+		elsif query[:tags] and query[:tags].length > 0
+			@recipes = Recipe.find_by_tag query[:tags], params[:offset], params[:limit]
 		else
-			@recipes = Recipe.where(["published = ?", 1]).order(id: :desc).offset(params[:offset]).limit(params[:limit])
+			@recipes = Recipe.published params[:offset], params[:limit]
 		end
 	end
 

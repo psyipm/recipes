@@ -16,8 +16,11 @@
 	<div>
 		<ul id="tagcloud" data-ng-if="tagcloud">
 			<% @tags.each do |t| %>
-				<li data-weight="<%= t.weight %>"><a href="/recipes?tag=<%= t.title %>"><%= t.title %></a></li>
+				<li data-weight="<%= t.weight %>">
+					<a class="tag" href="/recipes?tag=<%= t.title %>"><%= t.title %></a>
+				</li>
 			<% end %>
+			<li><a href="/" class="clear-tags"><span class="glyphicon glyphicon-remove"></span> убрать теги из поиска</a></li>
 		</ul>
 	</div>
 </div>

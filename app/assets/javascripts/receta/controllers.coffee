@@ -22,13 +22,13 @@ class ToggleText
 
 
 controllers = angular.module('controllers',[])
-controllers.controller("RecipesController", ['$scope','$http','$location','TokenfieldHelpers','Component','Recipe', 
-    ($scope,$http,$location,tf,Component,Recipe)->
-        tfCallback = (request, response)->
+controllers.controller("RecipesController", ['$scope','$location','TokenfieldHelpers','Component','Recipe', 
+    ($scope,$location,tf,Component,Recipe)->
+        $scope.tfCallback = (request, response)->
           Component.find(request.term, (c)-> response(c))
 
         $scope.tokenhelpers = tf.bind "keywords-inp"
-        $scope.tokenhelpers.init tfCallback
+        $scope.tokenhelpers.init $scope.tfCallback
 
         $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
 
@@ -45,14 +45,42 @@ controllers.controller("RecipesController", ['$scope','$http','$location','Token
           $("#more").attr("disabled", $scope.no_more)
 
         $scope.search = ()->
-          tokens = $scope.tokenhelpers.getTokens()
-          $location.search("components", tokens.join(","))
-          Recipe.find tokens, searchCallback, $scope.offset
+          try
+            tokens = $scope.tokenhelpers.getTokens()
+            $location.search("components", tokens.join(","))
+            Recipe.find {tokens: tokens}, searchCallback, $scope.offset
+          catch e
+            console.log e   
 
-        search = $location.search()
-        if search.hasOwnProperty "components"
-          $scope.tokenhelpers.setTokens search.components
-          Recipe.find $scope.tokenhelpers.getTokens(), searchCallback, $scope.offset
+        $scope.searchFromLocation = ()->
+          search = $location.search()
+          query = {}
+          if search.hasOwnProperty "components"
+            $scope.tokenhelpers.setTokens search.components
+            query = $.extend true, query, {tokens: $scope.tokenhelpers.getTokens()}
+          if search.hasOwnProperty "tags"
+            query = $.extend true, query, {tags: search.tags.split(",")}
+
+          Recipe.find query, searchCallback, $scope.offset unless $.isEmptyObject query
+
+        $scope.addTag = (text)->
+          search = $location.search()
+          if search.hasOwnProperty("tags")
+            tags = search.tags.split(",")
+            tags.push text unless text in tags
+            value = tags.join(",")
+          else
+            value = text
+          search = $.extend true, search, {tags: value}
+          $scope.search()
+
+        $scope.clearTags = ()->
+          params = {}
+          for key, val of $location.search()
+            params[key] = val unless key is "tags"
+
+          $location.search(params)
+          $scope.search()
 
         t = new ToggleText()
         $scope.toggle = ($event)->
@@ -60,6 +88,9 @@ controllers.controller("RecipesController", ['$scope','$http','$location','Token
 
         $(".fotorama").fotorama()
         $("#tagcloud").tx3TagCloud()
+        $(".tag").on("click", (e)-> e.preventDefault(); $scope.addTag $(this).text())
+        $(".clear-tags").on("click", (e)-> e.preventDefault(); $scope.clearTags())
+        $scope.searchFromLocation()
 ])
 
 

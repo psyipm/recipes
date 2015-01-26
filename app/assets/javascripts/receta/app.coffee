@@ -17,11 +17,13 @@ receta = angular.module('receta',[
     fotorama() if scope.$last
     return
 
-receta.config([ '$routeProvider',
-  ($routeProvider)->
+receta.config([ '$routeProvider','$locationProvider',
+  ($routeProvider,$locationProvider)->
     $routeProvider
       .when('/',
         templateUrl: "index.html"
         controller: 'RecipesController'
       )
+
+    $locationProvider.html5Mode(true)
 ])

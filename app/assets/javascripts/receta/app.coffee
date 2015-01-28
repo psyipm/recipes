@@ -26,7 +26,11 @@ receta.config([ '$routeProvider','$locationProvider',
         templateUrl: "index.html"
         controller: 'RecipesController'
       )
-      .when('/users/sign_in',
+      # .when('/recipes/new'
+      #   templateUrl: 'recipes/new.html',
+      #   controller: 'AddRecipeController'
+      # )
+      .when('/users/login',
         templateUrl: 'user_sessions/new.html'
         controller: 'UserSessionsController'
       )
@@ -34,9 +38,9 @@ receta.config([ '$routeProvider','$locationProvider',
         templateUrl: 'user_regisrations/new.html'
         controller: 'UserRegistrationsController'
       )
-      .otherwise(
-        redirectTo: '/'
-      )
+      # .otherwise(
+      #   redirectTo: '/'
+      # )
 
-    # $locationProvider.html5Mode(true)
+    $locationProvider.html5Mode(true)
 ])

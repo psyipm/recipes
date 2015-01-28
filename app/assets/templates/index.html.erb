@@ -12,6 +12,11 @@
     </div>
 
   </form>
+    <div ng-controller="UserSessionsController">
+      <a ng-show="!user.id" ng-href="/#/users/sign_in" class="btn btn-default">Войти</a>
+      <a ng-show="!user.id" ng-href="/#/users/register" class="btn btn-default">sign up</a>
+      <a ng-show="user.id" ng-click="signOut()" class="btn btn-default">Выйти</a>
+    </div>
 </section>
 <hr>
 <section class="row" ng-if="recipes.length">

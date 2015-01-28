@@ -14,7 +14,9 @@
         "jquery-ui": "latest",
         "dropzone": "latest",
         "fotorama": "latest",
-        "tx3-tag-cloud": "latest"
+        "tx3-tag-cloud": "latest",
+        "ng-token-auth": "latest",
+        "angular-cookie": "latest"
     }
   },
   "vendor": {

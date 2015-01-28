@@ -20,5 +20,7 @@
 //= require angular-sanitize
 //= require angular-rails-templates
 //= require delayed-change
+//= require angular-cookie
+//= require ng-token-auth
 //= require_tree ../templates
 //= require_tree .

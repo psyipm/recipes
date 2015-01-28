@@ -1,10 +1,12 @@
 receta = angular.module('receta',[
   'templates',
   'ngRoute',
-  'controllers',
+  'ipCookie',
+  'ngResource',
+  'ng-token-auth',
   'ngSanitize',
   'delayed-change',
-  'ngResource',
+  'controllers',
   'recetaServices'
 ])
 .directive "recipeListRenderingDirective", ->
@@ -24,6 +26,17 @@ receta.config([ '$routeProvider','$locationProvider',
         templateUrl: "index.html"
         controller: 'RecipesController'
       )
+      .when('/users/sign_in',
+        templateUrl: 'user_sessions/new.html'
+        controller: 'UserSessionsController'
+      )
+      .when('/users/register',
+        templateUrl: 'user_regisrations/new.html'
+        controller: 'UserRegistrationsController'
+      )
+      .otherwise(
+        redirectTo: '/'
+      )
 
-    $locationProvider.html5Mode(true)
+    # $locationProvider.html5Mode(true)
 ])

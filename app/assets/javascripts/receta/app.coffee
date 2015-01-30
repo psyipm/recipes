@@ -8,17 +8,17 @@ receta = angular.module('receta',[
   'recetaServices'
 ])
 
-receta.config([ '$routeProvider','$locationProvider',
-  ($routeProvider,$locationProvider)->
+receta.config([ '$routeProvider','$locationProvider','$httpProvider'
+  ($routeProvider,$locationProvider,$httpProvider)->
     $routeProvider
       .when('/',
         templateUrl: "index.html"
         controller: 'RecipesController'
       )
-      # .when('/recipes/new'
-      #   templateUrl: 'recipes/new.html',
-      #   controller: 'AddRecipeController'
-      # )
+      .when('/recipes/new'
+        templateUrl: 'recipes/new.html',
+        controller: 'AddRecipeController'
+      )
       .when('/users/login',
         templateUrl: 'user_sessions/new.html'
         controller: 'UserSessionsController'
@@ -32,4 +32,6 @@ receta.config([ '$routeProvider','$locationProvider',
       # )
 
     $locationProvider.html5Mode(true)
+
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
 ])

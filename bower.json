@@ -12,7 +12,7 @@
         "jquery-ujs": "latest",
         "bootstrap-tokenfield": "latest",
         "jquery-ui": "latest",
-        "dropzone": "latest",
+        "dropzone": "~3.12.0",
         "fotorama": "latest",
         "tx3-tag-cloud": "latest",
         "ng-token-auth": "latest",

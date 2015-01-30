@@ -1,0 +1,65 @@
+<div class="container-fluid top-buffer-md recipe-form">
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<h3>Добавить рецепт</h3>
+		</div>
+		<div class="panel-body">
+			<div class="col-md-8">
+				<form class="new_recipe" id="new_recipe" action="/recipes" accept-charset="UTF-8" method="post" ng-submit="submitRecipe()">
+					<label for="recipe_title">Название</label>
+					<div class="form-group">
+						<input class="form-control" data-ng-model="title" type="text" name="recipe[title]" id="recipe_title">
+					</div>
+					<label for="recipe_text">Текст</label>
+					<div class="form-group">
+						<textarea class="form-control" data-ng-model="text" data-delayed-change="textChanged()" rows="15" name="recipe[text]" id="recipe_text"></textarea>
+					</div>
+					<label for="tags">Теги</label>
+					<div class="form-group">
+						<input type="text" class="form-control" name="tags" id="tags" data-ng-model="tags">
+					</div>
+					<div class="col-md-6 nopadding-left">
+						<label for="recipe_serving">Количество порций</label>
+						<div class="form-group">
+							<input class="form-control" id="serving" min="1" max="10" type="number" name="recipe[serving]" data-ng-model="serving">
+						</div>
+					</div>
+					<div class="col-md-6 nopadding-right">
+						<label for="recipe_cook_time">Время приготовления</label>
+						<div class="form-group">
+							<input class="form-control" id="cook_time" min="1" placeholder="минут" type="number" name="recipe[cook_time]" data-ng-model="cook_time">
+						</div>
+					</div>
+					<div class="col-md-12 nopadding-left form-group">
+						<a id="clickable" class="btn btn-default">
+							<span class="glyphicon glyphicon-picture"></span>
+							Загрузить фото
+						</a>
+						<small class="drop-hint">или перетащите картинки на эту страницу</small>
+					</div>
+					<div id="previews" class="dropzone-previews"></div>
+					<input type="hidden" name="components" autocomplete="off" value="{{components.join(', ')}}" data-ng-model="components">
+					<input type="hidden" name="photos" autocomplete="off" id="photos" data-ng-model="photos">
+					<input type="submit" name="commit" value="Отправить" class="btn btn-default">
+				</form>
+			</div>
+			<div class="col-md-4">
+				<div class="components-list" data-ng-if="text">
+					<label>Ингредиенты</label> <sup class="help-badge" title="Удалите лишние или добавьте отсутствующие. Здесь должны быть основные компоненты, за которыми обычно нужно идти в магазин. Не пишите такие ингредиенты как соль, перец и т.д. - вряд ли кто-то будет искать что приготовить из соли :)">?</sup>
+					<div>
+						<div class="component-input-group">
+							<input type="text" class="form-control" data-ng-model="newcmp" placeholder="пример: сыр">
+							<button class="btn btn-default" data-ng-click="addComponent(newcmp)" title="Добавить"><span class="glyphicon glyphicon-plus"></span></button>
+						</div>
+					</div>
+					<div data-ng-repeat="i in components">
+						<div class="component-input-group">
+							<input type="text" class="form-control" value="{{i}}">
+							<button class="btn btn-default" data-ng-click="removeComponent(i)" title="Удалить"><span class="glyphicon glyphicon-remove"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

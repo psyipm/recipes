@@ -42,7 +42,8 @@ angular.module('recetaServices').factory('DropZoneHelpers', [
 					@photos
 		
 			onSending: (file, xhr, formData)->
-				formData.append "authenticity_token", $("input[name='authenticity_token']").val()
+				formData.append "authenticity_token", $('meta[name=csrf-token]').attr('content')
+				console.log formData
 		
 			onSuccess: (file, response)->
 				$(file.previewTemplate).find(".dz-remove").attr("data-file-id", response.file.id)

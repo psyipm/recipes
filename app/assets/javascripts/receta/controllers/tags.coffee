@@ -10,7 +10,7 @@ angular.module('receta').controller('TagsController', ['$scope','$location'
         value = tags.join(",")
       else
         value = text
-      $location.search($.extend true, search, {tags: value})
+      $location.path("/").search($.extend true, search, {tags: value})
 
     $scope.clearTags = ($event)->
       $event.preventDefault()
@@ -18,7 +18,7 @@ angular.module('receta').controller('TagsController', ['$scope','$location'
       for key, val of $location.search()
         params[key] = val unless key is "tags"
 
-      $location.search(params).replace()
+      $location.path("/").search(params).replace()
 
     $("#tagcloud").tx3TagCloud()
 ])

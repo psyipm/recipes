@@ -22,3 +22,28 @@
 .header > div {
   display: inline-block;
 }
+
+header .navbar {
+    border: none;
+    border-radius: none;
+    margin-bottom: 0;
+    background: transparent;
+}
+
+header ul.nav {
+    margin: 15px 0;
+}
+
+header ul.nav > li > a {
+	color: #c9c9c9 !important;
+}
+
+header ul.nav > li > a:hover {
+	color: #000000 !important;
+	text-decoration: underline;
+    -webkit-transition: color 250ms linear;
+    -moz-transition: color 250ms linear;
+    -o-transition: color 250ms linear;
+    -ms-transition: color 250ms linear;
+    transition: color 250ms linear;
+}

@@ -1,26 +1,26 @@
-<div ng-app="receta">
+<div>
 	<div class="view-container col-md-10">
 		<div ng-view class="view-frame animate-view"></div>
 		<!-- <%= @recipes.inspect %> -->
 	</div>
-</div>
-<div class="sidebar-right col-md-2">
-	<hr class="hidden-md hidden-lg">
-	<div class="visible-lg">
-		<a href="/recipes/new" class="btn btn-default btn-lg">Добавить рецепт</a>
-	</div>
-	<div class="hidden-lg">
-		<a href="/recipes/new" class="btn btn-default">Добавить рецепт</a>
-	</div>
-	<hr>
-	<div>
-		<ul id="tagcloud" data-ng-if="tagcloud">
-			<% @tags.each do |t| %>
-				<li data-weight="<%= t.weight %>">
-					<a class="tag" href="/recipes?tag=<%= t.title %>"><%= t.title %></a>
-				</li>
-			<% end %>
-			<li><a href="/" class="clear-tags"><span class="glyphicon glyphicon-remove"></span> убрать теги из поиска</a></li>
-		</ul>
+	<div class="sidebar-right col-md-2">
+		<hr class="hidden-md hidden-lg">
+		<div class="visible-lg">
+			<a href="/recipes/new" class="btn btn-default btn-lg">Добавить рецепт</a>
+		</div>
+		<div class="hidden-lg">
+			<a href="/recipes/new" class="btn btn-default">Добавить рецепт</a>
+		</div>
+		<hr>
+		<div>
+			<ul id="tagcloud">
+				<% @tags.each do |t| %>
+					<li data-weight="<%= t.weight %>">
+						<a class="tag" href="/recipes?tag=<%= t.title %>"><%= t.title %></a>
+					</li>
+				<% end %>
+				<li><a href="/" class="clear-tags"><span class="glyphicon glyphicon-remove"></span> убрать теги из поиска</a></li>
+			</ul>
+		</div>
 	</div>
 </div>

@@ -1,5 +1,3 @@
-<% content_for :title, "Добавить рецепт" %>
-
 <div class="container-fluid top-buffer-md recipe-form">
 	<div class="panel panel-success">
 		<div class="panel-heading">
@@ -7,29 +5,29 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-md-8">
-				<%= form_for @recipe, multipart: true do |f| %>
-					<%= f.label :title, "Название" %>
+				<form class="new_recipe" id="new_recipe" action="/recipes" accept-charset="UTF-8" method="post" ng-submit="submitRecipe()">
+					<label for="recipe_title">Название</label>
 					<div class="form-group">
-						<%= f.text_field :title, :class => "form-control", "data-ng-model" => "title" %>
+						<input class="form-control" data-ng-model="title" type="text" name="recipe[title]" id="recipe_title">
 					</div>
-					<%= f.label :text, "Текст" %>
+					<label for="recipe_text">Текст</label>
 					<div class="form-group">
-						<%= f.text_area :text, :class => "form-control", "data-ng-model" => "text", "data-delayed-change" => "textChanged()", "rows" => 15  %>
+						<textarea class="form-control" data-ng-model="text" data-delayed-change="textChanged()" rows="15" name="recipe[text]" id="recipe_text"></textarea>
 					</div>
 					<label for="tags">Теги</label>
 					<div class="form-group">
 						<input type="text" class="form-control" name="tags" id="tags" data-ng-model="tags">
 					</div>
 					<div class="col-md-6 nopadding-left">
-						<%= f.label :serving, "Количество порций" %>
+						<label for="recipe_serving">Количество порций</label>
 						<div class="form-group">
-							<%= f.number_field :serving, :class => "form-control", :id => "serving", :in => 1..10 %>
+							<input class="form-control" id="serving" min="1" max="10" type="number" name="recipe[serving]" data-ng-model="serving">
 						</div>
 					</div>
 					<div class="col-md-6 nopadding-right">
-						<%= f.label :cook_time, "Время приготовления" %>
+						<label for="recipe_cook_time">Время приготовления</label>
 						<div class="form-group">
-							<%= f.number_field :cook_time, :class => "form-control", :id => "cook_time", :min => 1, :placeholder => "минут" %>
+							<input class="form-control" id="cook_time" min="1" placeholder="минут" type="number" name="recipe[cook_time]" data-ng-model="cook_time">
 						</div>
 					</div>
 					<div class="col-md-12 nopadding-left form-group">
@@ -40,10 +38,10 @@
 						<small class="drop-hint">или перетащите картинки на эту страницу</small>
 					</div>
 					<div id="previews" class="dropzone-previews"></div>
-					<input type="hidden" name="components" autocomplete="off" value="{{components.join(', ')}}">
-					<input type="hidden" name="photos" autocomplete="off" id="photos">
-					<%= f.submit "Отправить", :class => "btn btn-default" %>
-				<% end %>
+					<input type="hidden" name="components" autocomplete="off" value="{{components.join(', ')}}" data-ng-model="components">
+					<input type="hidden" name="photos" autocomplete="off" id="photos" data-ng-model="photos">
+					<input type="submit" name="commit" value="Отправить" class="btn btn-default">
+				</form>
 			</div>
 			<div class="col-md-4">
 				<div class="components-list" data-ng-if="text">

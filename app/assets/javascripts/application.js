@@ -22,5 +22,14 @@
 //= require delayed-change
 //= require angular-cookie
 //= require ng-token-auth
+
+//= require receta/app
 //= require_tree ../templates
+//= require_tree ./receta/modules
+//= require_tree ./receta/filters
+//= require_tree ./receta/directives
+//= require_tree ./receta/models
+//= require_tree ./receta/services
+//= require_tree ./receta/controllers
+
 //= require_tree .

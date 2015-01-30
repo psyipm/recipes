@@ -12,14 +12,14 @@
 			<a href="/recipes/new" class="btn btn-default">Добавить рецепт</a>
 		</div>
 		<hr>
-		<div>
+		<div ng-controller="TagsController">
 			<ul id="tagcloud">
 				<% @tags.each do |t| %>
 					<li data-weight="<%= t.weight %>">
-						<a class="tag" href="/recipes?tag=<%= t.title %>"><%= t.title %></a>
+						<a ng-click="addTag($event)" href="/recipes?tag=<%= t.title %>"><%= t.title %></a>
 					</li>
 				<% end %>
-				<li><a href="/" class="clear-tags"><span class="glyphicon glyphicon-remove"></span> убрать теги из поиска</a></li>
+				<li><a href="/" ng-click="clearTags($event)"><span class="glyphicon glyphicon-remove"></span> убрать теги из поиска</a></li>
 			</ul>
 		</div>
 	</div>

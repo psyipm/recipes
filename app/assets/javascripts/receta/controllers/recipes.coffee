@@ -62,32 +62,11 @@ angular.module('receta').controller("RecipesController", ['$scope','$location','
 
           Recipe.find query, searchCallback, $scope.offset unless $.isEmptyObject query
 
-        $scope.addTag = (text)->
-          search = $location.search()
-          if search.hasOwnProperty("tags")
-            tags = search.tags.split(",")
-            tags.push text unless text in tags
-            value = tags.join(",")
-          else
-            value = text
-          search = $.extend true, search, {tags: value}
-          $scope.search()
-
-        $scope.clearTags = ()->
-          params = {}
-          for key, val of $location.search()
-            params[key] = val unless key is "tags"
-
-          $location.search(params)
-          $scope.search()
-
         t = new ToggleText()
         $scope.toggle = ($event)->
             t.toggle($event)
 
         $(".fotorama").fotorama()
-        $("#tagcloud").tx3TagCloud()
-        $(".tag").on("click", (e)-> e.preventDefault(); $scope.addTag $(this).text())
-        $(".clear-tags").on("click", (e)-> e.preventDefault(); $scope.clearTags())
+
         $scope.searchFromLocation()
 ])

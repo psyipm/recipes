@@ -22,6 +22,8 @@
 //= require delayed-change
 //= require angular-cookie
 //= require ng-token-auth
+//= require lodash
+//= require restangular
 
 //= require receta/app
 //= require_tree ../templates

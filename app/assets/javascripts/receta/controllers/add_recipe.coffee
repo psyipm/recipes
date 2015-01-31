@@ -1,5 +1,5 @@
-angular.module('receta').controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers', 'Component', 'Tag',
-  ($scope,$http,dz,tf,Component,Tag)->
+angular.module('receta').controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers', 'Component', 'Tag', 'RecipeService',
+  ($scope,$http,dz,tf,Component,Tag,RecipeService)->
     $scope.getComponents = ()->
       Component.get (data)->
         $scope.dictionary = data
@@ -51,9 +51,22 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
     $scope.tfHelpers = tf.bind "tags"
     $scope.tfHelpers.init tfCallback
 
-    $scope.submitRecipe = ()->
-      recipe = $("form").serialize()
-      console.log recipe
+    $scope.submitRecipe = ($event)->
+      $event.preventDefault()
+      # data = {
+      #   recipe : {
+      #     title: '$scope.title'
+      #     text: $scope.text
+      #     serving: '$scope.serving'
+      #     cook_time: '$scope.cook_time'
+      #   }
+      #   components: '$scope.components.join(", ")'
+      #   tags: '$scope.tfHelpers.getTokens().join(", ")'
+      #   photos: dz.getPhotos true
+      # }
+      # console.log data
+
+      # RecipeService.create(data)
 
     dz.init()
 ])

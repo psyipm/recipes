@@ -3,7 +3,7 @@ class Recipe < ActiveRecord::Base
 	has_many :tags
 	has_many :photos, dependent: :destroy
 
-	def self.find(query, offset = 0, limit = 10)
+	def self.search(query, offset = 0, limit = 10)
 		components = query[:tokens]
 
 		args = components.join("|").mb_chars.downcase.to_s

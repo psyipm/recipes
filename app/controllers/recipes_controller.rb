@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
 	# Prevent CSRF attacks by raising an exception.
 	# For APIs, you may want to use :null_session instead.
 	protect_from_forgery with: :exception
-	
+
 	def index
 		@tags = Tag.cloud
 		if params[:tag]
@@ -13,7 +13,7 @@ class RecipesController < ApplicationController
 	def find
 		query = params[:query] || []
 		if query[:tokens] and query[:tokens].length > 0 and query[:tokens][0].length > 0
-			@recipes = Recipe.find query, params[:offset], params[:limit]
+			@recipes = Recipe.search query, params[:offset], params[:limit]
 		elsif query[:tags] and query[:tags].length > 0
 			@recipes = Recipe.find_by_tag query[:tags], params[:offset], params[:limit]
 		else
@@ -35,16 +35,17 @@ class RecipesController < ApplicationController
 				Photo.remove_unused
 			end
 
-			@ok = true
+			render json: { success: 1 }
 		rescue Exception => e
-			@ok = false
+			render json: { message: "Cannot create a recipe", error: e }
 		end
 	end
 
   private
 	def recipe_params
 		recipe = params.require(:recipe).permit(:title, :text, :cook_time, :serving)
-		recipe[:text].gsub!(/(\r\n)/, '<br>')
+		recipe[:text].gsub! /(\r\n)|(\n)/, '<br>'
+		recipe[:published] = true if current_user.try(:admin?)
 		recipe
 	end
 	def component_params

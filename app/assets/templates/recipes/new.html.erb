@@ -5,7 +5,7 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-md-8">
-				<form class="new_recipe" id="new_recipe" action="/recipes" accept-charset="UTF-8" method="post" ng-submit="submitRecipe()">
+				<form class="new_recipe" id="new_recipe" action="/recipes" accept-charset="UTF-8" method="post" ng-submit="submitRecipe($event)">
 					<label for="recipe_title">Название</label>
 					<div class="form-group">
 						<input class="form-control" data-ng-model="title" type="text" name="recipe[title]" id="recipe_title">

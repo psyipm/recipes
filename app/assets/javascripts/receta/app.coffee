@@ -1,5 +1,6 @@
 receta = angular.module('receta',[
   'templates',
+  'restangular',
   'ngRoute',
   'ipCookie',
   'ng-token-auth',

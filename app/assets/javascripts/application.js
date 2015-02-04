@@ -24,6 +24,7 @@
 //= require ng-token-auth
 //= require lodash
 //= require restangular
+//= require angular-bootstrap
 
 //= require receta/app
 //= require_tree ../templates

@@ -1,13 +1,17 @@
-angular.module('recetaServices').factory('DropZoneHelpers', [
+angular.module('recetaServices').service('DropZoneHelpers', [
 	()->
 		class DropZoneHelpers
 			constructor: ->
 				@photos = []
+				@instance = null
 
 			init: ->
-				_self = this
 				try
-					$("body").dropzone { 
+					_self = this
+					unless @instance == null
+						@instance.destroy()
+
+					@instance = new Dropzone(document.body, {
 						url: "/photos", 
 						previewsContainer: "#previews", 
 						clickable: "#clickable",
@@ -17,7 +21,8 @@ angular.module('recetaServices').factory('DropZoneHelpers', [
 						sending: (file, xhr, fd)-> _self.onSending.call _self, file, xhr, fd; return
 						success: (f, r)-> _self.onSuccess.call _self, f, r; return
 						removedfile: (f)-> _self.onRemove.call _self, f; return
-					}
+					})
+
 				catch ignore
 
 			appendFile: (id)->

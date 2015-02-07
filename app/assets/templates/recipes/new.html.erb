@@ -8,15 +8,15 @@
 				<form class="new_recipe" id="new_recipe" action="/recipes" accept-charset="UTF-8" method="post" ng-submit="submitRecipe($event)">
 					<label for="recipe_title">Название</label>
 					<div class="form-group">
-						<input class="form-control" data-ng-model="title" type="text" name="recipe[title]" id="recipe_title">
+						<input class="form-control" data-ng-model="title" type="text" name="recipe[title]" id="recipe_title" required="required">
 					</div>
 					<label for="recipe_text">Текст</label>
 					<div class="form-group">
-						<textarea class="form-control" data-ng-model="text" data-delayed-change="textChanged()" rows="15" name="recipe[text]" id="recipe_text"></textarea>
+						<textarea class="form-control" data-ng-model="text" data-delayed-change="textChanged()" rows="15" name="recipe[text]" id="recipe_text" required="required"></textarea>
 					</div>
 					<label for="tags">Теги</label>
 					<div class="form-group">
-						<input type="text" class="form-control" name="tags" id="tags" data-ng-model="tags">
+						<input type="text" class="form-control" name="tags" id="tags" data-ng-model="tags" required="required">
 					</div>
 					<div class="col-md-6 nopadding-left">
 						<label for="recipe_serving">Количество порций</label>
@@ -42,6 +42,9 @@
 					<input type="hidden" name="photos" autocomplete="off" id="photos" data-ng-model="photos">
 					<input type="submit" name="commit" value="Отправить" class="btn btn-default">
 				</form>
+				<div class="alerts">
+					<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="components-list" data-ng-if="text">

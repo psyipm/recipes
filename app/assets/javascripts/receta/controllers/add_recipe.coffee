@@ -1,5 +1,13 @@
 angular.module('receta').controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers', 'Component', 'Tag', 'RecipeService',
   ($scope,$http,dz,tf,Component,Tag,RecipeService)->
+    tfCallback = (request, response) ->
+      Tag.find request.term, (t)-> response(t)
+
+    $scope.tfHelpers = tf.bind "tags"
+    $scope.tfHelpers.init tfCallback
+
+    dz.init()
+
     $scope.getComponents = ()->
       Component.get (data)->
         $scope.dictionary = data
@@ -23,8 +31,11 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
       [].concat.apply($scope.user_created, $scope.components).unique()
 
     $scope.parseComponents = ()->
-      $scope.dictionary.filter (word)->
-        ~$scope.text.toLowerCase().indexOf word
+      try
+        $scope.dictionary.filter (word)->
+          ~$scope.text.toLowerCase().indexOf word
+      catch e
+        console.log e
 
     $scope.textChanged = ()->
       return $scope.getComponents() unless $scope.dictionary
@@ -45,28 +56,52 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
       $scope.user_removed = pushToArray(word, $scope.user_removed)
       $scope.components = filterRemoved()
 
-    tfCallback = (request, response) ->
-      Tag.find request.term, (t)-> response(t)
+    $scope.getFormData = ()->
+      $scope.alerts = []
+      messages = {
+        tokens: { type: "danger", msg: "Нужно указать теги" }
+        photos: { type: "danger", msg: "Нужно загрузить фото" }
+        components: { type: "danger", msg: "Нужно ввести ингредиенты" }
+      }
+      getComponents = ()->
+        if $scope.components.length
+          $scope.components.join(", ")
+        else
+          $scope.alerts.push messages.components; return
 
-    $scope.tfHelpers = tf.bind "tags"
-    $scope.tfHelpers.init tfCallback
+      getTags = ()->
+        tokens = $scope.tfHelpers.getTokens()
+        if tokens.length
+          tokens.join(", ")
+        else
+          $scope.alerts.push messages.tags; return
+
+      getPhotos = ()->
+        photos = dz.getPhotos true
+        if photos.length
+          photos
+        else
+          $scope.alerts.push messages.photos; return
+
+      getRecipe = ()->
+        title: $scope.title
+        text: $scope.text
+        serving: $scope.serving
+        cook_time: $scope.cook_time
+
+      return { recipe: getRecipe(), components: getComponents(), photos: getPhotos(), tags: getTags() }
 
     $scope.submitRecipe = ($event)->
       $event.preventDefault()
-      # data = {
-      #   recipe : {
-      #     title: '$scope.title'
-      #     text: $scope.text
-      #     serving: '$scope.serving'
-      #     cook_time: '$scope.cook_time'
-      #   }
-      #   components: '$scope.components.join(", ")'
-      #   tags: '$scope.tfHelpers.getTokens().join(", ")'
-      #   photos: dz.getPhotos true
-      # }
-      # console.log data
 
-      # RecipeService.create(data)
+      unless $scope.alerts.length
+        RecipeService.create($scope.getFormData())
+          .then((data)-> 
+            alert("success")
+            console.log data
+          )
 
-    dz.init()
+    #TODO: create alert directive
+    $scope.closeAlert = (index)->
+      $scope.alerts.splice index, 1
 ])

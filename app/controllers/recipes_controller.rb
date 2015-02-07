@@ -37,7 +37,7 @@ class RecipesController < ApplicationController
 
 			render json: { success: 1 }
 		rescue Exception => e
-			render json: { message: "Cannot create a recipe", error: e }
+			render json: { message: "Cannot create a recipe", error: e.message }
 		end
 	end
 

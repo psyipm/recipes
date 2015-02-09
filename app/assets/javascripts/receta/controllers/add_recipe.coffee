@@ -59,19 +59,19 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
     $scope.getFormData = ()->
       $scope.alerts = []
       messages = {
-        tokens: { type: "danger", msg: "Нужно указать теги" }
+        tags: { type: "danger", msg: "Нужно ввести теги (через запятую)" }
         photos: { type: "danger", msg: "Нужно загрузить фото" }
         components: { type: "danger", msg: "Нужно ввести ингредиенты" }
       }
       getComponents = ()->
-        if $scope.components.length
+        if $scope.components and $scope.components.length
           $scope.components.join(", ")
         else
           $scope.alerts.push messages.components; return
 
       getTags = ()->
         tokens = $scope.tfHelpers.getTokens()
-        if tokens.length
+        if tokens.length and tokens[0].length
           tokens.join(", ")
         else
           $scope.alerts.push messages.tags; return
@@ -91,17 +91,28 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
 
       return { recipe: getRecipe(), components: getComponents(), photos: getPhotos(), tags: getTags() }
 
+    $scope.reset = ()->
+      $scope.title = ""
+      $scope.text = ""
+      $scope.tags = ""
+      $scope.serving = ""
+      $scope.cook_time = ""
+      $scope.components = ""
+      $scope.photos = ""
+      $scope.tfHelpers.setTokens []
+      dz.removeAllFiles()
+
     $scope.submitRecipe = ($event)->
       $event.preventDefault()
 
-      unless $scope.alerts.length
-        RecipeService.create($scope.getFormData())
-          .then((data)-> 
-            alert("success")
-            console.log data
-          )
+      data = $scope.getFormData()
 
-    #TODO: create alert directive
-    $scope.closeAlert = (index)->
-      $scope.alerts.splice index, 1
+      unless $scope.alerts.length
+        RecipeService.create(data)
+          .then((data)-> 
+            $scope.alerts.push {type: "success", msg: data.message}
+            $scope.reset()
+          ,(data)->
+            $scope.alerts.push {type: "danger", msg: data.data.message}
+          )
 ])

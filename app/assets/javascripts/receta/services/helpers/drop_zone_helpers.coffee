@@ -45,6 +45,10 @@ angular.module('recetaServices').service('DropZoneHelpers', [
 					@photos.join(", ")
 				else
 					@photos
+
+			removeAllFiles: ()->
+				@photos = []
+				@instance.removeAllFiles(true)
 		
 			onSending: (file, xhr, formData)->
 				formData.append "authenticity_token", $('meta[name=csrf-token]').attr('content')

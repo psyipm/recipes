@@ -9,7 +9,7 @@
 			<label for="password">Пароль</label> 
 			<input type="password" name="password" id="password" ng-model="loginForm.password" required="required" class="form-control"> 
 		</div> 
-		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		<alerts />
 		<button type="submit" class="btn btn-primary btn-lg">Войти</button> 
 	</form>
 </div>

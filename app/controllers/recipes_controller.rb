@@ -35,9 +35,11 @@ class RecipesController < ApplicationController
 				Photo.remove_unused
 			end
 
-			render json: { success: 1 }
+			message = current_user.try(:admin?) ? "Your recipe added successfully" : "Your recipe will be added after moderation"
+
+			render json: { success: 1, message: message}, :status => 200
 		rescue Exception => e
-			render json: { message: "Cannot create a recipe", error: e.message }
+			render json: { message: "Cannot create a recipe", error: e.message }, :status => 400
 		end
 	end
 

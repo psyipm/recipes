@@ -13,7 +13,7 @@
 			<label for="password_confirmation">Подтверждение пароля</label> 
 			<input type="password" name="password_confirmation" id="password_confirmation" ng-model="registrationForm.password_confirmation" required="required" class="form-control"> 
 		</div> 
-		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		<alerts />
 		<button type="submit" class="btn btn-primary btn-lg">Регистрация</button> 
 	</form>
 </div>

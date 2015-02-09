@@ -3,24 +3,6 @@ Array::unique = ->
     output[@[key]] = @[key] for key in [0...@length]
     value for key, value of output
 
-
-class ToggleText
-    toggle: ($event) ->
-        target = $event.target
-        console.log $event
-        collapsed = $(target).hasClass("collapsed")
-        $arrow = $(target).parent().parent().find("a.toggle-text")
-
-        if(collapsed)
-            $(target).removeClass("collapsed")
-            $arrow.text("▴")
-            return
-        else
-            $(target).addClass("collapsed")
-            $arrow.text("▾")
-            return
-
-
 angular.module('receta').controller("RecipesController", ['$scope','$location','TokenfieldHelpers','Component','RecipeService', 
   ($scope,$location,tf,Component,RecipeService)->
     $scope.tfCallback = (request, response)->
@@ -61,10 +43,6 @@ angular.module('receta').controller("RecipesController", ['$scope','$location','
         query = $.extend true, query, {tags: search.tags.split(",")}
 
       RecipeService.find(query, $scope.offset).then((res)-> searchCallback res) unless $.isEmptyObject query
-
-    t = new ToggleText()
-    $scope.toggle = ($event)->
-        t.toggle($event)
 
     $(".fotorama").fotorama()
 

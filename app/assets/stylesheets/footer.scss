@@ -10,7 +10,8 @@
 	padding: 0 2px;
 }
 
-#footer > a:hover {
+#footer > a:hover,
+recipe a:hover {
 	color: #000000;
     -webkit-transition: color 250ms linear;
     -moz-transition: color 250ms linear;

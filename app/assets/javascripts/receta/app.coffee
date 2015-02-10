@@ -22,7 +22,7 @@ receta.config([ '$routeProvider','$locationProvider','$httpProvider'
         controller: 'AddRecipeController'
       )
       .when('/recipes/:id'
-        templateUrl: 'recipes/view_recipe.html',
+        templateUrl: 'recipes/show.html',
         controller: 'ViewRecipeController'
       )
       .when('/users/login',

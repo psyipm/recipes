@@ -11,6 +11,14 @@ recipe a {
   cursor: pointer;
 }
 
+.recipe-container {
+  margin-bottom: 25px;
+}
+
+.recipe-container .recipe-descr {
+  cursor: auto;
+}
+
 .recipe-descr.collapsed {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -39,4 +47,9 @@ recipe a {
   left: 0;
   z-index: 1;
   background: rgba(255,255,255,0.7) no-repeat 50% 50% url("ajax-loader.gif");
+}
+
+.recipe-tags {
+  font-size: 0.9em;
+  margin: 10px 0;
 }

@@ -8,6 +8,10 @@
       <img ng-repeat="img in photos" ng-src="{{img.medium || img.original}}" alt="">
     </div>
   </div>
+  <div ng-if="view" class="col-md-12 nopadding-left recipe-tags">
+    <span class="glyphicon glyphicon-tag"></span>
+    <span class="tag" ng-repeat="tag in tags">{{tag.title}}{{$last? '' : ','}} </span>
+  </div>
   <div ng-if="!view">
     <div class="recipe-text" ng-click="toggle($event)" title="Показать полностью">
       <div class="col-md-12 recipe-descr collapsed" ng-bind-html="recipe.text"></div>
@@ -19,7 +23,6 @@
     </div>
   </div>
   <div class="col-md-12 nopadding-left">
-    <a ng-if="!view" class="toggle-text">▾</a>
     <span title="Порции" ng-if="recipe.serving"><span class="icon icon-spoon-knife"></span> {{recipe.serving}} |</span>
     <span title="Время приготовления" ng-if="recipe.cook_time"> <span class="glyphicon glyphicon-time"></span> {{recipe.cook_time}} минут | </span>
     <span title="Рейтинг"> <span class="glyphicon glyphicon-heart"></span> {{recipe.rating || 0}}</span>

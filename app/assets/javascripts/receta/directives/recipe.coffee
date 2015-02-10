@@ -2,15 +2,12 @@ class ToggleText
   toggle: ($event) ->
     target = $event.target
     collapsed = $(target).hasClass("collapsed")
-    $arrow = $(target).parent().parent().find("a.toggle-text")
 
     if(collapsed)
       $(target).removeClass("collapsed")
-      $arrow.text("▴")
       return
     else
       $(target).addClass("collapsed")
-      $arrow.text("▾")
       return
 
 angular.module('receta').directive('recipe', ()->

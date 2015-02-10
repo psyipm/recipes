@@ -22,6 +22,11 @@ recipe a {
     color: #000;
 }
 
+.recipe-images {
+  height: 320px;
+  opacity: 0;
+}
+
 .recipe-images img {
   max-height: 320px;
 }

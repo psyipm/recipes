@@ -21,6 +21,10 @@ receta.config([ '$routeProvider','$locationProvider','$httpProvider'
         templateUrl: 'recipes/new.html',
         controller: 'AddRecipeController'
       )
+      .when('/recipes/:id'
+        templateUrl: 'recipes/view_recipe.html',
+        controller: 'ViewRecipeController'
+      )
       .when('/users/login',
         templateUrl: 'user_sessions/new.html'
         controller: 'UserSessionsController'

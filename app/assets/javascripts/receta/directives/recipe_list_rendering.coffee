@@ -1,10 +1,6 @@
-angular.module('receta').directive "recipeListRenderingDirective", ->
-  (scope, element, attrs) ->
-    fotorama = ()->
-      window.setTimeout(()->
-        $(".fotorama").fotorama()
-        $(".recipe-images").animate({opacity: 1}, "slow")
-      , 100)
-
-    fotorama() if scope.$last
+angular.module('receta')
+.directive('recipeListRenderingDirective', ['fotorama', (fotorama)->
+  (scope, element, attrs)->
+    fotorama.apply() if scope.$last
     return
+])

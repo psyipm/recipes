@@ -1,7 +1,6 @@
 class ToggleText
   toggle: ($event) ->
     target = $event.target
-    console.log $event
     collapsed = $(target).hasClass("collapsed")
     $arrow = $(target).parent().parent().find("a.toggle-text")
 
@@ -21,7 +20,8 @@ angular.module('receta').directive('recipe', ()->
       recipe: '=',
       tags: '=',
       components: '=',
-      photos: '='
+      photos: '=',
+      view: '='
     },
     templateUrl: 'recipes/recipe.html',
     controller: ['$scope', ($scope)->

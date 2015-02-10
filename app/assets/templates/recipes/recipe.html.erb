@@ -1,15 +1,25 @@
 <section class="col-md-12 nopadding-left">
-  <h1 class="h3 col-md-12 nopadding-left"><a ng-href="/recipe/{{recipe.id}}">{{recipe.title}}</a></h1>
+  <h1 class="h3 col-md-12 nopadding-left">
+    <a ng-if="!view" ng-href="/recipes/{{recipe.id}}">{{recipe.title}}</a>
+    <span ng-if="view">{{recipe.title}}</span>
+  </h1>
   <div class="col-md-12 nopadding-left">
     <div class="fotorama recipe-images" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="320">
       <img ng-repeat="img in photos" ng-src="{{img.medium || img.original}}" alt="">
     </div>
   </div>
-  <div class="recipe-text" ng-click="toggle($event)" title="Показать полностью">
-    <div class="col-md-12 recipe-descr collapsed" ng-bind-html="recipe.text"></div>
+  <div ng-if="!view">
+    <div class="recipe-text" ng-click="toggle($event)" title="Показать полностью">
+      <div class="col-md-12 recipe-descr collapsed" ng-bind-html="recipe.text"></div>
+    </div>
+  </div>
+  <div ng-if="view">
+    <div class="recipe-text">
+      <div class="col-md-12 recipe-descr" ng-bind-html="recipe.text"></div>
+    </div>
   </div>
   <div class="col-md-12 nopadding-left">
-    <a class="toggle-text">▾</a>
+    <a ng-if="!view" class="toggle-text">▾</a>
     <span title="Порции" ng-if="recipe.serving"><span class="icon icon-spoon-knife"></span> {{recipe.serving}} |</span>
     <span title="Время приготовления" ng-if="recipe.cook_time"> <span class="glyphicon glyphicon-time"></span> {{recipe.cook_time}} минут | </span>
     <span title="Рейтинг"> <span class="glyphicon glyphicon-heart"></span> {{recipe.rating || 0}}</span>

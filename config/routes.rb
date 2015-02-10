@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :photos, only: [:create, :destroy]
 
   post 'recipes/find'
+  post 'recipes/:id', to: 'recipes#show', defaults: { format: 'json' }
 
   post 'components/find'
   post 'components/get'

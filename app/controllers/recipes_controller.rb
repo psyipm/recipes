@@ -10,6 +10,11 @@ class RecipesController < ApplicationController
 		end
 	end
 
+	def show
+		recipe = Recipe.find(params[:id])
+		@recipes = [recipe]
+	end
+
 	def find
 		query = params[:query] || []
 		if query[:tokens] and query[:tokens].length > 0 and query[:tokens][0].length > 0

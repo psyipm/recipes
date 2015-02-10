@@ -14,4 +14,7 @@ angular.module('receta').factory('RecipeService', [
 		create: (recipe)->
 			headers = $auth.retrieveData('auth_headers')
 			Restangular.all(model).post(recipe, null, headers)
+
+		one: (id)->
+			Restangular.one(model, id).post()
 ])

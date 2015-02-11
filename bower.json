@@ -18,7 +18,7 @@
         "ng-token-auth": "latest",
         "angular-cookie": "latest",
         "restangular": "v1.4.0",
-        "angular-bootstrap": "v0.12.0"
+        "angular-bootstrap": "v0.11.0"
     }
   },
   "vendor": {

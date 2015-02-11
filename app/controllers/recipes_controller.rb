@@ -11,7 +11,8 @@ class RecipesController < ApplicationController
 	end
 
 	def show
-		recipe = Recipe.find(params[:id])
+		recipe = Recipe.find params[:id]
+		@tags = Tag.for_recipe params[:id]
 		@recipes = [recipe]
 	end
 

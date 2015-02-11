@@ -20,5 +20,5 @@ angular.module('receta').controller('TagsController', ['$scope','$location'
 
       $location.path("/").search(params).replace()
 
-    $("#tagcloud").tx3TagCloud()
+    $(".tagcloud").tx3TagCloud()
 ])

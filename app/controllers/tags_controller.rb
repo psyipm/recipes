@@ -7,4 +7,8 @@ class TagsController < ApplicationController
 	def cloud
 		@tags = Tag.cloud
 	end
+
+	def for_recipe
+		@tags = Tag.for_recipe params[:recipe_id], params[:limit]
+	end
 end

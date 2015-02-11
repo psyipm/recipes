@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <p class="modal-title">
+    <p class="h3">Все теги для рецепта</p>
+    <p ng-if="recipe.title">"{{ recipe.title }}"</p>
+  </p>
+</div>
+<div class="modal-body modal-tags">
+  <ul class="tagcloud list-unstyled">
+    <li ng-repeat="tag in tags" ng-click="addTag($event)" data-weight="{{tag.weight}}">
+      <a ng-href="?tags={{tag.title}}" class="label label-success" style="font-size: {{1 + 0.01*tag.weight}}em">{{tag.title}}</a>
+    </li>
+  </ul>
+</div>
+<div class="modal-footer">
+  <div class="col-md-6 nopadding-left">
+    <div class="new-tag-edit" ng-show="editing">
+      <div class="input-group">
+        <input type="text" class="form-control" id="newtag">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="addTags()">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 nopadding-left">
+    <button class="btn btn-default" ng-click="newTag()" title="Добавить свой тег">
+      <span class="glyphicon glyphicon-tag"></span>
+    </button>
+    <button class="btn btn-default" ng-click="ok()">OK</button>
+  </div>
+</div>

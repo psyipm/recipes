@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post 'components/get'
 
   post 'tags/find'
+  post 'recipes/:recipe_id/tags', to: 'tags#for_recipe', defaults: { format: 'json' }
 
   get '*path' => 'recipes#index'
 

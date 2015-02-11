@@ -8,7 +8,10 @@
       <img ng-repeat="img in photos" ng-src="{{img.medium || img.original}}" alt="">
     </div>
   </div>
-  <recipe-tags ng-if="view && tags" recipe="recipe" tags="tags" class="col-md-12 nopadding-left"></recipe-tags>
+  <div ng-if="view" class="col-md-12 nopadding-left recipe-tags">
+    <span class="glyphicon glyphicon-tag"></span>
+    <span class="tag" ng-repeat="tag in tags">{{tag.title}}{{$last? '' : ','}} </span>
+  </div>
   <div ng-if="!view">
     <div class="recipe-text" ng-click="toggle($event)" title="Показать полностью">
       <div class="col-md-12 recipe-descr collapsed" ng-bind-html="recipe.text"></div>

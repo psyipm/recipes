@@ -13,7 +13,7 @@
 		</div>
 		<hr>
 		<div ng-controller="TagsController">
-			<ul class="tagcloud">
+			<ul id="tagcloud">
 				<% @tags.each do |t| %>
 					<li data-weight="<%= t.weight %>">
 						<a ng-click="addTag($event)" href="/recipes?tag=<%= t.title %>"><%= t.title %></a>

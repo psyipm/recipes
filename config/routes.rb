@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'recipes#index'
   resources :recipes, only: [:index, :create]
   resources :photos, only: [:create, :destroy]
+  resources :tags, only: [:create]
 
   post 'recipes/find'
   post 'recipes/:id', to: 'recipes#show', defaults: { format: 'json' }

@@ -48,22 +48,3 @@ recipe a {
   z-index: 1;
   background: rgba(255,255,255,0.7) no-repeat 50% 50% url("ajax-loader.gif");
 }
-
-.recipe-tags {
-  font-size: 0.9em;
-  margin: 10px 0;
-}
-
-.recipe-tags ul,
-.recipe-tags li,
-.modal-tags li {
-  display: inline;
-}
-
-.recipe-tags li > .tag {
-  color: #333 !important;
-}
-
-.recipe-tags .all-tags {
-  color: #5F0101;
-}

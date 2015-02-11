@@ -1,0 +1,32 @@
+.recipe-tags {
+  font-size: 0.9em;
+  margin: 10px 0;
+}
+
+.recipe-tags ul,
+.recipe-tags li,
+.modal-tags li {
+  display: inline;
+}
+
+.modal-tags li {
+  line-height: 2em;
+}
+
+.recipe-tags .tagcloud li {
+  margin-right: 5px
+}
+
+.recipe-tags .all-tags {
+  color: #5F0101;
+}
+
+.label-default.recipe-tag {
+  background-color: #fff;
+}
+
+.label.recipe-tag {
+  color: #000;
+  font-weight: normal;
+  font-size: 100%;
+}

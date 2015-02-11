@@ -1,8 +1,10 @@
-<div class="recipe-tags" ng-controller="TagsController">
-  <span class="glyphicon glyphicon-tag"></span> 
+<div class="recipe-tags">
   <ul class="tagcloud list-unstyled">
-    <li ng-repeat="tag in tags" ng-click="addTag($event)" data-weight="{{tag.weight}}">
-      <a href="" class="tag">{{tag.title}}</a>{{$last? "" : ", "}}
+    <li ng-repeat="tag in tags" data-weight="{{tag.weight}}">
+      <a ng-href="?tags={{tag.title}}" class="label label-default recipe-tag">
+        <small class="glyphicon glyphicon-tag"></small> 
+        {{tag.title}}
+      </a>
     </li>
   </ul>
   <a href="" class="all-tags" ng-click="openModal()" style="display: none" title="Показать все теги">все теги</a>

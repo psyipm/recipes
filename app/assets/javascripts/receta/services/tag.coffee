@@ -18,5 +18,13 @@ angular.module('recetaServices')
 				).success((tags)->
 					callback tags
 				)
+
+			create: (title, recipe_id, callback)->
+				$http.post(
+					"/tags",
+					{title: title, recipe_id: recipe_id}
+				).success((data)->
+					callback data.tag
+				)
 		}
 ])

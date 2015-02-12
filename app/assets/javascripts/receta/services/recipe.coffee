@@ -7,15 +7,19 @@ angular.module('receta').factory('RecipeService', [
 			angular.extend(obj, Recipe)
 		)
 
+		headers = $auth.retrieveData('auth_headers')
+
 		find: (params, offset = 0, limit = 10)-> 
-			headers = $auth.retrieveData('auth_headers')
 			Restangular.all(model)
 				.customPOST({query: params, offset: offset, limit: limit}, 'find.json', null, headers)
 
 		create: (recipe)->
-			headers = $auth.retrieveData('auth_headers')
 			Restangular.all(model).post(recipe, null, headers)
 
 		one: (id)->
 			Restangular.one(model, id).post()
+
+		put: (recipe)->
+			Restangular.all(model)
+				.customPUT(recipe, "#{recipe.id}", null, headers)
 ])

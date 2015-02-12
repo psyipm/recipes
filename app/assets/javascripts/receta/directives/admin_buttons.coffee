@@ -1,10 +1,14 @@
 angular.module('receta').directive('adminButtons', ()->
 	restrict: "E"
 	templateUrl: 'admin/admin_buttons.html'
-	controller: ['$scope', '$location', ($scope, $location)->
-		$scope.publish = (publish)->
-			id = $scope.n.recipe.id
-			console.log "publish #{id}"
+	controller: ['$scope', '$location', 'RecipeService', ($scope, $location, RecipeService)->
+		$scope.publish = (published)->
+			recipe = $scope.n.recipe
+
+			RecipeService.put({ id: recipe.id, published: published })
+				.then((data)->
+					$scope.n.recipe = data.recipe
+				)
 
 		$scope.edit = ()->
 			id = $scope.n.recipe.id

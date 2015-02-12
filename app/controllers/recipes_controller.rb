@@ -25,7 +25,7 @@ class RecipesController < ApplicationController
 		if query[:tokens] and query[:tokens].length > 0 and query[:tokens][0].length > 0
 			@recipes = Recipe.search query, offset, limit, @admin
 		elsif query[:tags] and query[:tags].length > 0
-			@recipes = Recipe.find_by_tag query[:tags], offset, @limit, admin
+			@recipes = Recipe.find_by_tag query[:tags], offset, limit, @admin
 		elsif @admin == true
 			@recipes = Recipe.all().order(id: :desc).offset(offset).limit(limit)
 		else
@@ -55,11 +55,25 @@ class RecipesController < ApplicationController
 		end
 	end
 
+	def update
+		@recipe = Recipe.find params[:id]
+		begin
+			@recipe.update recipe_params
+			render json: { success: 1, recipe: @recipe}, :status => 200
+		rescue Exception => e
+			render json: { message: "Cannot update a recipe", error: e.message}, :status => 400
+		end
+	end
+
   private
 	def recipe_params
-		recipe = params.require(:recipe).permit(:title, :text, :cook_time, :serving)
-		recipe[:text].gsub! /(\r\n)|(\n)/, '<br>'
-		recipe[:published] = true if current_user.try(:admin?)
+		recipe = params.require(:recipe).permit(:title, :text, :cook_time, :serving, :published)
+		unless recipe[:text].nil?
+			recipe[:text].gsub! /(\r\n)|(\n)/, '<br>'
+		end
+		if recipe[:published].nil?
+			recipe[:published] = true if current_user.try(:admin?)
+		end
 		recipe
 	end
 	def component_params

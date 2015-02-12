@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: '/api/auth'
   
   root 'recipes#index'
-  resources :recipes, only: [:index, :create]
+  resources :recipes, only: [:index, :create, :update]
   resources :photos, only: [:create, :destroy]
   resources :tags, only: [:create]
 

@@ -7,11 +7,12 @@ receta = angular.module('receta',[
   'ng-token-auth',
   'ngSanitize',
   'delayed-change',
-  'recetaServices'
+  'recetaServices',
+  'ngDisqus'
 ])
 
-receta.config([ '$routeProvider','$locationProvider','$httpProvider'
-  ($routeProvider,$locationProvider,$httpProvider)->
+receta.config([ '$routeProvider','$locationProvider','$disqusProvider'
+  ($routeProvider,$locationProvider,$disqusProvider)->
     $routeProvider
       .when('/',
         templateUrl: "index.html"
@@ -39,5 +40,5 @@ receta.config([ '$routeProvider','$locationProvider','$httpProvider'
 
     $locationProvider.html5Mode(true)
 
-    # $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
+    $disqusProvider.setShortname "recipes4you"
 ])

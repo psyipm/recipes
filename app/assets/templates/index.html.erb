@@ -15,7 +15,7 @@
 <hr>
 <section class="row" ng-if="recipes.length">
   <div class="col-md-12 nopadding-left recipe-wrapper panel" ng-repeat="n in recipes" recipe-list-rendering-directive>
-    <admin-buttons></admin-buttons>
+    <admin-buttons user="user" recipes="recipes" n="n" index="$index"></admin-buttons>
     <div class="col-md-8 col-md-offset-3 bottom-buffer-md">
       <recipe recipe="n.recipe" components="n.components" tags="n.tags" photos="n.photos"/>
     </div>

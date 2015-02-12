@@ -22,4 +22,7 @@ angular.module('receta').factory('RecipeService', [
 		put: (recipe)->
 			Restangular.all(model)
 				.customPUT(recipe, "#{recipe.id}", null, headers)
+
+		remove: (id)->
+			Restangular.one(model, id).remove()
 ])

@@ -25,6 +25,7 @@
 //= require lodash
 //= require restangular
 //= require angular-bootstrap
+//= require angular-disqus
 
 //= require receta/app
 //= require_tree ../templates

@@ -1,0 +1,23 @@
+.sidebar-right {
+  padding: 15px;
+}
+
+@media screen and(min-width: 992px) {
+  .sidebar-right {
+    border-left: 1px solid #eee;
+      box-shadow: -3px 0px 10px -10px black;
+  }
+}
+
+.tagcloud-settings {
+	font-weight: bold;
+	font-size: 0.8em;
+}
+
+.btn-settings {
+	border-color: #fff !important;
+}
+
+.tagcloud-popover {
+	min-width: 210px;
+}

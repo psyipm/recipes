@@ -4,7 +4,7 @@ angular.module('receta').directive('recipeTags', ()->
     recipe: "="
     tags: "="
   }
-  templateUrl: 'recipes/recipe_tags/recipe_tags.html'
+  templateUrl: 'tags/recipe_tags.html'
   controller: ['$scope', '$modal', 'Tag', ($scope, $modal, Tag)->
     $scope.showLink = ()->
       $(".all-tags").fadeIn()
@@ -13,7 +13,7 @@ angular.module('receta').directive('recipeTags', ()->
 
     $scope.openModal = ()->
       $scope.modalInstance = $modal.open({
-        templateUrl: 'recipes/recipe_tags/all_tags.html'
+        templateUrl: 'tags/modal_recipe_tags.html'
         scope: $scope
         controller: 'ModalTagsController'
       })

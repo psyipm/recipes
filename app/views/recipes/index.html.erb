@@ -13,13 +13,21 @@
 		</div>
 		<hr>
 		<div ng-controller="TagsController">
+			<div class="tagcloud-settings">
+				<span>Облако тегов</span>
+				<a href="/" ng-if="multiTagSearch" ng-click="clearTags($event)" class="btn btn-default btn-settings btn-xs" title="Убрать все теги из поиска">
+					<span class="glyphicon glyphicon-remove"></span>
+				</a>
+				<button class="btn btn-default btn-settings btn-xs" ng-click="openSettings()" title="Настройки">
+					<span class="glyphicon glyphicon-cog"></span>
+				</button>
+			</div>
 			<ul class="tagcloud">
 				<% @tags.each do |t| %>
 					<li data-weight="<%= t.weight %>">
 						<a ng-click="addTag($event)" href="/recipes?tag=<%= t.title %>"><%= t.title %></a>
 					</li>
 				<% end %>
-				<li><a href="/" ng-click="clearTags($event)"><span class="glyphicon glyphicon-remove"></span> убрать теги из поиска</a></li>
 			</ul>
 		</div>
 	</div>

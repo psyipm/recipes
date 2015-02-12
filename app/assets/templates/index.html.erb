@@ -15,6 +15,17 @@
 <hr>
 <section class="row" ng-if="recipes.length">
   <div class="col-md-12 nopadding-left recipe-wrapper panel" ng-repeat="n in recipes" recipe-list-rendering-directive>
+    <div class="col-md-12 admin-buttons" ng-if="user.admin">
+      <button class="btn btn-default btn-noborder btn-noborder-success btn-xs" title="Опубликовать">
+        <span class="glyphicon glyphicon-ok"></span>
+      </button>
+      <button class="btn btn-default btn-noborder btn-xs" title="Редактировать">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      <button class="btn btn-default btn-noborder btn-noborder-danger btn-xs" title="Удалить">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+    </div>
     <div class="col-md-8 col-md-offset-3 bottom-buffer-md">
       <recipe recipe="n.recipe" components="n.components" tags="n.tags" photos="n.photos"/>
     </div>

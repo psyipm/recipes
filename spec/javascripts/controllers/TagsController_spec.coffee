@@ -24,21 +24,40 @@ describe "TagsController", ->
 
   describe "addTag", ->
     search = null
-    beforeEach ()->
+    addTags = ()->
       scope.addTag getEventFor("торт")
       scope.addTag getEventFor("десерт")
       search = location.search()
 
-    it "url should contain 'tags' key", ->
-      expect(search.hasOwnProperty("tags")).toEqual(true)
+    describe "should change location", ->
+      beforeEach ()->
+        addTags()
 
-    it "tags property should be a string", ->
-      expect(typeof search.tags.split).toEqual("function")
+      it "url should contain 'tags' key", ->
+        expect(search.hasOwnProperty("tags")).toEqual(true)
 
-    it "should add multiple tags delimited by comma to url", ->
-      data = search.tags.split(",")
-      expect(data).toContain("торт")
-      expect(data).toContain("десерт")
+      it "tags property should be a string", ->
+        expect(typeof search.tags.split).toEqual("function")
+
+    describe "when multi search is off", ->
+      beforeEach ()->
+        scope.multiTagSearch = false
+        addTags()
+
+      it "should replace tag in search", ->
+        data = search.tags.split(",")
+        expect(data).toContain("десерт")
+        expect(data).not.toContain("торт")
+
+    describe "when multi is on", ->
+      beforeEach ()->
+        scope.multiTagSearch = true
+        addTags()
+
+      it "should add multiple tags delimited by comma to url", ->
+        data = search.tags.split(",")
+        expect(data).toContain("торт")
+        expect(data).toContain("десерт")
 
   describe "clearTags", ->
     search = null

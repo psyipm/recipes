@@ -8,8 +8,9 @@ angular.module('receta').factory('RecipeService', [
 		)
 
 		find: (params, offset = 0, limit = 10)-> 
+			headers = $auth.retrieveData('auth_headers')
 			Restangular.all(model)
-				.customPOST({query: params, offset: offset, limit: limit}, 'find.json')
+				.customPOST({query: params, offset: offset, limit: limit}, 'find.json', null, headers)
 
 		create: (recipe)->
 			headers = $auth.retrieveData('auth_headers')

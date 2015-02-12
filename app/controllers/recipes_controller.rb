@@ -18,12 +18,18 @@ class RecipesController < ApplicationController
 
 	def find
 		query = params[:query] || []
+		@admin = current_user.try(:admin?)
+		offset = params[:offset]
+		limit = params[:limit]
+
 		if query[:tokens] and query[:tokens].length > 0 and query[:tokens][0].length > 0
-			@recipes = Recipe.search query, params[:offset], params[:limit]
+			@recipes = Recipe.search query, offset, limit, @admin
 		elsif query[:tags] and query[:tags].length > 0
-			@recipes = Recipe.find_by_tag query[:tags], params[:offset], params[:limit]
+			@recipes = Recipe.find_by_tag query[:tags], offset, @limit, admin
+		elsif @admin == true
+			@recipes = Recipe.all().order(id: :desc).offset(offset).limit(limit)
 		else
-			@recipes = Recipe.published params[:offset], params[:limit]
+			@recipes = Recipe.published offset, limit
 		end
 	end
 

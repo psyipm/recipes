@@ -3,7 +3,7 @@ class Recipe < ActiveRecord::Base
 	has_many :tags
 	has_many :photos, dependent: :destroy
 
-	def self.search(query, offset = 0, limit = 10)
+	def self.search(query, offset = 0, limit = 10, admin = false)
 		components = query[:tokens]
 
 		args = components.join("|").mb_chars.downcase.to_s
@@ -20,7 +20,7 @@ class Recipe < ActiveRecord::Base
 
 		sql = Recipe.select("rc.*").
 				from("recipes as rc, (#{recipe_ids.to_sql}) as c").
-				where(["rc.id in (c.recipe_id) AND rc.published = ?", 1]).
+				where(["rc.id in (c.recipe_id)"]).
 				order("c.missing_comp_count").
 				offset(offset).
 				limit(limit)
@@ -37,17 +37,26 @@ class Recipe < ActiveRecord::Base
 			sql = sql.from("(#{tags_sql.to_sql}) as rc, (#{recipe_ids.to_sql}) as c")
 		end
 
+		unless admin == true
+			sql = sql.where ["rc.published = ?", 1]
+		end
+
 		recipes = sql.load
 	end
 
-	def self.find_by_tag(tag, offset = 0, limit = 10)
+	def self.find_by_tag(tag, offset = 0, limit = 10, admin = false)
 		tags = tag.join("|").mb_chars.downcase.to_s
-		Recipe.joins(:tags).
-				where("LOWER(tags.title regexp ? and recipes.published = ?)", tags, 1).
+		recipes = Recipe.joins(:tags).
+				where("LOWER(tags.title regexp ?)", tags).
 				order(id: :desc).
 				offset(offset).
 				limit(limit).
 				distinct
+
+		unless admin == true
+			recipes = recipes.where ["recipes.published = ?", 1]
+		end
+		recipes = recipes.load
 	end
 
 	def self.published(offset = 0, limit = 10)

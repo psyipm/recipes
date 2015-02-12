@@ -1,3 +1,17 @@
+.recipe-wrapper {
+  -webkit-transition: box-shadow 250ms linear;
+  -moz-transition: box-shadow 250ms linear;
+  -o-transition: box-shadow 250ms linear;
+  -ms-transition: box-shadow 250ms linear;
+  transition: box-shadow 250ms linear;
+}
+
+.recipe-wrapper:hover {
+  border-radius: 5px;
+  box-shadow: 1px 5px 10px 0px #ccc;
+  cursor: pointer;
+}
+
 recipe {
   font-size: 0.9em;
 }

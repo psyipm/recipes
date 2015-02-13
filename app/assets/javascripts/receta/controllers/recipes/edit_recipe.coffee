@@ -1,6 +1,8 @@
 angular.module('receta').controller('EditRecipeController', [
-  '$scope', '$routeParams', 'RecipeService', 'TokenfieldHelpers', 'DropZoneHelpers',
+  '$scope', '$routeParams', 'RecipeService', 'TokenfieldHelpers', 'DropZoneHelpers', 
   ($scope, $routeParams, RecipeService, tfHelpers, dz)->
+    $scope.formTitle = "Редактировать рецепт"
+
     $scope.loadComponents = (components)->
       $scope.components = (i.title for i in components)
 

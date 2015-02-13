@@ -13,8 +13,8 @@ angular.module('recetaServices').service('DropZoneHelpers', [
       @emit "addedfile", file
       @_enqueueThumbnail file
 
-      file.status = Dropzone.SUCCESS
-      @emit "success", file, response
+      # file.status = Dropzone.SUCCESS
+      # @emit "success", file, response
 
     class DropZoneHelpers
       constructor: ->
@@ -92,7 +92,12 @@ angular.module('recetaServices').service('DropZoneHelpers', [
           $(file.previewTemplate).remove()
           _self.deleteFileById(id)
     
-        $.ajax {type: "delete", url: "/photos/" + id, success: success}
+        $.ajax {
+          type: "delete", 
+          url: "/photos/" + id, 
+          success: success, 
+          headers: $auth.retrieveData 'auth_headers'
+        }
 
     new DropZoneHelpers()
 ])

@@ -1,7 +1,6 @@
 angular.module('recetaServices').service('DropZoneHelpers', [
   '$auth',
   ($auth)->
-
     _addFile = (file, response) ->
       file.upload =
         progress: 100
@@ -13,8 +12,8 @@ angular.module('recetaServices').service('DropZoneHelpers', [
       @emit "addedfile", file
       @_enqueueThumbnail file
 
-      # file.status = Dropzone.SUCCESS
-      # @emit "success", file, response
+      file.status = Dropzone.SUCCESS
+      @emit "success", file, response
 
     class DropZoneHelpers
       constructor: ->
@@ -40,6 +39,15 @@ angular.module('recetaServices').service('DropZoneHelpers', [
           })
 
         catch ignore
+          console.log ignore
+
+      reset: ()->
+        @instance.options.reset.call @instance
+        @instance.disable()
+        $(@instance.previewsContainer).empty()
+        @instance.files = []
+        @photos = []
+        @instance.enable()
 
       addUploadedFile: (photo)->
         _self = this

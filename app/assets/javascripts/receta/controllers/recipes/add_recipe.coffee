@@ -100,19 +100,22 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
       $scope.components = ""
       $scope.photos = ""
       $scope.tfHelpers.setTokens []
-      dz.removeAllFiles()
+      dz.reset()
 
     $scope.submitRecipe = ($event)->
       $event.preventDefault()
 
       data = $scope.getFormData()
+      $scope.waiting = true
 
       unless $scope.alerts.length
         RecipeService.create(data)
           .then((data)-> 
             $scope.alerts.push {type: "success", msg: data.message}
+            $scope.waiting = false
             $scope.reset()
           ,(data)->
+            $scope.waiting = false
             $scope.alerts.push {type: "danger", msg: data.data.message}
           )
 ])

@@ -25,4 +25,7 @@ angular.module('receta').factory('RecipeService', [
 
 		remove: (id)->
 			Restangular.one(model, id).remove(null, headers)
+
+		edit: (id)->
+			Restangular.oneUrl(model, "#{model}/#{id}/edit", id).post(null, null, null, headers)
 ])

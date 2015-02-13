@@ -28,9 +28,9 @@ class PhotosController < ApplicationController
     @upload = Photo.find_by id: params[:id], recipe_id: nil
     begin
       @upload.destroy
-      render json: { success: 1, message: "File deleted from server" }
+      render json: { success: 1, message: "File deleted from server" }, :status => 200
     rescue Exception => e
-      render json: { error: 1, message: "Error while deleting file" }
+      render json: { error: 1, message: "Error while deleting file" }, :status => 400
     end
   end
 

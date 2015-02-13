@@ -1,7 +1,7 @@
 angular.module('receta').directive('adminButtons', ()->
   restrict: "E"
   templateUrl: 'admin/admin_buttons.html'
-  controller: ['$scope', '$location', 'RecipeService', '$modal', ($scope, $location, RecipeService, $modal)->
+  controller: ['$scope', 'RecipeService', '$modal', ($scope, RecipeService, $modal)->
     $scope.publish = (published)->
       recipe = $scope.n.recipe
 
@@ -9,13 +9,6 @@ angular.module('receta').directive('adminButtons', ()->
         .then((data)->
           $scope.n.recipe = data.recipe
         )
-
-    # TODO: edit recipe
-    $scope.edit = ()->
-      console.log $scope
-      id = $scope.n.recipe.id
-      console.log "edit #{id}"
-      # $location.path("/recipes/#{id}/edit").search("")
 
     $scope.confirmDelete = ($index)->
       $scope.index = $index

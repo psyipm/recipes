@@ -5,9 +5,9 @@
   <button ng-if="n.recipe.published" class="btn btn-default btn-noborder btn-noborder-danger btn-xs" title="Снять с публикации" ng-click="publish(false)">
     <span class="glyphicon glyphicon-remove"></span>
   </button>
-  <button class="btn btn-default btn-noborder btn-xs" title="Редактировать" ng-click="edit()">
-    <span class="glyphicon glyphicon-pencil"></span>
-  </button>
+  <a href="/recipes/{{n.recipe.id}}/edit" class="btn btn-default btn-noborder btn-xs" title="Редактировать">
+  	<span class="glyphicon glyphicon-pencil"></span>
+  </a>
   <button class="btn btn-default btn-noborder btn-noborder-danger btn-xs" title="Удалить" ng-click="confirmDelete($index)">
     <span class="icon icon-bin"></span>
   </button>

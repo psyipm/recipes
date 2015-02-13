@@ -55,25 +55,35 @@ class RecipesController < ApplicationController
 		end
 	end
 
-	def update
+	def edit
+		authenticate_user!
 		begin
-			authenticate_user!
+			
 
+			@recipe = Recipe.find params[:id]
+
+			# render json: { success: 1, recipe: @recipe }, status => 200
+		rescue Exception => e
+			# render json: { message: "message" }, status => 400
+		end
+	end
+
+	def update
+		authenticate_user!
+		begin
 			if current_user.try(:admin?)
 				@recipe = Recipe.find params[:id]
 				@recipe.update recipe_params
 				render json: { success: 1, recipe: @recipe}, :status => 200
 			end
-			
 		rescue Exception => e
 			render json: { message: "Cannot update the recipe" }, :status => 400
 		end
 	end
 
 	def destroy
+		authenticate_user!
 		begin
-			authenticate_user!
-
 			if current_user.try(:admin?)
 				@recipe = Recipe.find params[:id]
 				ActiveRecord::Base.transaction do
@@ -83,7 +93,6 @@ class RecipesController < ApplicationController
 					@recipe.destroy
 				end
 				render json: { success: 1 }, :status => 200
-				
 			end
 		rescue Exception => e
 			render json: { message: "Cannot delete the recipe" }, :status => 400

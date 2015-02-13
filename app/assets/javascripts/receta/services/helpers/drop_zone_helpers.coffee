@@ -1,72 +1,98 @@
 angular.module('recetaServices').service('DropZoneHelpers', [
-	()->
-		class DropZoneHelpers
-			constructor: ->
-				@photos = []
-				@instance = null
+  '$auth',
+  ($auth)->
 
-			init: ->
-				try
-					_self = this
-					unless @instance == null
-						@instance.destroy()
+    _addFile = (file, response) ->
+      file.upload =
+        progress: 100
+        total: file.size
+        bytesSent: file.size
+      @files.push file
 
-					@instance = new Dropzone(document.body, {
-						url: "/photos", 
-						previewsContainer: "#previews", 
-						clickable: "#clickable",
-						maxFilesize: 1,
-						paramName: "upload[image]",
-						addRemoveLinks: true,
-						sending: (file, xhr, fd)-> _self.onSending.call _self, file, xhr, fd; return
-						success: (f, r)-> _self.onSuccess.call _self, f, r; return
-						removedfile: (f)-> _self.onRemove.call _self, f; return
-					})
+      file.status = Dropzone.ADDED
+      @emit "addedfile", file
+      @_enqueueThumbnail file
 
-				catch ignore
+      file.status = Dropzone.SUCCESS
+      @emit "success", file, response
 
-			appendFile: (id)->
-				@photos.push id if id not in @photos
-				$("#photos").val(@getPhotos true); return
+    class DropZoneHelpers
+      constructor: ->
+        @photos = []
+        @instance = null
 
-			deleteFileById: (id)->
-				photos = []
-				id = parseInt(id)
-				$.map(@photos, (val)->
-					val = parseInt(val)
-					photos.push val if val != id
-				)
-				@photos = photos
+      init: ->
+        try
+          _self = this
+          unless @instance == null
+            @instance.destroy()
 
-				$("#photos").val(@getPhotos true); return
+          @instance = new Dropzone(document.body, {
+            url: "/photos", 
+            previewsContainer: "#previews", 
+            clickable: "#clickable",
+            maxFilesize: 1,
+            paramName: "upload[image]",
+            addRemoveLinks: true,
+            sending: (file, xhr, fd)-> _self.onSending.call _self, file, xhr, fd; return
+            success: (file, response)-> _self.onSuccess.call _self, file, response; return
+            removedfile: (file)-> _self.onRemove.call _self, file; return
+          })
 
-			getPhotos: (toString = false)->
-				if toString
-					@photos.join(", ")
-				else
-					@photos
+        catch ignore
 
-			removeAllFiles: ()->
-				@photos = []
-				@instance.removeAllFiles(true)
-		
-			onSending: (file, xhr, formData)->
-				formData.append "authenticity_token", $('meta[name=csrf-token]').attr('content')
-				console.log formData
-		
-			onSuccess: (file, response)->
-				$(file.previewTemplate).find(".dz-remove").attr("data-file-id", response.file.id)
-				$(file.previewElement).addClass("dz-success")
-				@appendFile response.file.id if response.hasOwnProperty "success"
-		
-			onRemove: (file)->
-				id = $(file.previewTemplate).find(".dz-remove").attr("data-file-id")
-				_self = this
-				success = (data) ->
-					$(file.previewTemplate).remove()
-					_self.deleteFileById(id)
-		
-				$.ajax {type: "delete", url: "/photos/" + id, success: success}
+      addUploadedFile: (photo)->
+        _self = this
+        xhr = new XMLHttpRequest()
+        xhr.open("GET", photo.thumb)
+        xhr.responseType = "blob"
+        xhr.onload = ()->
+          _addFile.call _self.instance, xhr.response, { file: photo }
 
-		new DropZoneHelpers()
+        xhr.send()
+
+      appendFile: (id)->
+        @photos.push id if id not in @photos
+        $("#photos").val(@getPhotos true); return
+
+      deleteFileById: (id)->
+        photos = []
+        id = parseInt(id)
+        $.map(@photos, (val)->
+          val = parseInt(val)
+          photos.push val if val != id
+        )
+        @photos = photos
+
+        $("#photos").val(@getPhotos true); return
+
+      getPhotos: (toString = false)->
+        if toString
+          @photos.join(", ")
+        else
+          @photos
+
+      removeAllFiles: ()->
+        @photos = []
+        @instance.removeAllFiles(true)
+    
+      onSending: (file, xhr, formData)->
+        formData.append "authenticity_token", $('meta[name=csrf-token]').attr('content')
+        console.log formData
+    
+      onSuccess: (file, response)->
+        $(file.previewTemplate).find(".dz-remove").attr("data-file-id", response.file.id)
+        $(file.previewElement).addClass("dz-success")
+        @appendFile response.file.id if response.hasOwnProperty "success"
+    
+      onRemove: (file)->
+        id = $(file.previewTemplate).find(".dz-remove").attr("data-file-id")
+        _self = this
+        success = (data) ->
+          $(file.previewTemplate).remove()
+          _self.deleteFileById(id)
+    
+        $.ajax {type: "delete", url: "/photos/" + id, success: success}
+
+    new DropZoneHelpers()
 ])

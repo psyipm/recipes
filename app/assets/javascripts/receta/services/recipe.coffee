@@ -24,5 +24,5 @@ angular.module('receta').factory('RecipeService', [
 				.customPUT(recipe, "#{recipe.id}", null, headers)
 
 		remove: (id)->
-			Restangular.one(model, id).remove()
+			Restangular.one(model, id).remove(null, headers)
 ])

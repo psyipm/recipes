@@ -1,11 +1,5 @@
 angular.module('receta').directive('adminButtons', ()->
   restrict: "E"
-  scope: {
-    recipes: "=",
-    n: "=",
-    user: "=",
-    index: "="
-  }
   templateUrl: 'admin/admin_buttons.html'
   controller: ['$scope', '$location', 'RecipeService', '$modal', ($scope, $location, RecipeService, $modal)->
     $scope.publish = (published)->
@@ -18,6 +12,7 @@ angular.module('receta').directive('adminButtons', ()->
 
     # TODO: edit recipe
     $scope.edit = ()->
+      console.log $scope
       id = $scope.n.recipe.id
       console.log "edit #{id}"
       # $location.path("/recipes/#{id}/edit").search("")

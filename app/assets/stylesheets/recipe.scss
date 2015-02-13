@@ -1,14 +1,16 @@
-.recipe-wrapper {
-  -webkit-transition: box-shadow 250ms linear;
-  -moz-transition: box-shadow 250ms linear;
-  -o-transition: box-shadow 250ms linear;
-  -ms-transition: box-shadow 250ms linear;
-  transition: box-shadow 250ms linear;
+@media screen and(min-width: 992px) {
+  .recipe-wrapper {
+    margin: 0 0 0 -10px;
+    -webkit-transition: box-shadow 250ms linear;
+    -moz-transition: box-shadow 250ms linear;
+    -o-transition: box-shadow 250ms linear;
+    -ms-transition: box-shadow 250ms linear;
+    transition: box-shadow 250ms linear;
+  }
 }
 
 .recipe-wrapper:hover {
-  border-radius: 5px;
-  box-shadow: 1px 5px 10px 0px #ccc;
+  box-shadow: 0px 1px 5px 0px #ccc;
   cursor: pointer;
 }
 

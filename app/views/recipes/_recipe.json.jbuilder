@@ -1,2 +1,6 @@
+if @admin
+  	json.recipe recipe, :id, :title, :text, :serving, :cook_time, :rating, :published
+else
 	json.recipe recipe, :id, :title, :text, :serving, :cook_time, :rating
-	json.photos recipe.photos, :original, :medium, :thumb
+end
+json.photos recipe.photos, :original, :medium, :thumb

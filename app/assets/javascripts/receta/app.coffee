@@ -26,6 +26,10 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider'
         templateUrl: 'recipes/show.html',
         controller: 'ViewRecipeController'
       )
+      .when('/recipes/:id/edit'
+        templateUrl: 'recipes/new.html',
+        controller: 'EditRecipeController'
+      )
       .when('/users/login',
         templateUrl: 'user_sessions/new.html'
         controller: 'UserSessionsController'

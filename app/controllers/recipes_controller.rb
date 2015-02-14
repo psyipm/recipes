@@ -18,12 +18,18 @@ class RecipesController < ApplicationController
 
 	def find
 		query = params[:query] || []
+		@admin = current_user.try(:admin?)
+		offset = params[:offset]
+		limit = params[:limit]
+
 		if query[:tokens] and query[:tokens].length > 0 and query[:tokens][0].length > 0
-			@recipes = Recipe.search query, params[:offset], params[:limit]
+			@recipes = Recipe.search query, offset, limit, @admin
 		elsif query[:tags] and query[:tags].length > 0
-			@recipes = Recipe.find_by_tag query[:tags], params[:offset], params[:limit]
+			@recipes = Recipe.find_by_tag query[:tags], offset, limit, @admin
+		elsif @admin == true
+			@recipes = Recipe.all().order(id: :desc).offset(offset).limit(limit)
 		else
-			@recipes = Recipe.published params[:offset], params[:limit]
+			@recipes = Recipe.published offset, limit
 		end
 	end
 
@@ -49,11 +55,66 @@ class RecipesController < ApplicationController
 		end
 	end
 
+	def edit
+		authenticate_user!
+		begin
+			
+
+			@recipe = Recipe.find params[:id]
+
+			# render json: { success: 1, recipe: @recipe }, status => 200
+		rescue Exception => e
+			# render json: { message: "message" }, status => 400
+		end
+	end
+
+	def update
+		authenticate_user!
+		begin
+			if current_user.try(:admin?)
+				@recipe = Recipe.find params[:id]
+				# byebug
+				ActiveRecord::Base.transaction do
+					update_collection @recipe.tags, tag_params if params[:tags]
+					update_collection @recipe.components, component_params if params[:components]
+
+					if params[:photos]
+						photo_params.each {|p| Photo.update_urls @recipe.id, p }
+						Photo.remove_unused
+					end
+
+					@recipe.update recipe_params
+				end
+
+				render json: { success: 1, recipe: @recipe, message: "Recipe updated successfully"}, :status => 200
+			end
+		rescue Exception => e
+			render json: { message: "Cannot update the recipe", exception: e.message }, :status => 400
+		end
+	end
+
+	def destroy
+		authenticate_user!
+		begin
+			if current_user.try(:admin?)
+				@recipe = Recipe.find params[:id]
+				@recipe.destroy
+				render json: { success: 1 }, :status => 200
+			end
+		rescue Exception => e
+			render json: { message: "Cannot delete the recipe" }, :status => 400
+		end
+	end
+
   private
 	def recipe_params
-		recipe = params.require(:recipe).permit(:title, :text, :cook_time, :serving)
-		recipe[:text].gsub! /(\r\n)|(\n)/, '<br>'
-		recipe[:published] = true if current_user.try(:admin?)
+		recipe = params.require(:recipe).permit(:title, :text, :cook_time, :serving, :published)
+		unless recipe[:text].nil?
+			recipe[:text].gsub! /(\r\n)|(\n)/, '<br>'
+		end
+		if recipe[:published].nil?
+			recipe[:published] = true if current_user.try(:admin?)
+		end
 		recipe
 	end
 	def component_params
@@ -67,5 +128,15 @@ class RecipesController < ApplicationController
 	def photo_params
 		params.require :photos
 		data = params[:photos].split ", "
+	end
+	def update_collection(collection, params)
+		collection.each do |c|
+			unless params.include? c.title
+				c.destroy
+			else
+				params = params - [c.title]
+			end
+		end
+		params.each { |param| collection.create title: param }
 	end
 end

@@ -4,7 +4,7 @@ angular.module('receta')
     bindRecipeLinks = ()->
       $(".recipe-wrapper").click (e)->
         if $(e.target).hasClass("recipe-wrapper")
-          link = $(e.target).find("a").attr("href")
+          link = $(e.target).find("recipe").find("a").attr("href")
           
           $location.path(link).search({})
           scope.$apply()

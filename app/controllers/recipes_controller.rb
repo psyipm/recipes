@@ -73,11 +73,23 @@ class RecipesController < ApplicationController
 		begin
 			if current_user.try(:admin?)
 				@recipe = Recipe.find params[:id]
-				@recipe.update recipe_params
-				render json: { success: 1, recipe: @recipe}, :status => 200
+				# byebug
+				ActiveRecord::Base.transaction do
+					update_collection @recipe.tags, tag_params if params[:tags]
+					update_collection @recipe.components, component_params if params[:components]
+
+					if params[:photos]
+						photo_params.each {|p| Photo.update_urls @recipe.id, p }
+						Photo.remove_unused
+					end
+
+					@recipe.update recipe_params
+				end
+
+				render json: { success: 1, recipe: @recipe, message: "Recipe updated successfully"}, :status => 200
 			end
 		rescue Exception => e
-			render json: { message: "Cannot update the recipe" }, :status => 400
+			render json: { message: "Cannot update the recipe", exception: e.message }, :status => 400
 		end
 	end
 
@@ -86,12 +98,7 @@ class RecipesController < ApplicationController
 		begin
 			if current_user.try(:admin?)
 				@recipe = Recipe.find params[:id]
-				ActiveRecord::Base.transaction do
-					@recipe.tags.each {|t| t.destroy }
-					@recipe.components.each {|c| c.destroy }
-					@recipe.photos.each {|p| p.destroy }
-					@recipe.destroy
-				end
+				@recipe.destroy
 				render json: { success: 1 }, :status => 200
 			end
 		rescue Exception => e
@@ -121,5 +128,15 @@ class RecipesController < ApplicationController
 	def photo_params
 		params.require :photos
 		data = params[:photos].split ", "
+	end
+	def update_collection(collection, params)
+		collection.each do |c|
+			unless params.include? c.title
+				c.destroy
+			else
+				params = params - [c.title]
+			end
+		end
+		params.each { |param| collection.create title: param }
 	end
 end

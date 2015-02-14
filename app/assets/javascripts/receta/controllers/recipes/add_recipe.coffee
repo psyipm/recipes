@@ -118,4 +118,10 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
             $scope.waiting = false
             $scope.alerts.push {type: "danger", msg: data.data.message}
           )
+
+    $scope.$on('$destroy', ()->
+      dz.instance.destroy.call dz.instance
+      $scope.reset()
+      $scope = {}
+    )
 ])

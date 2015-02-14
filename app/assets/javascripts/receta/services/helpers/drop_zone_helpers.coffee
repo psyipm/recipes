@@ -68,6 +68,7 @@ angular.module('recetaServices').service('DropZoneHelpers', [
         xhr.responseType = "blob"
         xhr.onload = ()->
           _addFile.call _self.instance, xhr.response, { file: photo }
+          _self.appendFile photo.id
 
         xhr.send()
 

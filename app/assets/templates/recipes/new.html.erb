@@ -5,7 +5,7 @@
 		</div>
 		<div class="panel-body">
 			<div class="col-md-8">
-				<form class="new_recipe" id="new_recipe" action="/recipes" accept-charset="UTF-8" method="post" ng-submit="submitRecipe($event)">
+				<form class="new_recipe" id="new_recipe" action="/recipes" accept-charset="UTF-8" method="post">
 					<label for="recipe_title">Название</label>
 					<div class="form-group">
 						<input class="form-control" data-ng-model="title" type="text" name="recipe[title]" id="recipe_title" required="required">
@@ -40,7 +40,8 @@
 					<div id="previews" class="dropzone-previews"></div>
 					<input type="hidden" name="components" autocomplete="off" value="{{components.join(', ')}}" data-ng-model="components">
 					<input type="hidden" name="photos" autocomplete="off" id="photos" data-ng-model="photos">
-					<input type="submit" name="commit" value="Отправить" class="btn btn-default">
+					<input ng-if="!edit" ng-click="submitRecipe($event)" type="submit" name="commit" value="Отправить" class="btn btn-default">
+					<input ng-if="edit" ng-click="editRecipe($event)" type="submit" name="commit" value="Отправить" class="btn btn-default">
 				</form>
 				<div class="alerts">
 					<alerts />

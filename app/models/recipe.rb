@@ -1,7 +1,7 @@
 class Recipe < ActiveRecord::Base
-	has_many :components, dependent: :destroy
-	has_many :tags
-	has_many :photos, dependent: :destroy
+	has_many :components, dependent: :destroy, autosave: true
+	has_many :tags, dependent: :destroy, autosave: true
+	has_many :photos, dependent: :destroy, autosave: true
 
 	def self.search(query, offset = 0, limit = 10, admin = false)
 		components = query[:tokens]

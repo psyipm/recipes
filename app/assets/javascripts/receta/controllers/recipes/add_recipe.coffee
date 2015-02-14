@@ -106,9 +106,9 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
       $event.preventDefault()
 
       data = $scope.getFormData()
-      $scope.waiting = true
 
       unless $scope.alerts.length
+        $scope.waiting = true
         RecipeService.create(data)
           .then((data)-> 
             $scope.alerts.push {type: "success", msg: data.message}

@@ -15,6 +15,17 @@ angular.module('recetaServices').service('DropZoneHelpers', [
       file.status = Dropzone.SUCCESS
       @emit "success", file, response
 
+    Dropzone::destroy = ->
+      @disable()
+      @files = []
+      @listeners = []
+      @removeAllFiles true
+      if @hiddenFileInput?.parentNode
+        @hiddenFileInput.parentNode.removeChild @hiddenFileInput
+        @hiddenFileInput = null
+      delete @element.dropzone
+      Dropzone.instances.splice Dropzone.instances.indexOf(this), 1
+
     class DropZoneHelpers
       constructor: ->
         @photos = []
@@ -25,6 +36,7 @@ angular.module('recetaServices').service('DropZoneHelpers', [
           _self = this
           unless @instance == null
             @instance.destroy()
+            @instance = null
 
           @instance = new Dropzone(document.body, {
             url: "/photos", 

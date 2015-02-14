@@ -17,11 +17,10 @@ class Photo < ActiveRecord::Base
 
   def self.update_urls(recipe_id, id)
   	photo = Photo.find id 
-  	styles = photo.image.styles
-	photo.update recipe_id: recipe_id, 
+  	photo.update recipe_id: recipe_id, 
 				 original: photo.image.url, 
-				 medium: styles[:medium].attachment.url, 
-				 thumb: styles[:thumb].attachment.url
+				 medium: photo.image.url(:medium), 
+				 thumb: photo.image.url(:thumb)
   end
   
   def self.remove_unused

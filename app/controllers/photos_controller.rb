@@ -6,22 +6,20 @@ class PhotosController < ApplicationController
   def create
     @upload = Photo.create(upload_params)
     if @upload.save
-      styles = @upload.image.styles
-      # send success header
       render json: { 
-      				success: 1, 
+              success: 1, 
               file: {
                 id: @upload.id, 
                 original: @upload.image.url, 
-                medium: styles[:medium].attachment.url, 
-                thumb: styles[:thumb].attachment.url
+                medium: @upload.image.url(:medium), 
+                thumb: @upload.image.url(:thumb)
               }
-      			}, :status => 200
+            }, :status => 200
     else
       #  you need to send an error header, otherwise Dropzone
       #  will not interpret the response as an error:
-      render json: { error: @upload.errors.full_messages.join(', ')}, :status => 400
-    end     
+      render json: { error: @upload.errors.full_messages.join(', ')}, :status => 400      
+    end
   end
 
   def destroy

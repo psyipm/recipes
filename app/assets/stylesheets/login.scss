@@ -5,9 +5,12 @@
 .auth-providers li {
   margin-left: 15px;
 }
+.auth-providers a {
+  opacity: 0.5;
+}
 
 .auth-providers a:hover {
-  opacity: 0.5;
+  opacity: 1;
   -webkit-transition: opacity 250ms linear;
   -moz-transition: opacity 250ms linear;
   -o-transition: opacity 250ms linear;

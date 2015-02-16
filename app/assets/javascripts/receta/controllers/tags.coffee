@@ -14,7 +14,6 @@ receta.controller('TagsController', ['$scope','$location','$modal',
 
       $scope.modalInstance.result.then (isMulti)->
         $scope.multiTagSearch = isMulti
-        console.log $scope.multiTagSearch
 
     $scope.add = (text, search)->
       if search.hasOwnProperty("tags")
@@ -50,8 +49,9 @@ receta.controller('TagsController', ['$scope','$location','$modal',
 ])
 
 receta.controller('TagCloudSettingsModalController', ['$scope', ($scope)->
-  console.log $scope
+  $scope.setValue = (value)->
+    $scope.multiTagSearch = value
+    
   $scope.ok = ()->
-    console.log $scope.multiTagSearch
     $scope.modalInstance.close($scope.multiTagSearch)
 ])

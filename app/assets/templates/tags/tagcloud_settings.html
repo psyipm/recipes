@@ -1,4 +1,4 @@
-<div class="modal-header" ng-controller="TagCloudSettingsModalController">
+<div class="modal-header">
   <p class="modal-title">
     <p class="h3">Настройка поиска по тегам</p>
   </p>
@@ -6,8 +6,8 @@
 <div class="modal-body">
   <p>При клике по ссылке в облаке тегов искать:</p>
   <div class="btn-group">
-    <label class="btn btn-primary" ng-model="multiTagSearch" btn-radio="false">по одному тегу</label>
-    <label class="btn btn-primary" ng-model="multiTagSearch" btn-radio="true">по нескольким тегам</label>
+    <label class="btn btn-primary" ng-model="multiTagSearch" btn-radio="false" ng-click="setValue(false)">по одному тегу</label>
+    <label class="btn btn-primary" ng-model="multiTagSearch" btn-radio="true" ng-click="setValue(true)">по нескольким тегам</label>
   </div>
 </div>
 <div class="modal-footer">

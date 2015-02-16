@@ -31,9 +31,17 @@ gem 'angular_rails_csrf'
 
 gem "paperclip", "~> 4.1"
 
+#keep app secrets
+gem "figaro"
+
 #token authentication
 gem 'devise_token_auth'
 gem 'omniauth'
+
+gem 'omniauth-vkontakte'
+gem 'omniauth-github'
+gem 'omniauth-facebook',      :git => 'git://github.com/mkdynamic/omniauth-facebook.git'
+gem 'omniauth-google-oauth2', :git => 'git://github.com/zquestz/omniauth-google-oauth2.git'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

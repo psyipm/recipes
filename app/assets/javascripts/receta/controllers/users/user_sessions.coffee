@@ -1,5 +1,5 @@
-angular.module('receta').controller("UserSessionsController", ['$scope', '$location',
-  ($scope,$location)->
+angular.module('receta').controller("UserSessionsController", ['$scope', '$location', '$auth',
+  ($scope,$location,$auth)->
     $scope.alerts = []
 
     $scope.$on('auth:login-error', (ev, reason)->
@@ -9,4 +9,13 @@ angular.module('receta').controller("UserSessionsController", ['$scope', '$locat
     $scope.$on('auth:login-success', ()->
       $location.path('/')
     )
+
+    $scope.omniauthLogin = (provider)->
+        $auth.authenticate(provider)
+            .then((resp)->
+                console.log resp
+            )
+            .catch((resp)->
+                console.log resp
+            )
 ])

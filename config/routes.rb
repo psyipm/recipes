@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: '/api/auth'
+  get "#{::OmniAuth::config.path_prefix}/:provider/callback", to: "devise_token_auth/omniauth_callbacks#redirect_callbacks"
   
   root 'recipes#index'
   resources :recipes, only: [:index, :create, :update, :destroy]

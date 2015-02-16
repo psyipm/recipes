@@ -15,7 +15,8 @@
 /log/*
 !/log/.keep
 /tmp
-/lib/assets/bower_components/
 log/
-lib/assets/bower_components
 public/system/
+
+# Ignore application configuration
+/config/application.yml

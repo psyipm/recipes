@@ -1,0 +1,30 @@
+{
+  "name": "tx3-tag-cloud",
+  "version": "0.0.1",
+  "homepage": "https://github.com/psyipm/tx3TagCloud",
+  "authors": [
+    "Tuxes3, https://github.com/Tuxes3",
+    "psy.ipm, https://github.com/psyipm"
+  ],
+  "description": "very simple tag cloud jQuery Plugin",
+  "main": [
+    "build/jquery.tx3-tag-cloud.min.js",
+    "src/tx3-tag-cloud.css"
+  ],
+  "keywords": [
+    "jQuery",
+    "tag",
+    "cloud"
+  ],
+  "license": "THE BEER-WARE LICENSE",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3"
+  }
+}

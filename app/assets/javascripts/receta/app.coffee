@@ -11,8 +11,8 @@ receta = angular.module('receta',[
   'ngDisqus'
 ])
 
-receta.config([ '$routeProvider','$locationProvider','$disqusProvider'
-  ($routeProvider,$locationProvider,$disqusProvider)->
+receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authProvider',
+  ($routeProvider,$locationProvider,$disqusProvider,$authProvider)->
     $routeProvider
       .when('/',
         templateUrl: "index.html"
@@ -45,4 +45,13 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider'
     $locationProvider.html5Mode(true)
 
     $disqusProvider.setShortname "recipes4you"
+
+    $authProvider.configure({
+      authProviderPaths: {
+        vkontakte: '/auth/vkontakte'
+        github: '/auth/github'
+        facebook: '/auth/facebook'
+        google_oauth2: '/auth/google_oauth2'
+      }
+    });
 ])

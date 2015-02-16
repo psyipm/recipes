@@ -14,7 +14,6 @@
 }
 
 .header-logo {
-	width: 75px;
     height: 75px;
     margin: 0 25px 10px 25px;
 }
@@ -31,11 +30,12 @@ header .navbar {
 }
 
 header ul.nav {
-    margin: 15px 0;
+    margin: 17px 0;
 }
 
 header ul.nav > li > a {
 	color: #c9c9c9 !important;
+    cursor: pointer;
 }
 
 header ul.nav > li > a:hover {

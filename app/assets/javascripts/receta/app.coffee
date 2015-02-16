@@ -38,6 +38,10 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
         templateUrl: 'user_regisrations/new.html'
         controller: 'UserRegistrationsController'
       )
+      .when('/users/update-password',
+        templateUrl: 'update_password.html'
+        controller: 'UserPasswordUpdateController'
+      )
       # .otherwise(
       #   redirectTo: '/'
       # )

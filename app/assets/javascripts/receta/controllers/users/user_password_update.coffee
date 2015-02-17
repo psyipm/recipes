@@ -20,7 +20,7 @@ angular.module('receta').controller('UserPasswordUpdateController',
         .catch((resp)->
           $scope.waiting = false
           for field, message of resp.data.errors
-            $scope.alerts.push {type: "danger", msg: "#{fields[field]}: #{message}"}
+            $scope.alerts.push {type: "danger", msg: "#{fields[field]}: #{message}"} if typeof message is "string"
             continue
         )
   ])

@@ -144,7 +144,6 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql2 (0.3.17)
     nenv (0.1.1)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
@@ -179,6 +178,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    pg (0.18.1)
     phantomjs (1.9.7.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -273,13 +273,13 @@ DEPENDENCIES
   figaro
   guard-teaspoon
   jbuilder (~> 2.0)
-  mysql2
   omniauth
   omniauth-facebook!
   omniauth-github
   omniauth-google-oauth2!
   omniauth-vkontakte
   paperclip (~> 4.1)
+  pg
   phantomjs
   rails (= 4.2.0)
   sass-rails (~> 5.0)

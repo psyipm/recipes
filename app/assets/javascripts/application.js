@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery-ujs
-//= require jquery-ui
+//= require vendor
 //= require bootstrap
 //= require angular
 //= require angular-route

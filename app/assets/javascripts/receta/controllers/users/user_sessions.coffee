@@ -7,7 +7,7 @@ angular.module('receta').controller("UserSessionsController", ['$scope', '$locat
     )
 
     $scope.$on('auth:login-success', ()->
-      $location.path('/')
+      window.location.href = "/"
     )
 
     $scope.omniauthLogin = (provider)->

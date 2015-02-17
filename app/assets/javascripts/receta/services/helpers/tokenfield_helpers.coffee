@@ -9,7 +9,16 @@ angular.module('recetaServices')
 		
 		init: (autoCompleteSource, minLength = 2)->
 			@sourceFn = autoCompleteSource
-			tfparams = `{ autocomplete: { source: this.sourceFn, delay: 300, minLength: minLength, select: this.getSelectFn() }, showAutocompleteOnFocus: true }`
+			tfparams = { 
+				autocomplete: { 
+					source: this.sourceFn, 
+					delay: 300, 
+					minLength: minLength, 
+					select: this.getSelectFn()
+				}, 
+				createTokensOnBlur: true 
+				showAutocompleteOnFocus: true 
+			}
 			@keyInput.tokenfield tfparams	
 
 		getSelectFn: ()->

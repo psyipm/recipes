@@ -64,3 +64,13 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
       storage: 'localStorage'
     });
 ])
+
+.run(->
+  console.log "run"
+  rm = ()->
+    $(".incap_btn-area").fadeOut()
+
+  $(document).ready(()->
+    window.setTimeout((-> rm()), 2000)
+  )
+)

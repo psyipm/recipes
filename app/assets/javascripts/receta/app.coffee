@@ -42,6 +42,10 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
         templateUrl: 'update_password.html'
         controller: 'UserPasswordUpdateController'
       )
+      .when('/users/reset-password',
+        templateUrl: 'reset_password.html'
+        controller: 'UserPasswordResetController'
+      )
       # .otherwise(
       #   redirectTo: '/'
       # )
@@ -57,5 +61,6 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
         facebook: '/auth/facebook'
         google_oauth2: '/auth/google_oauth2'
       }
+      storage: 'localStorage'
     });
 ])

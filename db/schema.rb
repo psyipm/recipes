@@ -13,66 +13,69 @@
 
 ActiveRecord::Schema.define(version: 20150128113036) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "components", force: :cascade do |t|
-    t.string  "title",     limit: 255
-    t.integer "recipe_id", limit: 4
+    t.string  "title"
+    t.integer "recipe_id"
   end
 
   add_index "components", ["recipe_id"], name: "index_components_on_recipe_id", using: :btree
 
   create_table "photos", force: :cascade do |t|
-    t.string   "original",           limit: 255
-    t.string   "medium",             limit: 255
-    t.string   "thumb",              limit: 255
-    t.integer  "recipe_id",          limit: 4
-    t.string   "image_file_name",    limit: 255
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size",    limit: 4
+    t.integer  "recipe_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "original"
+    t.string   "medium"
+    t.string   "thumb"
   end
 
   add_index "photos", ["recipe_id"], name: "index_photos_on_recipe_id", using: :btree
 
   create_table "recipes", force: :cascade do |t|
     t.string   "title",      limit: 512
-    t.text     "text",       limit: 65535
-    t.integer  "serving",    limit: 4
-    t.integer  "cook_time",  limit: 4
-    t.integer  "rating",     limit: 4,     default: 0
-    t.boolean  "published",  limit: 1,     default: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.text     "text"
+    t.integer  "serving"
+    t.integer  "cook_time"
+    t.integer  "rating",                 default: 0
+    t.boolean  "published",              default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string  "title",     limit: 255
-    t.integer "recipe_id", limit: 4
+    t.string  "title"
+    t.integer "recipe_id"
   end
 
   add_index "tags", ["recipe_id"], name: "index_tags_on_recipe_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider",               limit: 255,                   null: false
-    t.string   "uid",                    limit: 255,   default: "",    null: false
-    t.string   "encrypted_password",     limit: 255,   default: "",    null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "provider",                               null: false
+    t.string   "uid",                    default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,     default: 0,     null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.string   "confirmation_token",     limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",      limit: 255
-    t.string   "name",                   limit: 255
-    t.string   "nickname",               limit: 255
-    t.string   "image",                  limit: 255
-    t.string   "email",                  limit: 255
-    t.boolean  "admin",                  limit: 1,     default: false
-    t.text     "tokens",                 limit: 65535
+    t.string   "unconfirmed_email"
+    t.string   "name"
+    t.string   "nickname"
+    t.string   "image"
+    t.string   "email"
+    t.boolean  "admin",                  default: false
+    t.text     "tokens"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

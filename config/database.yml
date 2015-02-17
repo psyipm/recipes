@@ -31,7 +31,7 @@
 #   database: recipes_prod
 
 default: &default
-  adapter: pg
+  adapter: postgresql
   encoding: utf8
   reconnect: false
   database: d6pdg1uc6feimr
@@ -43,14 +43,14 @@ default: &default
 
 development:
   <<: *default
-  database: recipes_dev
+  database: d6pdg1uc6feimr
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: recipes_test
+  database: d6pdg1uc6feimr
 
 production:
   <<: *default

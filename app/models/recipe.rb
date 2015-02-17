@@ -38,7 +38,7 @@ class Recipe < ActiveRecord::Base
 		end
 
 		unless admin == true
-			sql = sql.where ["rc.published = ?", 1]
+			sql = sql.where ["rc.published = ?", true]
 		end
 
 		recipes = sql.load
@@ -54,12 +54,12 @@ class Recipe < ActiveRecord::Base
 				distinct
 
 		unless admin == true
-			recipes = recipes.where ["recipes.published = ?", 1]
+			recipes = recipes.where ["recipes.published = ?", true]
 		end
 		recipes = recipes.load
 	end
 
 	def self.published(offset = 0, limit = 10)
-		Recipe.where(["published = ?", 1]).order(id: :desc).offset(offset).limit(limit)
+		Recipe.where(["published = ?", true]).order(id: :desc).offset(offset).limit(limit)
 	end
 end

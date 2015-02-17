@@ -1,0 +1,48 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+#
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: recipes_dev
+  pool: 5
+  username: recipeman
+  password: 123456
+  host: localhost
+  port: 3306
+
+heroku: &heroku
+  adapter: postgresql
+  encoding: utf8
+  reconnect: false
+  database: d6pdg1uc6feimr
+  pool: 5
+  username: qlbvtgqfkcewbp
+  password: 5fcs_5eRvUlIwpI6lUiazokDS1
+  host: ec2-107-22-249-138.compute-1.amazonaws.com
+  port: 5432
+
+development:
+  <<: *default
+  database: recipes_dev
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+# test:
+#   <<: *default
+#   database: recipes_test
+
+# production:
+#   <<: *default
+#   database: recipes_dev
+
+development:
+  <<: *heroku
+
+production:
+  <<: *heroku

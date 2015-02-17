@@ -179,6 +179,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    pg (0.18.1)
     phantomjs (1.9.7.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -280,6 +281,7 @@ DEPENDENCIES
   omniauth-google-oauth2!
   omniauth-vkontakte
   paperclip (~> 4.1)
+  pg
   phantomjs
   rails (= 4.2.0)
   sass-rails (~> 5.0)

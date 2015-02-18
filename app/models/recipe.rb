@@ -3,6 +3,8 @@ class Recipe < ActiveRecord::Base
 	has_many :tags, dependent: :destroy, autosave: true
 	has_many :photos, dependent: :destroy, autosave: true
 
+	self.per_page = 10
+
 	def self.search(query, offset = 0, limit = 10, admin = false)
 		components = query[:tokens]
 

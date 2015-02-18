@@ -46,6 +46,9 @@ gem 'omniauth-github'
 gem 'omniauth-facebook',      :git => 'git://github.com/mkdynamic/omniauth-facebook.git'
 gem 'omniauth-google-oauth2', :git => 'git://github.com/zquestz/omniauth-google-oauth2.git'
 
+# paged list
+gem 'will_paginate-bootstrap'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

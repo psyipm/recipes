@@ -32,9 +32,9 @@
 						<li><a ng-show="!user.id" ng-href="/#/users/register">Регистрация</a></li>
 						<li><a ng-show="user.id" ng-click="signOut()">Выйти</a></li>
 					</ul>
-<!-- 					<ul class="nav navbar-nav">
-						<li><a href="#">Link</a></li>
-					</ul> -->
+					<ul class="nav navbar-nav">
+						<li><a target="_self" href="/browse/?page=1">Все рецепты</a></li>
+					</ul>
 		</li>
 		</ul>
 				</div><!-- /.navbar-collapse -->
@@ -43,6 +43,12 @@
 	</header>
 
 	<div class="maincontent col-md-12">
+		<noscript>
+			<div class="noscript-msg">
+				<p class="h3">Внимание! Для правильной работы сайта</p>
+				<h1>включите Javascript в настройках браузера</h1>
+			</div>
+		</noscript>
 		<%= yield %>
 	</div>
 	

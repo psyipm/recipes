@@ -5,9 +5,6 @@ class RecipesController < ApplicationController
 
 	def index
 		@tags = Tag.cloud
-		if params[:tag]
-			@recipes = Recipe.find_by_tag params[:tag]
-		end
 	end
 
 	def show
@@ -73,7 +70,6 @@ class RecipesController < ApplicationController
 		begin
 			if current_user.try(:admin?)
 				@recipe = Recipe.find params[:id]
-				# byebug
 				ActiveRecord::Base.transaction do
 					update_collection @recipe.tags, tag_params if params[:tags]
 					update_collection @recipe.components, component_params if params[:components]

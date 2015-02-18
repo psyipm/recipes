@@ -3,8 +3,8 @@ Array::unique = ->
     output[@[key]] = @[key] for key in [0...@length]
     value for key, value of output
 
-angular.module('receta').controller("RecipesController", ['$scope','$location','TokenfieldHelpers','Component','RecipeService', 
-  ($scope,$location,tf,Component,RecipeService)->
+angular.module('receta').controller("RecipesController", ['$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService', 
+  ($scope,$location,$routeParams,tf,Component,RecipeService)->
     $scope.tfCallback = (request, response)->
       Component.find(request.term, (c)-> response(c))
 
@@ -15,6 +15,15 @@ angular.module('receta').controller("RecipesController", ['$scope','$location','
 
     $scope.recipes = []
     $scope.offset = 0
+
+    buildQuery = ()->
+      query = {}
+      if $routeParams.hasOwnProperty "components"
+        $scope.tokenhelpers.setTokens $routeParams.components
+        query = $.extend true, query, {tokens: $scope.tokenhelpers.getTokens()}
+      if $routeParams.hasOwnProperty "tags"
+        query = $.extend true, query, {tags: $routeParams.tags.split(",")}
+      query
 
     searchCallback = (recipes, replace = false)->
       $scope.no_more = false
@@ -29,19 +38,12 @@ angular.module('receta').controller("RecipesController", ['$scope','$location','
       try
         tokens = $scope.tokenhelpers.getTokens()
         $location.search("components", tokens.join(","))
-        RecipeService.find({tokens: tokens}, $scope.offset).then((res)-> searchCallback res, load_more) if load_more is true
+        RecipeService.find(buildQuery(), $scope.offset).then((res)-> searchCallback res, load_more) if load_more is true
       catch e
         console.log e   
 
     $scope.searchFromLocation = ()->
-      search = $location.search()
-      query = {}
-      if search.hasOwnProperty "components"
-        $scope.tokenhelpers.setTokens search.components
-        query = $.extend true, query, {tokens: $scope.tokenhelpers.getTokens()}
-      if search.hasOwnProperty "tags"
-        query = $.extend true, query, {tags: search.tags.split(",")}
-
+      query = buildQuery()
       RecipeService.find(query, $scope.offset).then((res)-> searchCallback res) unless $.isEmptyObject query
 
     $(".fotorama").fotorama()

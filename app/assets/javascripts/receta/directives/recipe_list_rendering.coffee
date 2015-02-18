@@ -1,5 +1,5 @@
 angular.module('receta')
-.directive('recipeListRenderingDirective', ['fotorama', '$location', (fotorama, $location)->
+.directive('recipeListRenderingDirective', ['$rootScope', 'fotorama', '$location', '$timeout', ($rootScope, fotorama, $location, $timeout)->
   (scope, element, attrs)->
     bindRecipeLinks = ()->
       $(".recipe-wrapper").click (e)->
@@ -12,6 +12,7 @@ angular.module('receta')
     if scope.$last
       bindRecipeLinks()
       fotorama.apply()
+      $timeout((-> $rootScope.$broadcast("recipeList:rendering-complete") ), 1)
 
     return
 ])

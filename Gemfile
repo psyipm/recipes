@@ -58,9 +58,15 @@ gem 'omniauth-google-oauth2', :git => 'git://github.com/zquestz/omniauth-google-
 group :development, :test do
   gem 'byebug'
 
+  #format inspect output
+  gem 'awesome_print'
+
   gem 'teaspoon'
   gem 'guard-teaspoon'
 
   gem 'phantomjs'
 end
 
+group :production do
+	gem 'rails_12factor'
+end

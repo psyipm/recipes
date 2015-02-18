@@ -18,7 +18,8 @@
         "angular-cookie": "latest",
         "restangular": "v1.4.0",
         "angular-bootstrap": "v0.11.0",
-        "angular-disqus": "1.1.0"
+        "angular-disqus": "1.1.0",
+        "tooltipster": "3.3.0"
     }
   },
   "vendor": {

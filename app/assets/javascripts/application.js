@@ -26,6 +26,7 @@
 //= require restangular
 //= require angular-bootstrap
 //= require angular-disqus
+//= require tooltipster
 
 //= require receta/app
 //= require_tree ../templates

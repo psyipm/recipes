@@ -31,9 +31,13 @@
   color: #d2322d !important;
 }
 
+.right {
+  float: right;
+}
+
 .right-center {
+  @extend .right;
 	padding: 10px 0;
-	float: right;
 }
 
 .ajax-loader {
@@ -52,4 +56,12 @@
   border-radius: 5px;
   margin: 10px 0;
   padding: 10px;
+}
+
+.rulez {
+  color: green;
+}
+
+.sux {
+  color: red;
 }

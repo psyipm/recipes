@@ -22,6 +22,6 @@
   <div class="col-md-12 nopadding-left">
     <span title="Порции" ng-if="recipe.serving"><span class="icon icon-spoon-knife"></span> {{recipe.serving}} |</span>
     <span title="Время приготовления" ng-if="recipe.cook_time"> <span class="glyphicon glyphicon-time"></span> {{recipe.cook_time}} минут | </span>
-    <span title="Рейтинг"> <span class="glyphicon glyphicon-heart"></span> {{recipe.rating || 0}}</span>
+    <recipe-rating recipe="recipe"></recipe-rating>
   </div>
 </section>

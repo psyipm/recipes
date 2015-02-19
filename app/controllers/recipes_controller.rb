@@ -89,6 +89,23 @@ class RecipesController < ApplicationController
 		end
 	end
 
+	def update_rating
+		@id, @rate = rating_params
+
+		if allow_rate?
+			@recipe = Recipe.find @id
+			@recipe.rating += @rate
+			if @recipe.save
+				save_to_session @id
+				render json: { success: 1, rating: @recipe.rating }, :status => 200
+			else
+				render json: { error: "Unable to save recipe" }, :status => 400
+			end
+		else
+			render json: { error: "You already rated this recipe" }, :status => 400
+		end
+	end
+
 	def destroy
 		authenticate_user!
 		begin
@@ -125,6 +142,11 @@ class RecipesController < ApplicationController
 		params.require :photos
 		data = params[:photos].split ", "
 	end
+	def rating_params
+		params.require(:id)
+		params.require(:rate)
+		return params[:id], params[:rate]
+	end
 	def update_collection(collection, params)
 		collection.each do |c|
 			unless params.include? c.title
@@ -134,5 +156,24 @@ class RecipesController < ApplicationController
 			end
 		end
 		params.each { |param| collection.create title: param }
+	end
+	def allow_rate?
+		@session_key = (@rate == 1) ? :liked_recipes : :disliked_recipes
+		@inverted_key = (@rate == -1) ? :liked_recipes : :disliked_recipes
+
+		unless session[@inverted_key].respond_to? :include?
+			session[@inverted_key] = Array.new
+		end
+
+		if session[@session_key].respond_to? :include?
+			return !session[@session_key].include?(@id)
+		else
+			session[@session_key] = Array.new
+			return true
+		end
+	end
+	def save_to_session(id)
+		session[@session_key].push id
+		session[@inverted_key] -= [id]
 	end
 end

@@ -19,16 +19,17 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
         controller: 'RecipesController'
       )
       .when('/recipes/new'
-        templateUrl: 'recipes/new.html',
+        templateUrl: 'recipes/new.html'
         controller: 'AddRecipeController'
       )
       .when('/recipes/:id'
-        templateUrl: 'recipes/show.html',
+        templateUrl: 'recipes/show.html'
         controller: 'ViewRecipeController'
       )
       .when('/recipes/:id/edit'
-        templateUrl: 'recipes/new.html',
+        templateUrl: 'recipes/new.html'
         controller: 'EditRecipeController'
+        restricted: true
       )
       .when('/users/login',
         templateUrl: 'user_sessions/new.html'
@@ -41,6 +42,7 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
       .when('/users/update-password',
         templateUrl: 'update_password.html'
         controller: 'UserPasswordUpdateController'
+        restricted: true
       )
       .when('/users/reset-password',
         templateUrl: 'reset_password.html'
@@ -65,12 +67,17 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
     });
 ])
 
-.run(->
-  console.log "run"
-  rm = ()->
-    $(".incap_btn-area").fadeOut()
-
-  $(document).ready(()->
-    window.setTimeout((-> rm()), 2000)
+.run(['$rootScope', '$location', '$auth', ($rootScope, $location, $auth)->
+  $rootScope.$on('$routeChangeStart', (event, next)->
+    if next.restricted
+      promise = $auth.validateUser()
+      promise.then(
+        (valid)->
+          # it's ok, ignore
+        , 
+        (error)->
+          console.log "User validation error. Reason: #{error.reason}"
+          $location.path('/users/login') unless $auth.user.admin
+      )
   )
-)
+])

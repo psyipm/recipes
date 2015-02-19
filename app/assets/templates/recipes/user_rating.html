@@ -1,0 +1,12 @@
+<span>
+  <span class="rating" title="Рейтинг">
+    <span class="icon icon-heart"></span>
+    {{recipe.rating || 0}}
+  </span>
+
+  <span class="user-rating right" title="Ваша оценка">
+    <button class="btn btn-default btn-noborder btn-noborder-success">
+      <span id="recipe-{{recipe.id}}-rating" class="icon icon-heart"></span>
+    </button>
+  </span>
+</span>

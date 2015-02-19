@@ -1,6 +1,6 @@
-@media screen and(min-width: 992px) {
+@media only screen and(min-width: 992px) {
   .recipe-wrapper {
-    margin: 0 0 0 -10px;
+    margin: 0 0 10px -10px;
     -webkit-transition: box-shadow 250ms linear;
     -moz-transition: box-shadow 250ms linear;
     -o-transition: box-shadow 250ms linear;

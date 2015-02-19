@@ -26,6 +26,7 @@
 //= require restangular
 //= require angular-bootstrap
 //= require angular-disqus
+//= require angular-local-storage
 
 //= require receta/app
 //= require_tree ../templates
@@ -33,6 +34,7 @@
 //= require_tree ./receta/filters
 //= require_tree ./receta/directives
 //= require_tree ./receta/models
+//= require ./receta/services/receta_services
 //= require_tree ./receta/services
 //= require_tree ./receta/controllers
 

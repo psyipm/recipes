@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   post 'recipes/find'
   post 'recipes/:id', to: 'recipes#show', defaults: { format: 'json' }
   post 'recipes/:id/edit', to: 'recipes#edit', defaults: { format: 'json' }
+  post 'recipes/:id/rating', to: 'recipes#update_rating', defaults: { format: 'json' }
 
   post 'components/find'
   post 'components/get'

@@ -1,4 +1,4 @@
-angular.module('recetaServices').service('Rating', ['localStorageService', (localStorageService)->
+angular.module('recetaServices').service('Rating', ['localStorageService', 'RecipeService', (localStorageService, RecipeService)->
   _key = 'rated_recipes'
   
   _recipes = {
@@ -6,21 +6,21 @@ angular.module('recetaServices').service('Rating', ['localStorageService', (loca
     disliked: localStorageService.get(_key).disliked or []
   }
 
-  _persist = ()->
+  _persist = (recipe_id = null, rate = 0)->
     localStorageService.set(_key, _recipes)
+    unless recipe_id == null and rate != 0
+      RecipeService.update_rating recipe_id, rate
 
   _remove = (array, recipe_id)->
     index = _recipes[array].indexOf recipe_id
     if index != -1
       _recipes[array].splice index, 1
-      _persist()
       return true
     return false
 
   _push = (array, recipe_id)->
     unless recipe_id in _recipes[array]
       _recipes[array].push recipe_id 
-      _persist()
       return true
     return false
 
@@ -28,6 +28,7 @@ angular.module('recetaServices').service('Rating', ['localStorageService', (loca
     like: (recipe_id)->
       _remove 'disliked', recipe_id
       result = _push 'liked', recipe_id
+      _persist(recipe_id, 1) if result
 
       #debug
       console.log localStorageService.get(_key)
@@ -37,6 +38,7 @@ angular.module('recetaServices').service('Rating', ['localStorageService', (loca
     dislike: (recipe_id)->
       _remove 'liked', recipe_id
       result = _push 'disliked', recipe_id
+      _persist(recipe_id, -1) if result
 
       #debug
       console.log localStorageService.get(_key)

@@ -28,4 +28,8 @@ angular.module('receta').factory('RecipeService', [
 
 		edit: (id)->
 			Restangular.oneUrl(model, "#{model}/#{id}/edit", id).post(null, null, null, headers)
+
+		update_rating: (id, rate)->
+			Restangular.oneUrl(model, "#{model}/#{id}/rating", id)
+				.customPOST({id: id, rate: rate}, null, null, headers)
 ])

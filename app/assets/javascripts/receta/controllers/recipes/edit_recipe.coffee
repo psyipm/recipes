@@ -54,7 +54,7 @@ angular.module('receta').controller('EditRecipeController', [
 
     $scope.$on('$destroy', ()->
       dz.instance.destroy.call dz.instance
-      $scope.editCtrlScope.reset()
+      $scope.editCtrlScope.reset() if $scope.editCtrlScope
       $scope = {}
     )          
 ])

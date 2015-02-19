@@ -70,6 +70,14 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
 .run(['$rootScope', '$location', '$auth', ($rootScope, $location, $auth)->
   $rootScope.$on('$routeChangeStart', (event, next)->
     if next.restricted
-      $location.path('/users/login') unless $auth.user.id
+      promise = $auth.validateUser()
+      promise.then(
+        (valid)->
+          # it's ok, ignore
+        , 
+        (error)->
+          console.log "User validation error. Reason: #{error.reason}"
+          $location.path('/users/login') unless $auth.user.admin
+      )
   )
 ])

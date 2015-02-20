@@ -1,8 +1,12 @@
 angular.module('recetaServices', [
-	'LocalStorageModule'
+	'LocalStorageModule',
+	'angular-md5'
 ])
 
 .config((localStorageServiceProvider)->
 	localStorageServiceProvider
-		.setPrefix 'receta'
+		.setStorageType('localStorage')
+		.setPrefix('receta')
+		
+	return
 )

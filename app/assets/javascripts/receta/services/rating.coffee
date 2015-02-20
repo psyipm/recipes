@@ -1,9 +1,10 @@
 angular.module('recetaServices').service('Rating', ['localStorageService', 'RecipeService', (localStorageService, RecipeService)->
   _key = 'rated_recipes'
+  _cached = localStorageService.get(_key) or {}
   
   _recipes = {
-    liked: localStorageService.get(_key).liked or []
-    disliked: localStorageService.get(_key).disliked or []
+    liked: if _cached.hasOwnProperty("liked") then _cached.liked else []
+    disliked: if _cached.hasOwnProperty("disliked") then _cached.disliked else []
   }
 
   _persist = (recipe_id = null, rate = 0)->

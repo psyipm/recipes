@@ -27,6 +27,7 @@
 //= require angular-bootstrap
 //= require angular-disqus
 //= require angular-local-storage
+//= require angular-md5
 
 //= require receta/app
 //= require_tree ../templates

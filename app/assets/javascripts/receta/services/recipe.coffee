@@ -1,6 +1,6 @@
 angular.module('receta').factory('RecipeService', [
-	'Restangular', 'Recipe', '$auth',
-	(Restangular, Recipe, $auth)->
+	'Restangular', 'Recipe', '$auth', 'queryCache',
+	(Restangular, Recipe, $auth, queryCache)->
 		model = 'recipes'
 
 		Restangular.extendModel(model, (obj)->
@@ -10,8 +10,12 @@ angular.module('receta').factory('RecipeService', [
 		headers = $auth.retrieveData('auth_headers')
 
 		find: (params, offset = 0, limit = 10)-> 
-			Restangular.all(model)
-				.customPOST({query: params, offset: offset, limit: limit}, 'find.json', null, headers)
+			query = {query: params, offset: offset, limit: limit}
+			callback = ()->
+				Restangular.all(model)
+					.customPOST(query, 'find.json', null, headers)
+
+			queryCache.fromCache(query, callback)
 
 		create: (recipe)->
 			Restangular.all(model).post(recipe, null, headers)

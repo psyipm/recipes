@@ -19,7 +19,8 @@
         "restangular": "v1.4.0",
         "angular-bootstrap": "v0.11.0",
         "angular-disqus": "1.1.0",
-        "angular-local-storage": "0.1.5"
+        "angular-local-storage": "0.1.5",
+        "angular-md5":"0.1.7"
     }
   },
   "vendor": {

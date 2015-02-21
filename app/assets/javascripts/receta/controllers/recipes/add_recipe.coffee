@@ -1,5 +1,6 @@
-angular.module('receta').controller("AddRecipeController", ['$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers', 'Component', 'Tag', 'RecipeService',
-  ($scope,$http,dz,tf,Component,Tag,RecipeService)->
+angular.module('receta').controller("AddRecipeController", [
+  '$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers', 'Component', 'Tag', 'RecipeService', 'queryCache',
+  ($scope,$http,dz,tf,Component,Tag,RecipeService,Cache)->
     tfCallback = (request, response) ->
       Tag.find request.term, (t)-> response(t)
 
@@ -113,6 +114,7 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
           .then((data)-> 
             $scope.alerts.push {type: "success", msg: data.message}
             $scope.waiting = false
+            $scope.invalidateCache = true
             $scope.reset()
           ,(data)->
             $scope.waiting = false
@@ -120,8 +122,11 @@ angular.module('receta').controller("AddRecipeController", ['$scope', '$http', '
           )
 
     $scope.$on('$destroy', ()->
+      # debug
+      console.log "destroy"
       dz.instance.destroy.call dz.instance
       $scope.reset()
+      Cache.clearAll() if $scope.invalidateCache
       $scope = {}
     )
 ])

@@ -1,4 +1,4 @@
-<div class="col-md-12 admin-buttons" ng-if="user.admin">
+<div class="col-md-12 admin-buttons" ng-if="user.admin && n.recipe.id">
   <button ng-if="!n.recipe.published" class="btn btn-default btn-noborder btn-noborder-success btn-xs" title="Опубликовать" ng-click="publish(true)">
     <span class="glyphicon glyphicon-ok"></span>
   </button>

@@ -3,7 +3,8 @@ Array::unique = ->
     output[@[key]] = @[key] for key in [0...@length]
     value for key, value of output
 
-angular.module('receta').controller("RecipesController", ['$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService', 
+angular.module('receta').controller("RecipesController", [
+  '$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService', 
   ($scope,$location,$routeParams,tf,Component,RecipeService)->
     $scope.tfCallback = (request, response)->
       Component.find(request.term, (c)-> response(c))
@@ -28,8 +29,8 @@ angular.module('receta').controller("RecipesController", ['$scope','$location','
     searchCallback = (recipes, replace = false)->
       $scope.no_more = false
       $scope.recipes = unless replace is true then recipes else [].concat($scope.recipes, recipes)
-      unless recipes.length < 10
-        $scope.offset += 10
+      unless recipes.length < RecipeService.per_page
+        $scope.offset += RecipeService.per_page
       else
         $scope.no_more = true
       $("#more").attr("disabled", $scope.no_more)

@@ -16,6 +16,7 @@ angular.module('receta').factory('RecipeService', [
 					.customPOST(query, 'find.json', null, headers)
 
 			queryCache.fromCache(query, callback)
+			# callback()
 
 		create: (recipe)->
 			Restangular.all(model).post(recipe, null, headers)
@@ -36,4 +37,6 @@ angular.module('receta').factory('RecipeService', [
 		update_rating: (id, rate)->
 			Restangular.oneUrl(model, "#{model}/#{id}/rating", id)
 				.customPOST({id: id, rate: rate}, null, null, headers)
+
+		per_page: 10
 ])

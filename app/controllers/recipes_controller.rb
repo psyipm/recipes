@@ -18,15 +18,30 @@ class RecipesController < ApplicationController
 		@admin = current_user.try(:admin?)
 		offset = params[:offset]
 		limit = params[:limit]
+		search_query = ""
 
 		if query[:tokens] and query[:tokens].length > 0 and query[:tokens][0].length > 0
+			search_query = query[:tokens].join("|").mb_chars.downcase.to_s
 			@recipes = Recipe.search query, offset, limit, @admin
 		elsif query[:tags] and query[:tags].length > 0
+			search_query += "|" + query[:tags].join("|").mb_chars.downcase.to_s
 			@recipes = Recipe.find_by_tag query[:tags], offset, limit, @admin
 		elsif @admin == true
 			@recipes = Recipe.all().order(id: :desc).offset(offset).limit(limit)
 		else
 			@recipes = Recipe.published offset, limit
+		end
+
+		if @recipes.length < Recipe.per_page
+			pages = ENV['vk_public_pages'].split("|")
+			vk = VkontakteApi::Client.new
+			if search_query.length > 0
+				data = vk.wall.search domain: pages.sample, query: search_query, offset: offset, count: limit*2
+			else
+				data = vk.wall.get domain: pages.sample, offset: offset, count: limit*2
+			end
+			@recipes = Parse.get_posts data
+		  render :json => @recipes.first(limit), status => 200
 		end
 	end
 
@@ -80,9 +95,10 @@ class RecipesController < ApplicationController
 					end
 
 					@recipe.update recipe_params
+					render json: { success: 1, recipe: @recipe, message: "Recipe updated successfully"}, :status => 200
 				end
-
-				render json: { success: 1, recipe: @recipe, message: "Recipe updated successfully"}, :status => 200
+			else
+				render json: { message: "You are not allowed to edit" }, :status => 400
 			end
 		rescue Exception => e
 			render json: { message: "Cannot update the recipe", exception: e.message }, :status => 400

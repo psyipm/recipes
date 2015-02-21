@@ -38,8 +38,8 @@ angular.module('recetaServices').service('queryCache', [
 			localStorageService.get(key)
 
 		clearAll = ()->
-			for key in localStorageService.getKeys()
-				localStorageService.remove(key) if key.indexOf _prefix == 0
+			for key in localStorageService.keys()
+				localStorageService.remove(key) if key.indexOf(_prefix) == 0
 			return
 
 		fromCache = (query, callback)->

@@ -36,12 +36,12 @@ class RecipesController < ApplicationController
 			pages = ENV['vk_public_pages'].split("|")
 			vk = VkontakteApi::Client.new
 			if search_query.length > 0
-				data = vk.wall.search domain: pages.sample, query: search_query, offset: offset, count: limit*2
+				data = vk.wall.search owner_id: pages.sample, query: search_query, offset: offset, count: limit*2
 			else
-				data = vk.wall.get domain: pages.sample, offset: offset, count: limit*2
+				data = vk.wall.get owner_id: pages.sample, offset: offset, count: limit*2
 			end
-			@recipes = Parse.get_posts data
-		  render :json => @recipes.first(limit), status => 200
+			recipes = Parse.get_posts data
+		  render :json => recipes.first(limit), status => 200
 		end
 	end
 

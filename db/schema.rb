@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128113036) do
+ActiveRecord::Schema.define(version: 20150223201425) do
 
   create_table "components", force: :cascade do |t|
     t.string  "title",     limit: 255
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(version: 20150128113036) do
   end
 
   add_index "components", ["recipe_id"], name: "index_components_on_recipe_id", using: :btree
+
+  create_table "fingerprints", force: :cascade do |t|
+    t.string  "text",      limit: 256
+    t.integer "recipe_id", limit: 4
+  end
+
+  add_index "fingerprints", ["recipe_id"], name: "index_fingerprints_on_recipe_id", using: :btree
+  add_index "fingerprints", ["text"], name: "index_fingerprints_on_text", length: {"text"=>255}, using: :btree
 
   create_table "photos", force: :cascade do |t|
     t.string   "original",           limit: 255
@@ -82,6 +90,7 @@ ActiveRecord::Schema.define(version: 20150128113036) do
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
   add_foreign_key "components", "recipes"
+  add_foreign_key "fingerprints", "recipes"
   add_foreign_key "photos", "recipes"
   add_foreign_key "tags", "recipes"
 end

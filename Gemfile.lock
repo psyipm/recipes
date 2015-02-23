@@ -60,6 +60,7 @@ GEM
     arel (6.0.0)
     awesome_print (1.6.1)
     bcrypt (3.1.9)
+    beaneater (0.3.3)
     bower-rails (0.9.2)
     builder (3.2.2)
     byebug (3.5.1)
@@ -180,7 +181,6 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
-    pg (0.18.1)
     phantomjs (1.9.7.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -277,6 +277,7 @@ DEPENDENCIES
   angular-rails-templates
   angular_rails_csrf
   awesome_print
+  beaneater
   bower-rails
   byebug
   coffee-rails (~> 4.1.0)
@@ -291,7 +292,6 @@ DEPENDENCIES
   omniauth-google-oauth2!
   omniauth-vkontakte
   paperclip (~> 4.1)
-  pg
   phantomjs
   rails (= 4.2.0)
   rails_12factor

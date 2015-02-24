@@ -86,4 +86,13 @@ class Recipe < ActiveRecord::Base
 		fp.save
 		return true
 	end
+
+	def similar
+		size = 5
+		arr = self.create_fingerprint.split(" ")
+		fp = arr.slice(rand(arr.length-size), size)
+		regexp = fp.join(".*") + ".*"
+
+		Fingerprint.where(["text regexp ?", regexp])
+	end
 end

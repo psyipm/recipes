@@ -11,7 +11,7 @@ class Parse
 		photos = Array.new
 		attachments.each do |a|
 			next unless a.is_a? Hashie::Mash and a.key? 'photo'
-			photo = { original: a.photo.src_big, medium: nil, thumb: nil }
+			photo = { original: a.photo.src_xxxbig || a.photo.src_xxbig || a.photo.src_xbig || a.photo.src_big, medium: a.photo.src_big, thumb: nil }
 			photos.push photo
 		end
 		photos
@@ -23,7 +23,7 @@ class Parse
 			next unless can_be_parsed? d, min_len, max_len
 			begin
 				title, text = get_title_from_text d.text
-				photos = get_attached_photos d.attachments
+				photos = get_attached_photos [d.attachment] + d.attachments
 				recipe = { recipe: { id: nil, title: title, text: text, serving: nil, cook_time: nil, rating: nil, published: true }, photos: photos }
 				posts.push recipe
 			rescue Exception => e

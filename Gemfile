@@ -24,6 +24,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Async queue with beanstalkd
 gem 'beaneater'
+# Wrapper for beaneater
+gem 'stalker'
 
 # Angular and bower
 gem 'bower-rails'

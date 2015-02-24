@@ -15,10 +15,17 @@ class Photo < ActiveRecord::Base
             :content_type => { :content_type => /\Aimage\/.*\Z/ },
             :size => { :less_than => 1.megabyte }
 
+  can_attach_from_remote_url :image
+
+  def get_urls
+    original = self.image.url
+    medium = self.image.url :medium
+    thumb = self.image.url :thumb
+    return original, medium, thumb
+  end
+
   def update_urls
-    self.original = self.image.url
-    self.medium = self.image.url :medium
-    self.thumb = self.image.url :thumb
+    self.original, self.medium, self.thumb = self.get_urls
     self.save
   end
 
@@ -31,5 +38,12 @@ class Photo < ActiveRecord::Base
   def self.remove_unused
     photos = Photo.where recipe_id: nil
     photos.each {|p| p.destroy }
+  end
+
+  def self.from_remote(url)
+    photo = Photo.new image_remote_url: url
+    photo.download_remote_image
+    photo.original, photo.medium, photo.thumb = photo.get_urls
+    photo
   end
 end

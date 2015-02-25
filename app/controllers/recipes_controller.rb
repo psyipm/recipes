@@ -40,8 +40,28 @@ class RecipesController < ApplicationController
 			else
 				data = vk.wall.get owner_id: pages.sample, offset: offset, count: limit*2
 			end
-			recipes = Parse.get_posts data
-		  render :json => recipes.first(limit), status => 200
+			recipes = Parse.get_posts(data).first(limit-@recipes.length)
+
+			Stalker.enqueue("recipes.save", recipes: recipes)
+
+			tmp = []
+			@recipes.each do |r|
+				obj = { 
+					recipe: { 
+						id: r.id, 
+						title: r.title, 
+						text: r.text, 
+						published: r.published, 
+						rating: r.rating,
+						cook_time: r.cook_time, 
+						serving: r.serving 
+					}, 
+					photos: r.photos 
+				}
+				tmp += [obj]
+			end
+
+		  render :json => tmp + recipes, status => 200
 		end
 	end
 

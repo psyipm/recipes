@@ -2,8 +2,11 @@ class Recipe < ActiveRecord::Base
 	has_many :components, dependent: :destroy, autosave: true
 	has_many :tags, dependent: :destroy, autosave: true
 	has_many :photos, dependent: :destroy, autosave: true
+	has_one :fingerprint, dependent: :destroy, autosave: true
 
 	self.per_page = 10
+
+	after_save :update_fingerprint
 
 	def self.search(query, offset = 0, limit = 10, admin = false)
 		components = query[:tokens]
@@ -63,5 +66,37 @@ class Recipe < ActiveRecord::Base
 
 	def self.published(offset = 0, limit = 10)
 		Recipe.where(["published = ?", true]).order(id: :desc).offset(offset).limit(limit)
+	end
+
+	def create_fingerprint
+		begin
+			words = self.text.mb_chars.downcase.to_s.gsub(/[^а-я]/i, " ").split(" ")
+			count = words.length
+			i = 0
+			words.collect! do |word| 
+				len = word.length
+				word.slice(0, len-len/3) if word.match(/[а-я]{5,8}/i) and i % (count/10) == 0
+			end
+			words.compact!.uniq!
+			words.join(" ").slice(0, 255)
+		rescue
+			return self.text.slice(0, 255)
+		end
+	end
+
+	def update_fingerprint
+		fp = self.fingerprint || Fingerprint.new(recipe_id: self.id)
+		fp.text = self.create_fingerprint
+		fp.save
+		return true
+	end
+
+	def similar
+		size = 5
+		arr = self.create_fingerprint.split(" ")
+		fp = arr.slice(rand(arr.length-size), size)
+		regexp = fp.join(".*") + ".*"
+
+		Fingerprint.where(["text regexp ?", regexp])
 	end
 end

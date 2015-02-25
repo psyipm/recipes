@@ -1,7 +1,7 @@
 class Parse
 	def self.get_title_from_text(text)
 		arr = text.split("<br>")
-		title = arr.delete_at 0
+		title = arr.delete_at(0).mb_chars.capitalize.to_s
 		text = arr.join("<br>")
 		
 		return title, text
@@ -23,8 +23,8 @@ class Parse
 			next unless can_be_parsed? d, min_len, max_len
 			begin
 				title, text = get_title_from_text d.text
-				photos = get_attached_photos [d.attachment] + d.attachments
-				recipe = { recipe: { id: nil, title: title, text: text, serving: nil, cook_time: nil, rating: nil, published: true }, photos: photos }
+				photos = get_attached_photos d.attachments
+				recipe = { recipe: { id: nil, title: title, text: text, serving: nil, cook_time: nil, rating: d.likes["count"], published: true }, photos: photos }
 				posts.push recipe
 			rescue Exception => e
 				# ignore, and go next

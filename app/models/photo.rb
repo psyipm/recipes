@@ -39,11 +39,4 @@ class Photo < ActiveRecord::Base
     photos = Photo.where recipe_id: nil
     photos.each {|p| p.destroy }
   end
-
-  def self.from_remote(url)
-    photo = Photo.new image_remote_url: url
-    photo.download_remote_image
-    photo.original, photo.medium, photo.thumb = photo.get_urls
-    photo
-  end
 end

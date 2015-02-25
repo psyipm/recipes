@@ -69,15 +69,19 @@ class Recipe < ActiveRecord::Base
 	end
 
 	def create_fingerprint
-		words = self.text.mb_chars.downcase.to_s.gsub(/[^а-я]/i, " ").split(" ")
-		i = 0
-		words.collect! do |word| 
-			i+=1
-			len = word.length
-			word.slice(0, len-len/3) if word.match(/[а-я]{5,8}/i) and i%3 == 0
+		begin
+			words = self.text.mb_chars.downcase.to_s.gsub(/[^а-я]/i, " ").split(" ")
+			count = words.length
+			i = 0
+			words.collect! do |word| 
+				len = word.length
+				word.slice(0, len-len/3) if word.match(/[а-я]{5,8}/i) and i % (count/10) == 0
+			end
+			words.compact!.uniq!
+			words.join(" ").slice(0, 255)
+		rescue
+			return self.text.slice(0, 255)
 		end
-		words.compact!.uniq!
-		words.join(" ").slice(0, 255)
 	end
 
 	def update_fingerprint

@@ -15,7 +15,8 @@ angular.module('receta').controller("RecipesController", [
     $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
 
     $scope.recipes = []
-    $scope.offset = 0
+    $scope.limit = RecipeService.per_page
+    $scope.offset = $location.search().page * $scope.limit || 0
 
     buildQuery = ()->
       query = {}
@@ -29,8 +30,8 @@ angular.module('receta').controller("RecipesController", [
     searchCallback = (recipes, replace = false)->
       $scope.no_more = false
       $scope.recipes = unless replace is true then recipes else [].concat($scope.recipes, recipes)
-      unless recipes.length < RecipeService.per_page
-        $scope.offset += RecipeService.per_page
+      unless recipes.length < $scope.limit
+        $scope.offset += $scope.limit
       else
         $scope.no_more = true
       $("#more").attr("disabled", $scope.no_more)
@@ -38,7 +39,9 @@ angular.module('receta').controller("RecipesController", [
     $scope.search = (load_more = false)->
       try
         tokens = $scope.tokenhelpers.getTokens()
-        $location.search("components", tokens.join(","))
+        page = $scope.offset / $scope.limit
+        $location.search("components", tokens.join(",")).search("page", page)
+        # $location.search({components: tokens.join(","), page: page})
         RecipeService.find(buildQuery(), $scope.offset).then((res)-> searchCallback res, load_more) if load_more is true
       catch e
         console.log e   

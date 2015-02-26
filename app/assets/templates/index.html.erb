@@ -6,11 +6,9 @@
       <div class="input-group">
         <label for="keywords-inp" class="sr-only">Ингредиенты</label>
         <input id="keywords-inp" ng-model="keywords" name="keywords" type="text" autofocus class="form-control" placeholder="ингредиенты (через запятую)">
-        <span class="input-group-btn">
-          <a href="/" class="btn btn-default" title="Сбросить параметры поиска">
-            <span class="glyphicon glyphicon-remove"></span>
-          </a>
-        </span>
+        <a class="input-group-addon btn" href="/" ng-click="clearParams()" title="Сбросить параметры поиска">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
       </div>
       <!-- <p>...или воспользуйтесь <a href="">поиском по тексту</a></p> -->
     </div>

@@ -14,6 +14,9 @@ angular.module('receta').controller("RecipesController", [
 
     $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
 
+    $scope.clearParams = ()->
+      $scope.tokenhelpers.setTokens []; return
+
     $scope.recipes = []
     $scope.offset = 0
 

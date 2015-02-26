@@ -17,5 +17,5 @@
  *= require fotorama
  *= require tx3-tag-cloud
  *= require_self
- *= require_tree .
+ *= require ./main.scss
  */

@@ -8,6 +8,7 @@ angular.module('receta').controller("AddRecipeController", [
     $scope.tfHelpers.init tfCallback
 
     dz.init()
+    $(".add-recipe-btn").text("Назад к поиску").attr("href", "/")
 
     $scope.getComponents = ()->
       Component.get (data)->
@@ -128,5 +129,6 @@ angular.module('receta').controller("AddRecipeController", [
       $scope.reset()
       Cache.clearAll() if $scope.invalidateCache
       $scope = {}
+      $(".add-recipe-btn").text("Добавить рецепт").attr("href", "/recipes/new")
     )
 ])

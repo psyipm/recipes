@@ -11,11 +11,7 @@ class VkClient
 		query = build_query params
 		@recipes = recipes
 
-		if query.length > 0
-			data = vk_search query
-		else 
-			data = vk_get
-		end
+		data = if query.length > 0 then vk_search query else vk_get end
 
 		limit = @limit / 2 - recipes.length
 		result = Parse.get_posts(data).first(limit)

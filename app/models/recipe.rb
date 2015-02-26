@@ -8,64 +8,48 @@ class Recipe < ActiveRecord::Base
 
 	after_save :update_fingerprint
 
-	def self.search(query, offset = 0, limit = 10, admin = false)
-		components = query[:tokens]
+	def self.published(page = 1)
+		@recipes = Recipe.where(["published = ?", true]).
+			order("id desc").
+			offset(self.get_offset page).
+			limit(self.per_page)
+	end
 
-		args = components.join("|").mb_chars.downcase.to_s
+	def self.search_by_components(params, page = 1)
+		components = self.join_tokens params
+		@recipes = self.published page unless @recipes
 
-		counts = Recipe.select("count(*)").
-				from("recipes as r").
-				joins("INNER JOIN components AS c ON (c.recipe_id = r.id)").
-				where("r.id = cm.recipe_id")
+		@recipes = @recipes.
+			select("recipes.*, count(c.id) as `c_count`").
+			joins("LEFT JOIN components AS c ON (recipes.id = c.recipe_id)").
+			where(["LOWER(c.title) regexp ?", components]).
+			group("recipes.id").
+			order("`c_count` desc").
+			offset(self.get_offset page).
+			limit(self.per_page)
+	end
 
-		recipe_ids = Component.select("cm.recipe_id, (#{counts.to_sql}) - count(*) as missing_comp_count").
-				from("components as cm").
-				where("LOWER(title) regexp ?", args).
-				group("cm.recipe_id")
+	def self.search_by_tags(params, page = 1)
+		tags = self.join_tokens params
+		@recipes = self.published page unless @recipes
 
-		sql = Recipe.select("rc.*").
-				from("recipes as rc, (#{recipe_ids.to_sql}) as c").
-				where(["rc.id in (c.recipe_id)"]).
-				order("c.missing_comp_count").
-				offset(offset).
-				limit(limit)
+		@recipes = @recipes.
+			joins("LEFT JOIN tags as t ON (recipes.id = t.recipe_id)").
+			where("LOWER(t.title) regexp ?", tags)
+	end
+
+	def self.search(query, page = 1)
+		@recipes = self.published page
+
+		if query[:tokens] and query[:tokens][0].length > 0
+			@recipes = self.search_by_components query[:tokens], page
+		end
 
 		if query[:tags]
-			tags = query[:tags].join("|").mb_chars.downcase.to_s
-
-			tags_sql = Recipe.select("r.*").
-					from("recipes as r").
-					joins("INNER JOIN tags AS t ON (r.id = t.recipe_id)").
-					where("LOWER(t.title) regexp ?", tags)
-
-			counts = counts.from("(#{tags_sql.to_sql}) as r")
-			sql = sql.from("(#{tags_sql.to_sql}) as rc, (#{recipe_ids.to_sql}) as c")
+			@recipes = self.search_by_tags query[:tags], page
 		end
 
-		unless admin == true
-			sql = sql.where ["rc.published = ?", true]
-		end
-
-		recipes = sql.load
-	end
-
-	def self.find_by_tag(tag, offset = 0, limit = 10, admin = false)
-		tags = tag.join("|").mb_chars.downcase.to_s
-		recipes = Recipe.joins(:tags).
-				where("LOWER(tags.title regexp ?)", tags).
-				order(id: :desc).
-				offset(offset).
-				limit(limit).
-				distinct
-
-		unless admin == true
-			recipes = recipes.where ["recipes.published = ?", true]
-		end
-		recipes = recipes.load
-	end
-
-	def self.published(offset = 0, limit = 10)
-		Recipe.where(["published = ?", true]).order(id: :desc).offset(offset).limit(limit)
+		@recipes
 	end
 
 	def create_fingerprint
@@ -99,4 +83,13 @@ class Recipe < ActiveRecord::Base
 
 		Fingerprint.where(["text regexp ?", regexp])
 	end
+
+	private
+		def self.get_offset(page)
+			(page - 1) * self.per_page
+		end
+
+		def self.join_tokens(params)
+			params.join("|").mb_chars.downcase.to_s
+		end
 end

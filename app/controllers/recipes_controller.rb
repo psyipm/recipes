@@ -15,53 +15,18 @@ class RecipesController < ApplicationController
 
 	def find
 		query = params[:query] || []
-		@admin = current_user.try(:admin?)
+
+		# TODO: replace offset and limit with page number
 		offset = params[:offset]
 		limit = params[:limit]
-		search_query = ""
 
-		if query[:tokens] and query[:tokens].length > 0 and query[:tokens][0].length > 0
-			search_query = query[:tokens].join("|").mb_chars.downcase.to_s
-			@recipes = Recipe.search query, offset, limit, @admin
-		elsif query[:tags] and query[:tags].length > 0
-			search_query += "|" + query[:tags].join("|").mb_chars.downcase.to_s
-			@recipes = Recipe.find_by_tag query[:tags], offset, limit, @admin
-		elsif @admin == true
-			@recipes = Recipe.all().order(id: :desc).offset(offset).limit(limit)
-		else
-			@recipes = Recipe.published offset, limit
-		end
+		page = offset/limit+1
+
+		@recipes = Recipe.search query, page
 
 		if @recipes.length < Recipe.per_page
-			pages = ENV['vk_public_pages'].split("|")
-			vk = VkontakteApi::Client.new
-			if search_query.length > 0
-				data = vk.wall.search owner_id: pages.sample, query: search_query, offset: offset, count: limit*2
-			else
-				data = vk.wall.get owner_id: pages.sample, offset: offset, count: limit*2
-			end
-			recipes = Parse.get_posts(data).first(limit-@recipes.length)
-
-			Stalker.enqueue("recipes.save", recipes: recipes)
-
-			tmp = []
-			@recipes.each do |r|
-				obj = { 
-					recipe: { 
-						id: r.id, 
-						title: r.title, 
-						text: r.text, 
-						published: r.published, 
-						rating: r.rating,
-						cook_time: r.cook_time, 
-						serving: r.serving 
-					}, 
-					photos: r.photos 
-				}
-				tmp += [obj]
-			end
-
-		  render :json => tmp + recipes, status => 200
+			vk = VkClient.new offset, limit
+			@recipes = vk.augment @recipes, query
 		end
 	end
 

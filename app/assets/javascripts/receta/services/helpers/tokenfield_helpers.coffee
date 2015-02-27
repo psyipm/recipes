@@ -5,17 +5,17 @@ angular.module('recetaServices')
 	class TokenfieldHelpers
 		constructor: (inputId) ->
 			@keyInput = $("#"+inputId)
-			@sourceFn = {}
 		
-		init: (autoCompleteSource, minLength = 2)->
-			@sourceFn = autoCompleteSource
+		init: (data, minLength = 2)->
+			engine = new Bloodhound(
+				local: $.map(data, (item)-> return { value: item }; )
+				datumTokenizer: (d)->
+					Bloodhound.tokenizers.whitespace(d.value)
+				queryTokenizer: Bloodhound.tokenizers.whitespace
+			)
+			engine.initialize()
 			tfparams = { 
-				autocomplete: { 
-					source: this.sourceFn, 
-					delay: 300, 
-					minLength: minLength, 
-					select: this.getSelectFn()
-				}, 
+				typeahead: [{hint: true, highlight: true}, { source: engine.ttAdapter() }], 
 				createTokensOnBlur: true 
 				showAutocompleteOnFocus: true 
 			}

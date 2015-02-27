@@ -26,5 +26,10 @@ angular.module('recetaServices')
 				).success((data)->
 					callback data.tag
 				)
+
+			parse_from_cloud: ()->
+				data = []
+				$(".tagcloud li a").each(()-> data.push $(this).text())
+				data
 		}
 ])

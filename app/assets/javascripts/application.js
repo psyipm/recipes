@@ -28,6 +28,7 @@
 //= require angular-disqus
 //= require angular-local-storage
 //= require angular-md5
+//= require typeahead.js/dist/typeahead.bundle.min.js
 
 //= require receta/app
 //= require_tree ../templates

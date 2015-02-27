@@ -3,11 +3,12 @@ angular.module('receta').controller("AddRecipeController", [
   ($scope,$http,dz,tf,Component,Tag,RecipeService,queryCache)->
     Cache = queryCache.configure("recipe_cache")
 
-    tfCallback = (request, response) ->
-      Tag.find request.term, (t)-> response(t)
+    # tfCallback = (request, response) ->
+    #   Tag.find request.term, (t)-> response(t)
 
     $scope.tfHelpers = tf.bind "tags"
-    $scope.tfHelpers.init tfCallback
+    # $scope.tfHelpers.init tfCallback
+    $scope.tfHelpers.init Tag.parse_from_cloud()
 
     dz.init()
     $(".add-recipe-btn").text("Назад к поиску").attr("href", "/")

@@ -6,11 +6,11 @@ Array::unique = ->
 angular.module('receta').controller("RecipesController", [
   '$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService', 
   ($scope,$location,$routeParams,tf,Component,RecipeService)->
-    $scope.tfCallback = (request, response)->
-      Component.find(request.term, (c)-> response(c))
+    # $scope.tfCallback = (request, response)->
+    #   Component.find(request.term, (c)-> response(c))
 
     $scope.tokenhelpers = tf.bind "keywords-inp"
-    $scope.tokenhelpers.init $scope.tfCallback
+    Component.get((data)-> $scope.tokenhelpers.init data)
 
     $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
 

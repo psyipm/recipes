@@ -1,6 +1,8 @@
 angular.module('receta').controller("AddRecipeController", [
   '$scope', '$http', 'DropZoneHelpers', 'TokenfieldHelpers', 'Component', 'Tag', 'RecipeService', 'queryCache',
-  ($scope,$http,dz,tf,Component,Tag,RecipeService,Cache)->
+  ($scope,$http,dz,tf,Component,Tag,RecipeService,queryCache)->
+    Cache = queryCache.configure("recipe_cache")
+
     tfCallback = (request, response) ->
       Tag.find request.term, (t)-> response(t)
 

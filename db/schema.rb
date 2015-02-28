@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223201425) do
+ActiveRecord::Schema.define(version: 20150228021045) do
 
   create_table "components", force: :cascade do |t|
     t.string  "title",     limit: 255
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20150223201425) do
     t.boolean  "published",  limit: 1,     default: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+    t.integer  "dislikes",   limit: 4,     default: 0
   end
 
   create_table "tags", force: :cascade do |t|

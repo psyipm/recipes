@@ -1,12 +1,14 @@
-<span>
-  <span class="rating" title="Рейтинг">
+<span id="recipe-{{recipe.id}}-rating" class="recipe-rating">
+  <span class="rating-like" ng-click="like()" title="Понравилось">
     <span class="icon icon-heart"></span>
     {{recipe.rating || 0}}
   </span>
-
-  <span class="user-rating right" title="Ваша оценка">
-    <button class="btn btn-default btn-noborder btn-noborder-success">
-      <span id="recipe-{{recipe.id}}-rating" class="icon icon-heart"></span>
-    </button>
+	<div class="recipe-reviews" title="Оценки пользователей">
+  	<div style="width: {{liked}}% !important" class="col-xs-12 liked"></div>
+  	<div style="width: {{disliked}}% !important" class="col-xs-12 disliked"></div>
+  </div>
+  <span class="rating-dislike" ng-click="dislike()" title="Не понравилось">
+	  {{recipe.dislikes || 0}}
+    <span class="icon icon-heart-broken"></span>
   </span>
 </span>

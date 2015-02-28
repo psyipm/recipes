@@ -7,9 +7,4 @@ angular.module('receta').directive('recipeRating', ['Rating', '$timeout', (Ratin
   }
   link: (scope, element)->
     $timeout((-> scope.setUserRate(Rating.check scope.recipe.id)), 1)
-
-    element.bind('click', ()->
-      scope.changeRating()
-      scope.$apply()
-    )
 ])

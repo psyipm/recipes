@@ -29,9 +29,24 @@ angular.module('receta').controller("RecipesController", [
         query = $.extend true, query, {tags: $routeParams.tags.split(",")}
       query
 
+    pushRecipes = (recipes, replace = false)->
+      $scope.recipes = unless replace is true then recipes else [].concat($scope.recipes, recipes)
+
+      tokens = $scope.tokenhelpers.getTokens()
+      unless tokens.join(",").length > 0 
+        return
+
+      for r in $scope.recipes
+        for t in tokens
+          r.recipe.text = r.recipe.text.replace(new RegExp(t, 'ig'), "<b>#{t}</b>") if r and r.recipe and r.recipe.text
+          continue
+        continue
+
+      
+
     searchCallback = (recipes, replace = false)->
       $scope.no_more = false
-      $scope.recipes = unless replace is true then recipes else [].concat($scope.recipes, recipes)
+      pushRecipes(recipes, replace)
       unless recipes.length < RecipeService.per_page
         $scope.offset += RecipeService.per_page
       else

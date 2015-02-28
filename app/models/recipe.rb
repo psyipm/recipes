@@ -24,7 +24,7 @@ class Recipe < ActiveRecord::Base
 			joins("LEFT JOIN components AS c ON (recipes.id = c.recipe_id)").
 			where(["LOWER(c.title) regexp ?", components]).
 			group("recipes.id").
-			order("`c_count` desc").
+			reorder("`c_count` desc").
 			offset(self.get_offset page).
 			limit(self.per_page)
 	end

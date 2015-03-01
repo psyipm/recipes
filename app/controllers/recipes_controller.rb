@@ -95,8 +95,8 @@ class RecipesController < ApplicationController
 
 		if allow_rate?
 			@recipe = Recipe.find @id
-			@recipe.rating += @rate
-			@recipe.dislikes -= @rate
+			@recipe.rating += @rate if @recipe.rating > 0
+			@recipe.dislikes -= @rate if @recipe.rating > 0
 			if @recipe.save
 				save_to_session @id
 				render json: { success: 1, rating: @recipe.rating }, :status => 200

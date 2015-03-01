@@ -17,8 +17,8 @@ angular.module('receta').factory('RecipeService', [
 				Restangular.all(model)
 					.customPOST(query, 'find.json', null, headers)
 
-			# Cache.fromCache(query, callback)
-			callback()
+			Cache.fromCache(query, callback)
+			# callback()
 
 		create: (recipe)->
 			Restangular.all(model).post(recipe, null, headers)

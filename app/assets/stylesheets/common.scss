@@ -47,7 +47,7 @@
   top: 0;
   left: 0;
   z-index: 1;
-  background: rgba(255,255,255,0.7) no-repeat 50% 50% url("ajax-loader.gif");
+  background: rgba(255,255,255,0.7) no-repeat 50% 50% image-url("ajax-loader.gif");
 }
 
 .noscript-msg {
@@ -56,4 +56,21 @@
   border-radius: 5px;
   margin: 10px 0;
   padding: 10px;
+}
+
+@font-face {
+  font-family: 'IcoMoon-Free';
+  src: font-url('icomoon/IcoMoon-Free.ttf?-b7qzp2') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: font-url('bootstrap/dist/fonts/glyphicons-halflings-regular.eot');
+  src: font-url('bootstrap/dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+       font-url('bootstrap/dist/fonts/glyphicons-halflings-regular.woff') format('woff'), 
+       font-url('bootstrap/dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+       font-url('bootstrap/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }

@@ -3,10 +3,10 @@ angular.module('recetaServices', [
 	'angular-md5'
 ])
 
-.config((localStorageServiceProvider)->
+.config(['localStorageServiceProvider',(localStorageServiceProvider)->
 	localStorageServiceProvider
 		.setStorageType('localStorage')
 		.setPrefix('receta')
 		
 	return
-)
+])

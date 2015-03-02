@@ -24,7 +24,7 @@
 			<ul class="tagcloud">
 				<% @tags.each do |t| %>
 					<li data-weight="<%= t.weight %>">
-						<a ng-click="addTag($event)" href="/recipes?tag=<%= t.title %>"><%= t.title %></a>
+						<a ng-click="addTag($event)" href="/browse?tag=<%= t.title %>"><%= t.title %></a>
 					</li>
 				<% end %>
 			</ul>

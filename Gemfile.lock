@@ -5,14 +5,6 @@ GIT
     omniauth-facebook (2.0.0)
       omniauth-oauth2 (~> 1.2)
 
-GIT
-  remote: git://github.com/zquestz/omniauth-google-oauth2.git
-  revision: 74d9e4fa4ec369bbb088628b1f400e54d3094fd9
-  specs:
-    omniauth-google-oauth2 (0.2.6)
-      omniauth (>= 1.1.1)
-      omniauth-oauth2 (>= 1.1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -155,6 +147,7 @@ GEM
     notiffany (0.0.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    oauth (0.4.7)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -168,11 +161,17 @@ GEM
     omniauth-github (1.1.2)
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.1)
+    omniauth-oauth (1.0.1)
+      oauth
+      omniauth (~> 1.0)
     omniauth-oauth2 (1.2.0)
       faraday (>= 0.8, < 0.10)
       multi_json (~> 1.3)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    omniauth-twitter (1.1.0)
+      multi_json (~> 1.3)
+      omniauth-oauth (~> 1.0)
     omniauth-vkontakte (1.3.3)
       multi_json
       omniauth (~> 1.0)
@@ -294,7 +293,7 @@ DEPENDENCIES
   omniauth
   omniauth-facebook!
   omniauth-github
-  omniauth-google-oauth2!
+  omniauth-twitter
   omniauth-vkontakte
   paperclip (~> 4.1)
   phantomjs

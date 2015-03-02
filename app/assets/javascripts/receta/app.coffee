@@ -61,7 +61,7 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
         vkontakte: '/auth/vkontakte'
         github: '/auth/github'
         facebook: '/auth/facebook'
-        google_oauth2: '/auth/google_oauth2'
+        twitter: '/auth/twitter'
       }
       storage: 'localStorage'
     });

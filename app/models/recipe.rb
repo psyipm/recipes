@@ -15,6 +15,13 @@ class Recipe < ActiveRecord::Base
 			limit(self.per_page)
 	end
 
+	def self.unpublished(page = 1)
+		@recipes = Recipe.where(["published = ?", false]).
+			order("id desc").
+			offset(self.get_offset page).
+			limit(self.per_page)
+	end
+
 	def self.search_by_components(params, page = 1)
 		components = self.join_tokens params
 		@recipes = self.published page unless @recipes
@@ -39,7 +46,7 @@ class Recipe < ActiveRecord::Base
 	end
 
 	def self.search(query, page = 1)
-		@recipes = self.published page
+		@recipes = if query[:unpublished] then self.unpublished page else self.published page end
 
 		if query[:tokens] and query[:tokens][0].length > 0
 			@recipes = self.search_by_components query[:tokens], page

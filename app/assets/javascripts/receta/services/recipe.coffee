@@ -17,8 +17,7 @@ angular.module('receta').factory('RecipeService', [
 				Restangular.all(model)
 					.customPOST(query, 'find.json', null, headers)
 
-			Cache.fromCache(query, callback)
-			# callback()
+			promise = if $auth.user.admin then callback() else Cache.fromCache(query, callback)
 
 		create: (recipe)->
 			Restangular.all(model).post(recipe, null, headers)

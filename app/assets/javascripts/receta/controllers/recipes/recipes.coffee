@@ -36,13 +36,13 @@ angular.module('receta').controller("RecipesController", [
       unless tokens.join(",").length > 0 
         return
 
+      $("title").text("Рецепты с ингредиентами: #{tokens.join(", ")} - Recipes4You")
+
       for r in $scope.recipes
         for t in tokens
           r.recipe.text = r.recipe.text.replace(new RegExp(t, 'ig'), "<b>#{t}</b>") if r and r.recipe and r.recipe.text
           continue
         continue
-
-      
 
     searchCallback = (recipes, replace = false)->
       $scope.no_more = false

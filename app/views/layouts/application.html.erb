@@ -2,10 +2,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Recipes4you</title>
+	<title><%= yield(:title)%>Recipes4you</title>
 	<%= stylesheet_link_tag    'application', media: 'all' %>
 	<%= javascript_include_tag 'application' %>
 	<%= csrf_meta_tags %>
+	<meta name="description" content="Recipes4You поиск рецептов по ингредиентам">
+	<meta name="keywords" content="кулинарные рецепты, поиск рецептов по ингредиентам, поиск рецептов ВКонтакте, готовим дома, домашние блюда, закуски, десерты, напитки, коктейли">
 	<base href="/">
 </head>
 <body>

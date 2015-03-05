@@ -48,9 +48,9 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
         templateUrl: 'reset_password.html'
         controller: 'UserPasswordResetController'
       )
-      # .otherwise(
-      #   redirectTo: '/'
-      # )
+      .otherwise(
+        redirectTo: '/'
+      )
 
     $locationProvider.html5Mode(true)
 

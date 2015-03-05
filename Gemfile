@@ -75,8 +75,6 @@ group :development, :test do
   gem 'phantomjs'
 end
 
-gem 'sape-rails', :git => 'git://github.com/hazg/sape-rails'
-
-# group :production do
-# 	gem 'sape-rails', :git => 'git://github.com/hazg/sape-rails'
-# end
+group :production do
+	gem 'rails_12factor'
+end

@@ -1,3 +1,15 @@
+#keywords-inp-tokenfield {
+    width: 100% !important;
+}
+
+@media only screen and(max-width: 480px) {
+  .container,
+  .view-container,
+  .recipe-container {
+    padding: 0;
+  }
+}
+
 @media only screen and(min-width: 992px) {
   .recipe-wrapper {
     margin: 0 0 10px -10px;
@@ -9,9 +21,11 @@
   }
 }
 
-.recipe-wrapper:hover {
-  box-shadow: 0px 1px 5px 0px #ccc;
-  cursor: pointer;
+@media only screen and (min-width: 480px) {
+  .recipe-wrapper:hover {
+    box-shadow: 0px 1px 5px 0px #ccc;
+    cursor: pointer;
+  }
 }
 
 recipe,
@@ -45,7 +59,7 @@ recipe a,
 }
 
 .recipe-descr.collapsed:hover {
-    color: #000;
+  color: #000;
 }
 
 .recipe-images {
@@ -59,4 +73,8 @@ recipe a,
 
 .admin-buttons {
   padding: 10px;
+}
+
+.my-adsense {
+  margin-bottom: 10px;
 }

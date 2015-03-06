@@ -3,7 +3,7 @@
 }
 
 .top-buffer-md {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .bottom-buffer-md {
@@ -16,6 +16,11 @@
 
 .nopadding-right {
   padding-right: 0 !important;
+}
+
+.nopadding-lr {
+  @extend .nopadding-left;
+  @extend .nopadding-right;
 }
 
 .btn-noborder {
@@ -31,13 +36,8 @@
   color: #d2322d !important;
 }
 
-.right {
-  float: right;
-}
-
-.right-center {
-  @extend .right;
-	padding: 10px 0;
+a.keyword-ex-lnk {
+  color: #999;
 }
 
 .ajax-loader {
@@ -73,4 +73,8 @@
        font-url('bootstrap/dist/fonts/glyphicons-halflings-regular.woff') format('woff'), 
        font-url('bootstrap/dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
        font-url('bootstrap/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+.btn {
+  outline: none !important; 
 }

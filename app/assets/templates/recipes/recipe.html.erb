@@ -4,7 +4,7 @@
     <span ng-if="view || !recipe.id">{{recipe.title}}</span>
   </h1>
   <div class="col-md-12 nopadding-lr">
-    <div class="fotorama recipe-images" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="320">
+    <div class="fotorama recipe-images" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="300">
       <img ng-repeat="img in photos" ng-src="{{img.medium || img.original}}" data-full="{{img.original}}" alt="">
     </div>
   </div>

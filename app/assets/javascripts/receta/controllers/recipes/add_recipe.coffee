@@ -18,8 +18,8 @@ angular.module('receta').controller("AddRecipeController", [
         $scope.components = $scope.parseComponents()
 
         #debug
-        console.log $scope.dictionary
-        console.log $scope.components
+        # console.log $scope.dictionary
+        # console.log $scope.components
 
     pushToArray = (word, array) ->
       return array unless word
@@ -125,8 +125,6 @@ angular.module('receta').controller("AddRecipeController", [
           )
 
     $scope.$on('$destroy', ()->
-      # debug
-      console.log "destroy"
       dz.instance.destroy.call dz.instance
       $scope.reset()
       Cache.clearAll() if $scope.invalidateCache

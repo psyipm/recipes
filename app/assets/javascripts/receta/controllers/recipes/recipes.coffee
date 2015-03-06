@@ -65,7 +65,14 @@ angular.module('receta').controller("RecipesController", [
       query = buildQuery()
       RecipeService.find(query, $scope.offset).then((res)-> searchCallback res) unless $.isEmptyObject query
 
-    $(".fotorama").fotorama()
+    # $(".fotorama").fotorama()
 
     $scope.searchFromLocation()
+])
+.run([
+  '$timeout', '$location',
+  ($timeout, $location)->
+    $timeout(
+      ()-> $location.search("components", "")
+    , 1000)
 ])

@@ -8,18 +8,21 @@ class Recipe < ActiveRecord::Base
 
 	after_save :update_fingerprint
 
-	def self.published(page = 1)
-		@recipes = Recipe.where(["published = ?", true]).
+	def self.default(page = 1)
+		@recipes = Recipe.all.
 			order("id desc").
 			offset(self.get_offset page).
 			limit(self.per_page)
 	end
 
+	def self.published(page = 1)
+		@recipes = self.default(page).
+			where(["published = ?", true])
+	end
+
 	def self.unpublished(page = 1)
-		@recipes = Recipe.where(["published = ?", false]).
-			order("id desc").
-			offset(self.get_offset page).
-			limit(self.per_page)
+		@recipes = self.default(page).
+			where(["published = ?", false])
 	end
 
 	def self.search_by_components(params, page = 1)
@@ -46,7 +49,7 @@ class Recipe < ActiveRecord::Base
 	end
 
 	def self.search(query, page = 1)
-		@recipes = if query[:unpublished] then self.unpublished page else self.published page end
+		@recipes = if query[:unpublished] then self.default page else self.published page end
 
 		if query[:tokens] and query[:tokens][0].length > 0
 			@recipes = self.search_by_components query[:tokens], page

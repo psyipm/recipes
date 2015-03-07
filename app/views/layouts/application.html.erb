@@ -12,30 +12,30 @@
 </head>
 <body>
 
-<div class="container" ng-app="receta">
+<div class="container" data-ng-app="receta">
 	<header class="row header">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<noindex>
+					<!--noindex-->
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-					</noindex>
+					<!--/noindex-->
 					<a href="/"><%= image_tag "logo.png", class: "header-logo", alt: "Recipes4you" %></a>
 				</div>
 
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="UserSessionsController">
-					<noindex>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" data-ng-controller="UserSessionsController">
+					<!--noindex-->
 						<ul class="nav navbar-nav navbar-right">
-							<li><a ng-show="!user.id" ng-href="/#/users/login">Войти</a></li>
-							<li><a ng-show="!user.id" ng-href="/#/users/register">Регистрация</a></li>
-							<li><a ng-show="user.id" ng-click="signOut()">Выйти</a></li>
+							<li><a data-ng-show="!user.id" data-ng-href="/#/users/login">Войти</a></li>
+							<li><a data-ng-show="!user.id" data-ng-href="/#/users/register">Регистрация</a></li>
+							<li><a data-ng-show="user.id" data-ng-click="signOut()">Выйти</a></li>
 						</ul>
-					</noindex>
+					<!--/noindex-->
 					<ul class="nav navbar-nav">
 						<li><a target="_self" href="/browse/?page=1">Все рецепты</a></li>
 						<li><a href="/">Поиск</a></li>
@@ -46,14 +46,14 @@
 	</header>
 
 	<div class="maincontent col-md-12">
-		<noindex>
+		<!--noindex-->
 			<noscript>
 				<div class="noscript-msg">
 					<p class="h3">Внимание! Для правильной работы сайта</p>
 					<h1>включите Javascript в настройках браузера</h1>
 				</div>
 			</noscript>
-		</noindex>
+		<!--/noindex-->
 
 		<%= yield %>
 

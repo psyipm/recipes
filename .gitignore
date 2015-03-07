@@ -18,6 +18,8 @@
 log/
 public/system/
 
+compile_assets.sh
+
 # Ignore application configuration
 /config/application.yml
 /config/database.yml

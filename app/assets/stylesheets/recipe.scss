@@ -2,7 +2,7 @@
     width: 100% !important;
 }
 
-@media only screen and(max-width: 480px) {
+@media only screen and(max-width: 520px) {
   .container,
   .view-container,
   .recipe-container {
@@ -21,7 +21,7 @@
   }
 }
 
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 520px) {
   .recipe-wrapper:hover {
     box-shadow: 0px 1px 5px 0px #ccc;
     cursor: pointer;

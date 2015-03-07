@@ -2,10 +2,10 @@
 
 <div>
 	<div class="view-container col-md-10 col-sm-12 col-xs-12">
-		<div ng-view class="view-frame animate-view"></div>
+		<div data-ng-view class="view-frame animate-view"></div>
 	</div>
 	<div class="sidebar-right col-md-2 col-sm-12 col-xs-12">
-		<noindex>
+		<!--noindex-->
 			<hr class="hidden-md hidden-lg">
 			<div class="visible-lg">
 				<a href="/recipes/new" class="btn btn-default btn-lg add-recipe-btn">Добавить рецепт</a>
@@ -14,21 +14,21 @@
 				<a href="/recipes/new" class="btn btn-default add-recipe-btn">Добавить рецепт</a>
 			</div>
 			<hr>
-		</noindex>
-		<div ng-controller="TagsController">
+		<!--/noindex-->
+		<div data-ng-controller="TagsController">
 			<div class="tagcloud-settings">
 				<span>Облако тегов</span>
-				<a href="/" ng-if="multiTagSearch" ng-click="clearTags($event)" class="btn btn-default btn-noborder btn-xs" title="Убрать все теги из поиска">
+				<a href="/" data-ng-if="multiTagSearch" data-ng-click="clearTags($event)" class="btn btn-default btn-noborder btn-xs" title="Убрать все теги из поиска">
 					<span class="glyphicon glyphicon-remove"></span>
 				</a>
-				<button class="btn btn-default btn-noborder btn-xs" ng-click="openSettings()" title="Настройки">
+				<button class="btn btn-default btn-noborder btn-xs" data-ng-click="openSettings()" title="Настройки">
 					<span class="glyphicon glyphicon-cog"></span>
 				</button>
 			</div>
 			<ul class="tagcloud">
 				<% @tags.each do |t| %>
 					<li data-weight="<%= t.weight %>">
-						<a ng-click="addTag($event)" href="/browse?tag=<%=u t.title %>"><%= t.title %></a>
+						<a data-ng-click="addTag($event)" href="/browse?tag=<%=u t.title %>"><%= t.title %></a>
 					</li>
 				<% end %>
 			</ul>

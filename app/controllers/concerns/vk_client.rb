@@ -34,7 +34,7 @@ class VkClient
 	private
 		def build_query(query)
 			search_query = query.flatten(2).delete_if do |q|
-				q.match /(tokens)|(tags)|(^$)/
+				q.to_s.match /(tokens)|(tags)|(^$)/
 			end
 			search_query.join("|").mb_chars.downcase.to_s
 		end

@@ -16,9 +16,10 @@ class RecipesController < ApplicationController
   def find
     query, page = query_params
 
-    query[:unpublished] = true if current_user.try(:admin?)
+    qr = { unpublished: true }
+    qr = query.merge qr if current_user.try(:admin?)
 
-    @recipes = Recipe.search query, page
+    @recipes = Recipe.search qr, page
 
     if @recipes.length < Recipe.per_page
       vk = VkClient.new @offset, @limit
@@ -184,6 +185,7 @@ class RecipesController < ApplicationController
     end
 
     def query_params
+      # params.require(:query).permit(:tags, :components)
       query = params[:query] || []
 
       @offset = params[:offset]

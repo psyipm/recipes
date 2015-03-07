@@ -24,7 +24,7 @@ job "recipes.save" do |args|
 			recipe.save
 
 			recipe.photos.each do |p| 
-				Photo.update_urls recipe.id, p.id
+				p.update_urls
 			end
 		end
 	end

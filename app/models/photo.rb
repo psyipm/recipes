@@ -5,10 +5,7 @@ class Photo < ActiveRecord::Base
             :styles => { 
               :medium => "320x320>",
               :thumb => "100x100>"
-            },
-            :path => ":rails_root/public/system/:attachment/:id_partition/:hash.:extension",
-            :hash_secret => "CCLYDnUvJuDsfcFC1aFf",
-            :url => "/system/:attachment/:id_partition/:hash.:extension"
+            }
 
   validates_attachment  :image, 
             :presence => true,

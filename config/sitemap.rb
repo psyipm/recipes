@@ -21,7 +21,7 @@ SitemapGenerator::Sitemap.create do
   # Add all articles:
   #
     Recipe.where(published: true).find_each do |recipe|
-      add recipe_path(recipe), :lastmod => recipe.updated_at, :priority => 0.8
+      add recipe_path(recipe), :lastmod => recipe.updated_at, :priority => 1
     end
 
     add browse_path, :priority => 0.7, :changefreq => 'daily'

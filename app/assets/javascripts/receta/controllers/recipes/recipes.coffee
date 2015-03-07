@@ -40,7 +40,7 @@ angular.module('receta').controller("RecipesController", [
 
       for r in $scope.recipes
         for t in tokens
-          r.recipe.text = r.recipe.text.replace(new RegExp(t, 'ig'), "<b>#{t}</b>") if r and r.recipe and r.recipe.text
+          r.recipe.text = r.recipe.text.replace(new RegExp(t, 'ig'), "<strong>#{t}</strong>") if r and r.recipe and r.recipe.text
           continue
         continue
 

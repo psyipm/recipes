@@ -1,5 +1,4 @@
 User-agent: *
-
 Allow: /
-
 Sitemap: http://www.recipes4you.in.ua/sitemap.xml.gz
+Host: recipes4you.in.ua

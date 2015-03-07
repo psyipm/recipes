@@ -3,7 +3,7 @@
     <li ng-repeat="tag in tags" data-weight="{{tag.weight}}">
       <a ng-href="?tags={{tag.title}}" class="label label-default recipe-tag">
         <small class="glyphicon glyphicon-tag"></small> 
-        {{tag.title}}
+        <strong>{{tag.title}}</strong>
       </a>
     </li>
   </ul>

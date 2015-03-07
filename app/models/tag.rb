@@ -2,7 +2,7 @@ class Tag < ActiveRecord::Base
   belongs_to :recipe
 
   def self.cloud(limit = 200)
-  	Tag.select("title, count(*) as weight").group(:title).limit(limit)
+  	Tag.select("id, title, count(*) as weight").group(:title).limit(limit)
   end
 
   def self.for_recipe(recipe_id, limit = 5, sort = true)

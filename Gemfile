@@ -49,7 +49,7 @@ gem 'omniauth'
 gem 'omniauth-vkontakte'
 gem 'omniauth-github'
 gem 'omniauth-facebook',      :git => 'git://github.com/mkdynamic/omniauth-facebook.git'
-gem 'omniauth-google-oauth2', :git => 'git://github.com/zquestz/omniauth-google-oauth2.git'
+# gem 'omniauth-google-oauth2', :git => 'git://github.com/zquestz/omniauth-google-oauth2.git'
 
 # paged list
 gem 'will_paginate-bootstrap'
@@ -75,6 +75,8 @@ group :development, :test do
   gem 'phantomjs'
 end
 
-group :production do
-	gem 'rails_12factor'
-end
+gem 'sitemap_generator'
+
+# group :production do
+# 	gem 'rails_12factor'
+# end

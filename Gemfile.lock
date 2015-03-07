@@ -5,14 +5,6 @@ GIT
     omniauth-facebook (2.0.0)
       omniauth-oauth2 (~> 1.2)
 
-GIT
-  remote: git://github.com/zquestz/omniauth-google-oauth2.git
-  revision: 74d9e4fa4ec369bbb088628b1f400e54d3094fd9
-  specs:
-    omniauth-google-oauth2 (0.2.6)
-      omniauth (>= 1.1.1)
-      omniauth-oauth2 (>= 1.1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -210,11 +202,6 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.1)
       loofah (~> 2.0)
-    rails_12factor (0.0.3)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.4)
-    rails_stdout_logging (0.0.3)
     railties (4.2.0)
       actionpack (= 4.2.0)
       activesupport (= 4.2.0)
@@ -238,6 +225,8 @@ GEM
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     shellany (0.0.1)
+    sitemap_generator (5.0.5)
+      builder
     slop (3.6.0)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -294,14 +283,13 @@ DEPENDENCIES
   omniauth
   omniauth-facebook!
   omniauth-github
-  omniauth-google-oauth2!
   omniauth-vkontakte
   paperclip (~> 4.1)
   phantomjs
   rails (= 4.2.0)
-  rails_12factor
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  sitemap_generator
   stalker
   teaspoon
   uglifier (>= 1.3.0)

@@ -1,7 +1,7 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "http://www.recipes4you.in.ua"
 
-yandex = { :yandex => 'http://blogs.yandex.ru/pings/?status=success&url=%s' }
+yandex = { :yandex => 'https://blogs.yandex.ru/pings/?status=success&url=%s' }
 SitemapGenerator::Sitemap.search_engines.merge! yandex
 
 SitemapGenerator::Sitemap.create do

@@ -4,8 +4,8 @@ Array::unique = ->
     value for key, value of output
 
 angular.module('receta').controller("RecipesController", [
-  '$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService', 
-  ($scope,$location,$routeParams,tf,Component,RecipeService)->
+  '$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService','titleService',
+  ($scope,$location,$routeParams,tf,Component,RecipeService,title)->
     $scope.tfCallback = (request, response)->
       Component.find(request.term, (c)-> response(c))
 
@@ -36,7 +36,7 @@ angular.module('receta').controller("RecipesController", [
       unless tokens.join(",").length > 0 
         return
 
-      $("title").text("Рецепты с ингредиентами: #{tokens.join(", ")} - Recipes4You")
+      title.setTitle("Рецепты с ингредиентами: #{tokens.join(", ")}")
 
       for r in $scope.recipes
         for t in tokens
@@ -73,6 +73,6 @@ angular.module('receta').controller("RecipesController", [
   '$timeout', '$location',
   ($timeout, $location)->
     $timeout(
-      ()-> $location.search("components", "")
+      ()-> $location.search("components", "") if $location.path() == "/"
     , 1000)
 ])

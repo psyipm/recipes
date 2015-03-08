@@ -11,16 +11,18 @@ receta = angular.module('receta',[
   'ngDisqus'
 ])
 
-receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authProvider',
-  ($routeProvider,$locationProvider,$disqusProvider,$authProvider)->
+receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authProvider','titleServiceProvider',
+  ($routeProvider,$locationProvider,$disqusProvider,$authProvider,titleServiceProvider)->
     $routeProvider
       .when('/',
         templateUrl: "index.html"
         controller: 'RecipesController'
+        title: "Поиск кулинарных рецептов"
       )
       .when('/recipes/new'
         templateUrl: 'recipes/new.html'
         controller: 'AddRecipeController'
+        title: "Добавить рецепт"
       )
       .when('/recipes/:id'
         templateUrl: 'recipes/show.html'
@@ -30,23 +32,28 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
         templateUrl: 'recipes/new.html'
         controller: 'EditRecipeController'
         restricted: true
+        title: "Редактировать рецепт"
       )
       .when('/users/login',
         templateUrl: 'user_sessions/new.html'
         controller: 'UserSessionsController'
+        title: "Авторизация"
       )
       .when('/users/register',
         templateUrl: 'user_regisrations/new.html'
         controller: 'UserRegistrationsController'
+        title: "Регистрация"
       )
       .when('/users/update-password',
         templateUrl: 'update_password.html'
         controller: 'UserPasswordUpdateController'
         restricted: true
+        title: "Редактирование пароля"
       )
       .when('/users/reset-password',
         templateUrl: 'reset_password.html'
         controller: 'UserPasswordResetController'
+        title: "Восстановление пароля"
       )
       .otherwise(
         redirectTo: '/'
@@ -65,19 +72,27 @@ receta.config([ '$routeProvider','$locationProvider','$disqusProvider','$authPro
       }
       storage: 'localStorage'
     });
+
+    titleServiceProvider
+      .setSiteName('Recipes4You')
 ])
 
-.run(['$rootScope', '$location', '$auth', ($rootScope, $location, $auth)->
-  $rootScope.$on('$routeChangeStart', (event, next)->
-    if next.restricted
-      promise = $auth.validateUser()
-      promise.then(
-        (valid)->
-          # it's ok, ignore
-        , 
-        (error)->
-          console.log "User validation error. Reason: #{error.reason}"
-          $location.path('/users/login') unless $auth.user.admin
-      )
-  )
+.run([
+  '$rootScope', '$location', '$auth', 'titleService',
+  ($rootScope, $location, $auth, titleService)->
+
+    $rootScope.$on('$routeChangeStart', (event, next)->
+      if next.restricted
+        promise = $auth.validateUser()
+        promise.then(
+          (valid)->
+            # it's ok, ignore
+          , 
+          (error)->
+            console.log "User validation error. Reason: #{error.reason}"
+            $location.path('/users/login') unless $auth.user.admin
+        )
+    )
+
+    titleService.init()
 ])

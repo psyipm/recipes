@@ -1,13 +1,12 @@
-angular.module('receta').controller('ViewRecipeController', 
-['$scope', '$routeParams', 'RecipeService',
-	($scope, $routeParams, RecipeService)->
+angular.module('receta').controller('ViewRecipeController', [
+	'$scope', '$routeParams', 'RecipeService', 'titleService',
+	($scope, $routeParams, RecipeService, titleService)->
 		id = $routeParams.id
 
 		RecipeService.one(id).then((recipes)-> 
 			$scope.recipes = recipes 
 
 			if $scope.recipes[0]
-				title = $scope.recipes[0].recipe.title
-				$("title").text("#{title} - Recipes4You")
+				titleService.setTitle $scope.recipes[0].recipe.title
 		)
 ])

@@ -27,9 +27,11 @@
 			</div>
 			<ul class="tagcloud">
 				<% @tags.each do |t| %>
-					<li data-weight="<%= t.weight %>">
-						<a data-ng-click="addTag($event)" href="/browse?tag=<%=u t.title %>"><%= t.title %></a>
-					</li>
+					<% cache(t) do %>
+						<li data-weight="<%= t.weight %>">
+							<a data-ng-click="addTag($event)" href="/browse?tag=<%=u t.title %>"><%= t.title %></a>
+						</li>
+					<% end -%>
 				<% end %>
 			</ul>
 		</div>

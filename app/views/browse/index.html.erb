@@ -4,11 +4,13 @@
 	<div class="view-container col-md-10 col-sm-12 col-xs-12">
 		<% if @recipes.length %>
 			<% @recipes.each do |recipe| %>
-			<div class="col-xs-12 nopadding-left recipe-wrapper panel">
-				<div class="col-md-8 col-md-offset-3 bottom-buffer-md">
-					<%= render partial: "recipes/recipe", locals: { recipe: recipe } %>
-				</div>
-			</div>
+				<% cache(recipe) do %>
+					<div class="col-xs-12 nopadding-left recipe-wrapper panel">
+						<div class="col-md-8 col-md-offset-3 bottom-buffer-md">
+							<%= render partial: "recipes/recipe", locals: { recipe: recipe } %>
+						</div>
+					</div>
+				<% end -%>
 			<% end %>
 			<div class="col-xs-12">
 				<%= will_paginate @recipes, renderer: BootstrapPagination::Rails %>
@@ -29,9 +31,11 @@
 		<div data-ng-controller="TagsController">
 			<ul class="tagcloud">
 				<% @tags.each do |t| %>
-					<li data-weight="<%= t.weight %>">
-						<a target="_self" href="/browse?tag=<%=u t.title %>"><%= t.title %></a>
-					</li>
+					<% cache(t) do %>
+						<li data-weight="<%= t.weight %>">
+							<a target="_self" href="/browse?tag=<%=u t.title %>"><%= t.title %></a>
+						</li>
+					<% end -%>
 				<% end %>
 			</ul>
 		</div>

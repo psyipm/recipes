@@ -48,8 +48,8 @@ class Recipe < ActiveRecord::Base
 			where("LOWER(t.title) regexp ?", tags)
 	end
 
-	def self.search(query, page = 1)
-		@recipes = if query[:unpublished] then self.default page else self.published page end
+	def self.search(query, page = 1, show_all = false)
+		@recipes = if show_all then self.default page else self.published page end
 
 		if query[:tokens] and query[:tokens][0].length > 0
 			@recipes = self.search_by_components query[:tokens], page

@@ -1,11 +1,11 @@
-<section class="col-md-12 nopadding-lr">
-  <h1 class="h3 col-md-12 nopadding-lr">
+<section class="col-md-12 nopadding-lr" itemscope itemtype="http://data-vocabulary.org/Recipe">
+  <h1 class="h3 col-md-12 nopadding-lr" itemprop="name">
     <a ng-if="!view && recipe.id" ng-href="/recipes/{{recipe.id}}">{{recipe.title}}</a>
     <span ng-if="view || !recipe.id">{{recipe.title}}</span>
   </h1>
   <div class="col-md-12 nopadding-lr">
-    <div class="fotorama recipe-images" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="300">
-      <img ng-repeat="img in photos" ng-src="{{img.medium || img.original}}" data-full="{{img.original}}" alt="">
+    <div class="fotorama recipe-images" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="285">
+      <img itemprop="photo" ng-repeat="img in photos" ng-src="{{img.medium || img.original}}" data-full="{{img.original}}" alt="">
     </div>
   </div>
   <recipe-tags ng-if="view && tags" recipe="recipe" tags="tags" class="col-md-12 nopadding-lr"></recipe-tags>
@@ -16,12 +16,12 @@
   </div>
   <div ng-if="view">
     <div class="recipe-text">
-      <div class="col-md-12 recipe-descr" ng-bind-html="recipe.text"></div>
+      <div itemprop="instructions" class="col-md-12 recipe-descr" ng-bind-html="recipe.text"></div>
     </div>
   </div>
   <div class="col-md-12 nopadding-lr">
-    <span title="Порции" ng-if="recipe.serving"><span class="icon icon-spoon-knife"></span> {{recipe.serving}} |</span>
-    <span title="Время приготовления" ng-if="recipe.cook_time"> <span class="glyphicon glyphicon-time"></span> {{recipe.cook_time}} минут | </span>
+    <span itemprop="yield" title="Порции" ng-if="recipe.serving"><span class="icon icon-spoon-knife"></span> {{recipe.serving}} |</span>
+    <span itemprop="cookTime" title="Время приготовления" ng-if="recipe.cook_time"> <span class="glyphicon glyphicon-time"></span> {{recipe.cook_time}} минут | </span>
     <recipe-rating ng-if="recipe.id" recipe="recipe"></recipe-rating>
   </div>
 </section>

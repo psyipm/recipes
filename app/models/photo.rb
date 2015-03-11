@@ -3,8 +3,8 @@ class Photo < ActiveRecord::Base
 
   has_attached_file :image, 
             :styles => { 
-              :medium => "320x320>",
-              :thumb => "100x100>"
+              :medium => "0x320>",
+              :thumb => "0x128>"
             }
 
   validates_attachment  :image, 

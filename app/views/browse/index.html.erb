@@ -1,4 +1,8 @@
-<% provide(:title, "Все рецепты - ") %>
+<% if @page %>
+	<% provide(:title, "Все рецепты - Страница #{@page} - ") %>
+<% else %>
+	<% provide(:title, "Все рецепты - ") %>
+<% end -%>
 
 <div>
 	<div class="view-container col-md-10 col-sm-12 col-xs-12">

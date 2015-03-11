@@ -1,24 +1,24 @@
-<section class="col-md-12 nopadding-left recipe">
-  <h1 class="h3 col-md-12 nopadding-left">
+<section class="col-md-12 nopadding-left recipe" itemscope itemtype="http://data-vocabulary.org/Recipe">
+  <h1 class="h3 col-md-12 nopadding-left" itemprop="name">
     <a ng-href="/recipes/<%= recipe.id %>"><%= recipe.title %></a>
   </h1>
   <div class="col-md-12 nopadding-left">
-    <div class="fotorama" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="320">
+    <div class="fotorama" data-allowfullscreen="true" data-loop="true" data-auto="false" data-width="100%" data-maxheight="285">
       <% recipe.photos.each do |img| %>
-        <img src="<%= img.medium or img.original %>" data-full="<%= img.original %>" alt="">
+        <img itemprop="photo" src="<%= img.medium or img.original %>" data-full="<%= img.original %>" alt="">
       <% end %>
     </div>
   </div>
   <div class="recipe-text">
-    <div class="col-md-12 recipe-descr"><%= recipe.text.html_safe if recipe.text %></div>
+    <div itemprop="instructions" class="col-md-12 recipe-descr"><%= recipe.text.html_safe if recipe.text %></div>
   </div>
 
   <div class="col-md-12 nopadding-left">
     <% if recipe.serving %>
-      <span title="Порции"><span class="icon icon-spoon-knife"></span> <%= recipe.serving %> |</span>
+      <span itemprop="yield" title="Порции"><span class="icon icon-spoon-knife"></span> <%= recipe.serving %> |</span>
     <% end %>
     <% if recipe.cook_time %>
-      <span title="Время приготовления"><span class="glyphicon glyphicon-time"></span> <%= recipe.cook_time %> минут | </span>
+      <span itemprop="cookTime" title="Время приготовления"><span class="glyphicon glyphicon-time"></span> <%= recipe.cook_time %> минут | </span>
     <% end %>
     <span title="Рейтинг"> <span class="glyphicon glyphicon-heart"></span> <%= recipe.rating || 0 %></span>
   </div>

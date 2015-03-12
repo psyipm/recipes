@@ -1,13 +1,21 @@
 class ToggleText
   toggle: ($event) ->
-    target = $event.target
-    collapsed = $(target).hasClass("collapsed")
+    target = if $($event.target).hasClass('recipe-text') then $event.target else $($event.target).parent()
+    btn = $(target).find(".read-all")
+    text = $(target).find(".recipe-descr")
+    collapsed = $(btn).hasClass("collapsed")
 
     if(collapsed)
-      $(target).removeClass("collapsed")
+      $(btn)
+        .removeClass("collapsed")
+        .text("Свернуть описание ▴")
+      $(text).removeClass("short")
       return
     else
-      $(target).addClass("collapsed")
+      $(btn)
+        .addClass("collapsed")
+        .text("Показать полностью ▾")
+      $(text).addClass("short")
       return
 
 angular.module('receta').directive('recipe', ()->

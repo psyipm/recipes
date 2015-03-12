@@ -10,8 +10,9 @@
   </div>
   <recipe-tags ng-if="view && tags" recipe="recipe" tags="tags" class="col-md-12 nopadding-lr"></recipe-tags>
   <div ng-if="!view">
-    <div class="recipe-text" ng-click="toggle($event)" title="Показать полностью">
-      <div class="col-md-12 recipe-descr collapsed" ng-bind-html="recipe.text"></div>
+    <div class="col-md-12 recipe-text" ng-click="toggle($event)">
+      <div class="recipe-descr short" ng-bind-html="recipe.text"></div>
+      <div class="read-all collapsed">Показать полностью ▾</div>
     </div>
   </div>
   <div ng-if="view">

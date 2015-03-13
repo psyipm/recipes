@@ -25,7 +25,6 @@
 //= require lodash
 //= require restangular
 //= require angular-bootstrap
-//= require angular-disqus
 //= require angular-local-storage
 //= require angular-md5
 

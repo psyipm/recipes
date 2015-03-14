@@ -6,19 +6,19 @@ Array::unique = ->
 angular.module('receta').controller("RecipesController", [
   '$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService','titleService',
   ($scope,$location,$routeParams,tf,Component,RecipeService,title)->
-    $scope.tfCallback = (request, response)->
-      Component.find(request.term, (c)-> response(c))
+    init = ()->
+      $scope.tfCallback = (request, response)->
+        Component.find(request.term, (c)-> response(c))
+      $scope.tokenhelpers = tf.bind "keywords-inp"
+      $scope.tokenhelpers.init $scope.tfCallback
 
-    $scope.tokenhelpers = tf.bind "keywords-inp"
-    $scope.tokenhelpers.init $scope.tfCallback
-
-    $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
+      $(".keyword-ex-lnk").on("click", ()-> $scope.tokenhelpers.addToken $(this).text())
+      $scope.recipes = []
+      $scope.offset = 0
+      $scope.searchFromLocation()
 
     $scope.clearParams = ()->
       $scope.tokenhelpers.setTokens []; return
-
-    $scope.recipes = []
-    $scope.offset = 0
 
     buildQuery = ()->
       query = {}
@@ -29,6 +29,13 @@ angular.module('receta').controller("RecipesController", [
         query = $.extend true, query, {tags: $routeParams.tags.split(",")}
       query
 
+    selectTokensInText = (tokens)->
+      for r in $scope.recipes
+        for t in tokens
+          r.recipe.text = r.recipe.text.replace(new RegExp(t, 'ig'), "<strong>#{t}</strong>") if r and r.recipe and r.recipe.text
+          continue
+        continue
+
     pushRecipes = (recipes, replace = false)->
       $scope.recipes = unless replace is true then recipes else [].concat($scope.recipes, recipes)
 
@@ -37,12 +44,7 @@ angular.module('receta').controller("RecipesController", [
         return
 
       title.setTitle("Рецепты с ингредиентами: #{tokens.join(", ")}")
-
-      for r in $scope.recipes
-        for t in tokens
-          r.recipe.text = r.recipe.text.replace(new RegExp(t, 'ig'), "<strong>#{t}</strong>") if r and r.recipe and r.recipe.text
-          continue
-        continue
+      selectTokensInText(tokens)
 
     searchCallback = (recipes, replace = false)->
       $scope.no_more = false
@@ -65,14 +67,12 @@ angular.module('receta').controller("RecipesController", [
       query = buildQuery()
       RecipeService.find(query, $scope.offset).then((res)-> searchCallback res) unless $.isEmptyObject query
 
-    # $(".fotorama").fotorama()
-
-    $scope.searchFromLocation()
+    init()
 ])
 .run([
   '$timeout', '$location',
   ($timeout, $location)->
     $timeout(
-      ()-> $location.search("components", "") if $location.path() == "/"
+      ()-> $location.search("components", "") if $location.path() == "/" and $.isEmptyObject $location.search()
     , 1000)
 ])

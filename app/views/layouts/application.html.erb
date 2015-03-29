@@ -19,23 +19,27 @@
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<!--noindex-->
+					<!--googleoff: all-->
 						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
+					<!--googleon: all-->
 					<!--/noindex-->
 					<a href="/"><%= image_tag "logo.png", class: "header-logo", alt: "Recipes4you" %></a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" data-ng-controller="UserSessionsController">
 					<!--noindex-->
+					<!--googleoff: all-->
 						<ul class="nav navbar-nav navbar-right">
 							<li><a data-ng-show="!user.id" data-ng-href="/users/login">Войти</a></li>
 							<li><a data-ng-show="!user.id" data-ng-href="/users/register">Регистрация</a></li>
 							<li><a data-ng-show="user.id" data-ng-click="signOut()">Выйти</a></li>
 						</ul>
+					<!--googleon: all-->
 					<!--/noindex-->
 					<ul class="nav navbar-nav">
 						<li><a target="_self" href="/browse/?page=1">Все рецепты</a></li>
@@ -48,12 +52,14 @@
 
 	<div class="maincontent col-md-12">
 		<!--noindex-->
+		<!--googleoff: all-->
 			<noscript>
 				<div class="noscript-msg">
 					<p class="h3">Внимание! Для правильной работы сайта</p>
 					<h1>включите Javascript в настройках браузера</h1>
 				</div>
 			</noscript>
+		<!--googleon: all-->
 		<!--/noindex-->
 
 		<%= yield %>

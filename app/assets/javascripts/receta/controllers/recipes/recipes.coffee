@@ -4,8 +4,9 @@ Array::unique = ->
     value for key, value of output
 
 angular.module('receta').controller("RecipesController", [
-  '$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService','titleService',
-  ($scope,$location,$routeParams,tf,Component,RecipeService,title)->
+  '$scope','$location','$routeParams','TokenfieldHelpers','Component','RecipeService','titleService','$timeout',
+  ($scope,$location,$routeParams,tf,Component,RecipeService,title,$timeout)->
+
     init = ()->
       $scope.tfCallback = (request, response)->
         Component.find(request.term, (c)-> response(c))
@@ -67,7 +68,10 @@ angular.module('receta').controller("RecipesController", [
       query = buildQuery()
       RecipeService.find(query, $scope.offset).then((res)-> searchCallback res) unless $.isEmptyObject query
 
-    init()
+    $timeout(
+      ()-> init()
+    )
+    
 ])
 .run([
   '$timeout', '$location',

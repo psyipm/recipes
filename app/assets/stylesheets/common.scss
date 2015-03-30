@@ -71,6 +71,12 @@ a.keyword-ex-lnk {
   padding: 10px;
 }
 
+@media print {
+  .no-print, .no-print * {
+    display: none !important;
+  }
+}
+
 @font-face {
   font-family: 'IcoMoon-Free';
   src: font-url('icomoon/IcoMoon-Free.ttf?-b7qzp2') format('truetype');

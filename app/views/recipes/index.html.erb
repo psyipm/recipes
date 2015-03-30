@@ -4,7 +4,7 @@
 	<div class="view-container col-md-10 col-sm-12 col-xs-12">
 		<div data-ng-view class="view-frame animate-view"></div>
 	</div>
-	<div class="sidebar-right col-md-2 col-sm-12 col-xs-12">
+	<div class="sidebar-right col-md-2 col-sm-12 col-xs-12 no-print">
 		<!--noindex-->
 		<!--googleoff: all-->
 			<hr class="hidden-md hidden-lg">
@@ -20,7 +20,7 @@
 		<div data-ng-controller="TagsController">
 			<div class="tagcloud-settings">
 				<span>Облако тегов</span>
-				<a href="/" data-ng-if="multiTagSearch" data-ng-click="clearTags($event)" class="btn btn-default btn-noborder btn-xs" title="Убрать все теги из поиска">
+				<a href="/" data-ng-if="multiTagSearch" data-ng-click="clearTags($event)" class="btn btn-default btn-noborder btn-xs" title="Убрать все теги из поиска" alt="Убрать все теги из поиска">
 					<span class="glyphicon glyphicon-remove"></span>
 				</a>
 				<button class="btn btn-default btn-noborder btn-xs" data-ng-click="openSettings()" title="Настройки">
